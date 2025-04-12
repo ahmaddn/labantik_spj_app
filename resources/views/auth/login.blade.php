@@ -1,4 +1,4 @@
-@include('layouts.head')
+@extends('layouts.master')
 <div class="main-wrapper login-body">
     <div class="login-wrapper">
         <div class="container">
@@ -8,7 +8,7 @@
                 </div>
                 <div class="login-right">
                     <div class="login-right-wrap">
-                        <h1>Welcome to Preskool</h1>
+                        <h1>Welcome to Spj App</h1>
                         <p class="account-subtitle">Need an account? <a href="register">Sign Up</a></p>
                         <h2>Sign in</h2>
 
@@ -22,7 +22,7 @@
                             <div class="form-group">
                                 <label>Password <span class="login-danger">*</span></label>
                                 <input class="form-control pass-input" type="password" name="password">
-                                <span class="profile-views feather-eye toggle-password"></span>
+                                <span class="profile-views feather-eye-off toggle-password"></span>
                             </div>
                             <div class="forgotpass">
                                 <div class="remember-me">
@@ -37,25 +37,10 @@
                                 <button class="btn btn-primary btn-block" type="submit">Login</button>
                             </div>
                         </form>
-
-                        <div class="login-or">
-                            <span class="or-line"></span>
-                            <span class="span-or">or</span>
-                        </div>
-
-                        <div class="social-login">
-                            <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
 @include('layouts.footer')

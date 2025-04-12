@@ -5,38 +5,30 @@
                 <li class="menu-title">
                     <span>Main Menu</span>
                 </li>
-                <li class="submenu active">
-                    <a href="#"><i class="feather-grid"></i> <span> Dashboard</span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="" class="active">Admin Dashboard</a></li>
-                        <li><a href="">Teacher Dashboard</a></li>
-                        <li><a href="">Student Dashboard</a></li>
-                    </ul>
+                <li class="{{ Route::is('dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard') }}" class="{{ Route::is('dashboard') ? 'active' : '' }}"><i
+                            class="feather-grid"></i> <span> Dashboard Admin</span></a>
                 </li>
-                <li class="submenu">
+                <li class="submenu {{ Route::is('internal.*') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-graduation-cap"></i> <span> Internal</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="">Student List</a></li>
-                        <li><a href="">Student View</a></li>
-                        <li><a href="">Student Add</a></li>
-                        <li><a href="">Student Edit</a></li>
+                        <li><a href="{{ route('internal.kepsek.index') }}"
+                                class="{{ Route::is('internal.kepsek.index') ? 'active' : '' }}">Kepala Sekolah</a></li>
+                        <li><a href="#"
+                                class="{{ Route::is('internal.bendahara.index') ? 'active' : '' }}">Bendahara</a></li>
+                        <li><a href="#"
+                                class="{{ Route::is('internal.penerima.index') ? 'active' : '' }}">Penerima</a></li>
                     </ul>
                 </li>
-                <li class="submenu">
+                <li class="{{ Route::is('eksternal.*') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Eksternal</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="">Teacher List</a></li>
-                        <li><a href="">Teacher View</a></li>
-                        <li><a href="">Teacher Add</a></li>
-                        <li><a href="">Teacher Edit</a></li>
-                    </ul>
-                </li>
-                
-                
-                
+                        <li><a href="#" class="{{ Route::is('eksternal.*') ? 'active' : '' }}">Kegiatan</a></li>
+                        <li><a href="#" class="{{ Route::is('eksternal.*') ? 'active' : '' }}">Barang</a></li>
+                        <li><a href="#" class="{{ Route::is('eksternal.*') ? 'active' : '' }}">Penyedia</a></li>
+                        <li><a href="#" class="{{ Route::is('eksternal.*') ? 'active' : '' }}">Pesanan</a></li>
                     </ul>
                 </li>
             </ul>
