@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\Auth\LoginUserController;
 use App\Http\Controllers\internal\KepsekController;
+use App\Http\Controllers\eksternal\KegiatanController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -29,5 +30,5 @@ Route::prefix('internal')->name('internal.')->group(function () {
 });
 
 Route::prefix('eksternal')->name('eksternal.')->group(function () {
-    //Route::resource('kegiatan')
+    Route::resource('/kegiatan', KegiatanController::class);
 });
