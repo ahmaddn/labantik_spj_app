@@ -25,7 +25,8 @@
                     <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Eksternal</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="#" class="{{ Route::is('eksternal.*') ? 'active' : '' }}">Kegiatan</a></li>
+                        <li><a href="{{ route('eksternal.kegiatan.index') }}" 
+                            class="{{ Route::is('eksternal.kegiatan.index*') ? 'active' : '' }}">Kegiatan</a></li>
                         <li><a href="#" class="{{ Route::is('eksternal.*') ? 'active' : '' }}">Barang</a></li>
                         <li><a href="#" class="{{ Route::is('eksternal.*') ? 'active' : '' }}">Penyedia</a></li>
                         <li><a href="#" class="{{ Route::is('eksternal.*') ? 'active' : '' }}">Pesanan</a></li>
