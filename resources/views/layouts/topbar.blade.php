@@ -37,8 +37,8 @@
                     <img class="rounded-circle" src="{{ asset('assets/img/profiles/avatar-01.jpg') }}" width="31"
                         alt="Soeng Souy">
                     <div class="user-text">
-                        <h6>{{ Auth::user()->username }}</h6>
-                        <p class="text-muted mb-0">{{ Auth::user()->level }}</p>
+                        <h6></h6>
+                        <p class="text-muted mb-0"></p>
                     </div>
                 </span>
             </a>
@@ -49,7 +49,7 @@
                             class="avatar-img rounded-circle">
                     </div>
                     <div class="user-text">
-                        <h6>Soeng Souy</h6>
+                        <h6>{{ Auth::user()->namalengkap }}</h6>
                         <p class="text-muted mb-0">Administrator</p>
                     </div>
                 </div>
