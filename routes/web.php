@@ -10,6 +10,7 @@ use App\Http\Controllers\internal\PenerimaController;
 use App\Http\Controllers\eksternal\KegiatanController;
 use App\Http\Controllers\eksternal\BarangController;
 use App\Http\Controllers\eksternal\PenyediaController;
+use App\Http\Controllers\eksternal\PesananController;
 
 
 
@@ -62,7 +63,7 @@ Route::prefix('internal')->name('internal.')->group(function () {
 });
 
 Route::prefix('eksternal')->name('eksternal.')->group(function () {
-    Route::get('/', [KegiatanController::class, 'index'])->name('kegiatan.index');
+    Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
     Route::get('/add', [KegiatanController::class, 'add'])->name('kegiatan.add');
     Route::post('/add', [KegiatanController::class, 'addKegiatan'])->name('kegiatan.addKegiatan');
     Route::get('/edit/{id}', [KegiatanController::class, 'edit'])->name('kegiatan.edit');
@@ -82,4 +83,11 @@ Route::prefix('eksternal')->name('eksternal.')->group(function () {
     Route::get('/penyedia/edit/{id}', [PenyediaController::class, 'edit'])->name('penyedia.edit');
     Route::put('/penyedia/update/{id}', [PenyediaController::class, 'update'])->name('penyedia.update');
     Route::delete('/penyedia/delete/{id}', [PenyediaController::class, 'deletePenyedia'])->name('penyedia.destroy');
+
+    Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan.index');
+    Route::get('pesanan/add', [PesananController::class, 'add'])->name('pesanan.add');
+    Route::post('pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
+    Route::get('pesanan/edit/{id}', [PesananController::class, 'edit'])->name('pesanan.edit');
+    Route::post('pesanan/update/{id}', [PesananController::class, 'update'])->name('pesanan.update');
+    Route::get('pesanan/delete/{id}', [PesananController::class, 'delete'])->name('pesanan.delete');
 });
