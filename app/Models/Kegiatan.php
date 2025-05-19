@@ -18,4 +18,8 @@ class Kegiatan extends Model
         'completed',
         'info',
     ];
+    public function pesanan()
+    {
+        return $this->hasMany(Pesanan::class, 'kegiatanID');
+    }
 }
