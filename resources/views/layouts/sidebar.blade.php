@@ -27,9 +27,9 @@
                     <ul>
                         <li><a href="{{ route('eksternal.kegiatan.index') }}" 
                                 class="{{ Route::is('eksternal.kegiatan.index*') ? 'active' : '' }}">Kegiatan</a></li>
-                        <li><a href="#" 
+                        <li><a href="{{ route('eksternal.barang.index') }}" 
                                 class="{{ Route::is('eksternal.barang.index*') ? 'active' : '' }}">Barang</a></li>
-                        <li><a href="#"     
+                        <li><a href="{{ route('eksternal.penyedia.index') }}"     
                                 class="{{ Route::is('eksternal.penyedia.index*') ? 'active' : '' }}">Penyedia</a></li>
                         <li><a href="#" 
                                 class="{{ Route::is('eksternal.pesanan.index*') ? 'active' : '' }}">Pesanan</a></li>

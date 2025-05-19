@@ -8,6 +8,10 @@ use App\Http\Controllers\internal\BendaharaController;
 use App\Http\Controllers\internal\PenerimaController;
 
 use App\Http\Controllers\eksternal\KegiatanController;
+use App\Http\Controllers\eksternal\BarangController;
+use App\Http\Controllers\eksternal\PenyediaController;
+
+
 
 Route::get('/', function () {
     return view('auth.login');
@@ -64,4 +68,18 @@ Route::prefix('eksternal')->name('eksternal.')->group(function () {
     Route::get('/edit/{id}', [KegiatanController::class, 'edit'])->name('kegiatan.edit');
     Route::put('/update/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
     Route::delete('/delete/{id}', [KegiatanController::class, 'deleteKegiatan'])->name('kegiatan.deleteKegiatan');
+
+    Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+    Route::get('/barang/add', [BarangController::class, 'add'])->name('barang.add');
+    Route::post('/barang/add', [BarangController::class, 'store'])->name('barang.store');
+    Route::get('/barang/edit/{id}', [BarangController::class, 'edit'])->name('barang.edit');
+    Route::put('/barang/update/{id}', [BarangController::class, 'update'])->name('barang.update');
+    Route::delete('/barang/delete/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
+
+    Route::get('/penyedia', [PenyediaController::class, 'index'])->name('penyedia.index');
+    Route::get('/penyedia/add', [PenyediaController::class, 'add'])->name('penyedia.add');
+    Route::post('/penyedia/add', [PenyediaController::class, 'addPenyedia'])->name('penyedia.store');
+    Route::get('/penyedia/edit/{id}', [PenyediaController::class, 'edit'])->name('penyedia.edit');
+    Route::put('/penyedia/update/{id}', [PenyediaController::class, 'update'])->name('penyedia.update');
+    Route::delete('/penyedia/delete/{id}', [PenyediaController::class, 'deletePenyedia'])->name('penyedia.destroy');
 });

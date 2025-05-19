@@ -30,15 +30,7 @@ class KegiatanController extends Controller
                 'completed' => 'required'    ,
                 'info' => 'nullable|string|max:255',
             ]);
-            $data = $request->all();
-
-
-
-
-Kegiatan::create($data);
-
-
-            Kegiatan::create([
+     Kegiatan::create([
                 'name' => $request->input('name'),
                 'order' => $request->input('order'),
                 'accepted' => $request->input('accepted'),
