@@ -32,6 +32,9 @@ Route::post('/logout', [LoginUserController::class, 'logout'])->name('logout');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware('auth')->name('dashboard');
+Route::get('/template', function () {
+    return view('template');
+})->middleware('auth')->name('template');
 
 Route::prefix('internal')->name('internal.')->group(function () {
     //Route Kepsek
@@ -89,5 +92,7 @@ Route::prefix('eksternal')->name('eksternal.')->group(function () {
     Route::post('pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
     Route::get('pesanan/edit/{id}', [PesananController::class, 'edit'])->name('pesanan.edit');
     Route::post('pesanan/update/{id}', [PesananController::class, 'update'])->name('pesanan.update');
-    Route::get('pesanan/delete/{id}', [PesananController::class, 'delete'])->name('pesanan.delete');
+    Route::delete('pesanan/delete/{id}', [PesananController::class, 'delete'])->name('pesanan.delete');
+    Route::get('/eksternal/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
+
 });

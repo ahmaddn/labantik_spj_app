@@ -9,6 +9,7 @@ use App\Models\Kegiatan;
 use App\Models\Penyedia;
 use App\Models\Penerima;
 use App\Models\Barang;
+use App\Models\Kepsek;
 
 class PesananController extends Controller
 {
@@ -33,7 +34,7 @@ class PesananController extends Controller
             'invoice_num'   => 'required|integer',
             'kegiatanID'    => 'required|exists:kegiatan,id',
             'penyediaID'    => 'required|exists:penyedia,id',
-            'penerimaID'    => 'required|exists:users,id',
+            'penerimaID'    => 'required|exists:penerima,id',
             'barangID'      => 'required|exists:barang,id',
             'budget'        => 'required|integer',
             'money_total'   => 'required|integer',
@@ -88,4 +89,14 @@ class PesananController extends Controller
         return redirect()->route('eksternal.pesanan.index')
                          ->with('success', 'Data Pesanan berhasil diperbarui.');
     }
+    // PesananController.php
+public function export($id)
+{
+    $pesanan = Pesanan::with(['barang', 'penyedia'])->findOrFail($id);
+    $kepsek = Kepsek::latest()->first(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
+
+    return view('template', compact('pesanan', 'kepsek'));
+}
+
+
 }

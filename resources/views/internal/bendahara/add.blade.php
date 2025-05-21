@@ -44,6 +44,15 @@
                                     <label>Nama Bendahara</label>
                                     <input type="text" class="form-control" name="name" value="{{ old('name') }}">
                                 </div>
+                                {{-- Nama Bendahara --}}
+                                <div class="form-group">
+                                    <label>Nama Bendahara</label>
+                                    <select class="form-control" name="jenis">
+                                        <option value="BOS">BOS</option>
+                                        <option value="BODP">BODP</option>
+                                        
+</select>
+                                </div>
 
                                 {{-- NIP --}}
                                 <div class="form-group">

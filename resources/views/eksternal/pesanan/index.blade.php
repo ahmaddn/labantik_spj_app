@@ -45,6 +45,7 @@
                                         <th>Jumlah Uang</th>
                                         <th>Tanggal Order</th>
                                         <th>Tanggal Bayar</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,6 +59,19 @@
                                         <td>{{ $item->money_total }}</td>
                                         <td>{{ $item->order }}</td>
                                         <td>{{ $item->paid }}</td>
+                                        <td class="px-4 py-2 flex space-x-2">
+                                                        <a href="{{ route('eksternal.pesanan.edit', $item->id) }}"
+                                                           class="btn btn-warning text-white px-3 py-1 rounded hover:bg-yellow-600">Edit</a>
+
+                                                        <form action="{{ route('eksternal.pesanan.delete', $item->id) }}" method="POST"
+                                                              onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger text-white px-3 py-1 rounded hover:bg-red-700">Delete</button>
+                                                        </form>
+                                                        <a href="{{ route('eksternal.pesanan.export', $item->id) }}"
+                                                           class="btn btn-primary text-white px-3 py-1 rounded hover:bg-yellow-600">Print</a>
+                                                    </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
