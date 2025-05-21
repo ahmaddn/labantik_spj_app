@@ -26,12 +26,14 @@ class BendaharaController extends Controller
         if ($request->isMethod('post')) {
             $request->validate([
                 'name' => 'required|unique:bendahara,name',
+                'jenis' => 'required|in:BOS,BODP,',
                 'nip' => 'required|numeric|unique:bendahara,nip',
                 'school' => 'required|numeric',
             ]);
 
             Bendahara::create([
                 'name' => $request->input('name'),
+                'jenis' => $request->input('jenis'),
                 'nip' => $request->input('nip'),
                 'school' => $request->input('school'),
             ]);
@@ -68,6 +70,7 @@ class BendaharaController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:bendahara,name,' . $id,
+            'jenis' => 'required|in:BOS,BODP,',
             'nip' => 'required|numeric|unique:bendahara,nip,' . $id,
             'school' => 'required|numeric',
         ]);
