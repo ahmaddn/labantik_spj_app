@@ -93,9 +93,11 @@ class PesananController extends Controller
 public function export($id)
 {
     $pesanan = Pesanan::with(['barang', 'penyedia'])->findOrFail($id);
+    // return response()->json($pesanan);
     $kepsek = Kepsek::latest()->first(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
+    $barang = Barang::all(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
 
-    return view('template', compact('pesanan', 'kepsek'));
+    return view('template', compact('pesanan', 'kepsek', 'barang'));
 }
 
 
