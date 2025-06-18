@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Bendahara;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class BendaharaController extends Controller
@@ -27,13 +28,13 @@ class BendaharaController extends Controller
             $request->validate([
                 'name' => 'required|unique:bendahara,name',
                 'jenis' => 'required|in:BOS,BODP,',
-                'nip' => 'required|numeric|unique:bendahara,nip',
+                'nip' => 'required|digits:16|unique:bendahara,nip',
                 'school' => 'required|numeric',
             ]);
 
             Bendahara::create([
                 'name' => $request->input('name'),
-                'jenis' => $request->input('jenis'),
+                'type' => $request->input('jenis'),
                 'nip' => $request->input('nip'),
                 'school' => $request->input('school'),
             ]);
@@ -58,7 +59,7 @@ class BendaharaController extends Controller
     public function edit($id)
     {
         $bendahara = Bendahara::findOrFail($id);
-        $user = auth()->user();
+        $user = Auth::user();
 
         return view('internal.bendahara.edit', [
             'bendahara' => $bendahara,
@@ -71,7 +72,7 @@ class BendaharaController extends Controller
         $request->validate([
             'name' => 'required|unique:bendahara,name,' . $id,
             'jenis' => 'required|in:BOS,BODP,',
-            'nip' => 'required|numeric|unique:bendahara,nip,' . $id,
+            'nip' => 'required|digits:16digits:16|unique:bendahara,nip,' . $id,
             'school' => 'required|numeric',
         ]);
 

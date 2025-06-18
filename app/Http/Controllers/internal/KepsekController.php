@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Kepsek;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 
@@ -14,7 +15,7 @@ class KepsekController extends Controller
     public function index()
     {
     $kepsek = Kepsek::all(); // Ambil semua data kepala sekolah dari database
-    return view('internal.kepsek.index', compact('kepsek')); 
+    return view('internal.kepsek.index', compact('kepsek'));
     }
     public function add()
     {
@@ -26,7 +27,7 @@ class KepsekController extends Controller
         // Validasi input
         $request->validate([
             'name' => 'required|unique:kepsek,name',
-            'nip' => 'required|numeric|unique:kepsek,nip',
+            'nip' => 'required|unique:kepsek,nip|digits:16',
             'school' => 'required|numeric',
             'address' => 'required|string',
         ]);
@@ -64,7 +65,7 @@ public function deleteKepsek($id)
 public function edit($id)
 {
     $kepsek = Kepsek::findOrFail($id);
-    $user = auth()->user(); // atau sesuaikan jika pakai session
+    $user = Auth::user(); // atau sesuaikan jika pakai session
 
     return view('internal.kepsek.edit', [
         'kepsek' => $kepsek,
@@ -77,7 +78,7 @@ public function update(Request $request, $id)
 {
     $request->validate([
         'name' => 'required|unique:kepsek,name',
-        'nip' => 'required',
+        'nip' => 'required|digits:16',
         'school' => 'required|numeric',
         'address' => 'required',
     ]);

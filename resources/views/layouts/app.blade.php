@@ -2,7 +2,13 @@
 
 <body>
     <div class="main-wrapper">
-        @yield('content')
+        <div class="page-wrapper">
+
+            @include('layouts.topbar')
+            @include('layouts.sidebar')
+            @yield('content')
+            @include('layouts.footer')
+        </div>
     </div>
     @include('layouts.script')
 

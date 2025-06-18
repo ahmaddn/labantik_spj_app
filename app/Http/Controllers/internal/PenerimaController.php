@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Penerima;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class PenerimaController extends Controller
@@ -27,7 +28,7 @@ class PenerimaController extends Controller
         if ($request->isMethod('post')) {
             $request->validate([
                 'name' => 'required|unique:penerima,name',
-                'nip' => 'required|numeric|unique:penerima,nip',
+                'nip' => 'required|digits:16|unique:penerima,nip',
                 'school' => 'required|numeric|',
             ]);
 
@@ -56,7 +57,7 @@ class PenerimaController extends Controller
     public function edit($id)
     {
         $penerima = Penerima::findOrFail($id);
-        $user = auth()->user();
+        $user = Auth::user();
 
         return view('internal.penerima.edit', [
             'penerima' => $penerima,
@@ -68,7 +69,7 @@ class PenerimaController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:penerima,name,' . $id,
-            'nip' => 'required|numeric|unique:penerima,nip,' . $id,
+            'nip' => 'required|digits:16|unique:penerima,nip,' . $id,
             'school' => 'required|numeric',
         ]);
 

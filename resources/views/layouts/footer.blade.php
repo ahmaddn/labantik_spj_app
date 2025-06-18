@@ -1,3 +1,3 @@
 <footer>
-    <p>Copyright © 2025 Labantik.</p>
+    <p>Copyright © {{ date('Y') }} Labantik.</p>
 </footer>

@@ -36,7 +36,7 @@ Route::get('/template', function () {
     return view('template');
 })->middleware('auth')->name('template');
 
-Route::prefix('internal')->name('internal.')->group(function () {
+Route::prefix('internal')->name('internal.')->middleware('auth')->group(function () {
     //Route Kepsek
     Route::resource('kepsek', KepsekController::class)->except(['show']);
     Route::get('/kepsek', [KepsekController::class, 'index'])->name('kepsek.index');
@@ -51,7 +51,7 @@ Route::prefix('internal')->name('internal.')->group(function () {
     Route::get('/bendahara', [BendaharaController::class, 'index'])->name('bendahara.index');
     Route::get('bendahara/add', [BendaharaController::class, 'add'])->name('bendahara.add');
     Route::get('bendahara/{id}/edit', [BendaharaController::class, 'edit'])->name('bendahara.edit');
-    Route::post('bendahara/tambah', [BendaharaController::class, 'addBendahara'])->name('bendahara.addBendahara');    
+    Route::post('bendahara/tambah', [BendaharaController::class, 'addBendahara'])->name('bendahara.addBendahara');
     Route::delete('bendahara/deletebendahara/{id}', [BendaharaController::class, 'deleteBendahara'])->name('bendahara.deleteBendahara');
     Route::post('/bendahara/{id}/update', [BendaharaController::class, 'update'])->name('internal.bendahara.update');
 
@@ -65,7 +65,7 @@ Route::prefix('internal')->name('internal.')->group(function () {
     Route::delete('penerima/deletepenerima/{id}', [PenerimaController::class, 'deletePenerima'])->name('penerima.deletePenerima');
 });
 
-Route::prefix('eksternal')->name('eksternal.')->group(function () {
+Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(function () {
     Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
     Route::get('/add', [KegiatanController::class, 'add'])->name('kegiatan.add');
     Route::post('/add', [KegiatanController::class, 'addKegiatan'])->name('kegiatan.addKegiatan');
