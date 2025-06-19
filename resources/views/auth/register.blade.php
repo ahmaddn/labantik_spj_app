@@ -13,27 +13,31 @@
                             <div class="login-right-wrap">
                                 <h1>Sign Up</h1>
                                 <p class="account-subtitle">Enter details to create your account</p>
-                                @if ($errors->any())
-                                    @foreach ($errors->all() as $error)
-                                        <div class="alert alert-danger">{{ $error }}</div>
-                                    @endforeach
-                                @endif
                                 <form action="{{ route('register') }}" method="post">
                                     @csrf
                                     <div class="form-group">
                                         <label>Username <span class="login-danger">*</span></label>
                                         <input class="form-control" type="text" name="username" autofocus>
                                         <span class="profile-views"><i class="fas fa-user-circle"></i></span>
+                                        @error('username')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label>Nama Lengkap<span class="login-danger">*</span></label>
                                         <input class="form-control" type="text" name="namalengkap">
                                         <span class="profile-views"><i class="fas fa-user"></i></span>
+                                        @error('namalengkap')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label>Password <span class="login-danger">*</span></label>
                                         <input class="form-control pass-input" type="password" name="password">
                                         <span class="profile-views feather-eye-off toggle-password"></span>
+                                        @error('password')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label>Confirm password <span class="login-danger">*</span></label>

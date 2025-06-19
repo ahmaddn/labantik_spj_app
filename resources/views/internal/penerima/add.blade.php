@@ -9,7 +9,7 @@
                     <h3 class="page-title">Tambah Data Penerima</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('internal.penerima.index') }}">Tabel Penerima</a>
+                        <li class="breadcrumb-item"><a href="{{ route('internal.penerima.index') }}">Daftar Penerima</a>
                         </li>
                         <li class="breadcrumb-item active">Tambah Penerima</li>
                     </ul>
@@ -27,27 +27,22 @@
                         <form action="{{ route('internal.penerima.addPenerima') }}" method="POST">
                             @csrf
 
-                            {{-- Validasi Error --}}
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-
                             {{-- Nama Penerima --}}
                             <div class="form-group">
                                 <label>Nama Penerima</label>
                                 <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                                @error('name')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- NIP --}}
                             <div class="form-group">
                                 <label>NIP</label>
                                 <input type="text" class="form-control" name="nip" value="{{ old('nip') }}">
+                                @error('nip')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- Tahun Ajaran --}}
@@ -55,6 +50,9 @@
                                 <label>Tahun Ajaran</label>
                                 <input type="number" class="form-control" name="school" min="1900" max="2100"
                                     value="{{ old('school') }}">
+                                @error('school')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="text-end">

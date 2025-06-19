@@ -1,9 +1,6 @@
 @extends('layouts.app')
-@include('layouts.topbar')
-@include('layouts.sidebar')
 
 @section('content')
-<div class="page-wrapper">
     <div class="content container-fluid">
 
         <div class="page-header">
@@ -43,13 +40,15 @@
                             {{-- Nama Perusahaan --}}
                             <div class="form-group">
                                 <label>Nama Perusahaan</label>
-                                <input type="text" class="form-control" name="company" value="{{ old('company', $penyedia->company) }}" required>
+                                <input type="text" class="form-control" name="company"
+                                    value="{{ old('company', $penyedia->company) }}" required>
                             </div>
 
                             {{-- NPWP --}}
                             <div class="form-group">
                                 <label>NPWP</label>
-                                <input type="number" class="form-control" name="npwp" value="{{ old('npwp', $penyedia->npwp) }}" required>
+                                <input type="number" class="form-control" name="npwp"
+                                    value="{{ old('npwp', $penyedia->npwp) }}" required>
                             </div>
 
                             {{-- Alamat --}}
@@ -61,19 +60,22 @@
                             {{-- Jumlah Rekening --}}
                             <div class="form-group">
                                 <label>Jumlah Rekening</label>
-                                <input type="number" class="form-control" name="account" value="{{ old('account', $penyedia->account) }}" required>
+                                <input type="number" class="form-control" name="account"
+                                    value="{{ old('account', $penyedia->account) }}" required>
                             </div>
 
                             {{-- Nama Delegasi --}}
                             <div class="form-group">
                                 <label>Nama Delegasi</label>
-                                <input type="text" class="form-control" name="delegation_name" value="{{ old('delegation_name', $penyedia->delegation_name) }}" required>
+                                <input type="text" class="form-control" name="delegation_name"
+                                    value="{{ old('delegation_name', $penyedia->delegation_name) }}" required>
                             </div>
 
                             {{-- Jabatan Delegasi --}}
                             <div class="form-group">
                                 <label>Jabatan Delegasi</label>
-                                <input type="text" class="form-control" name="delegate_position" value="{{ old('delegate_position', $penyedia->delegate_position) }}" required>
+                                <input type="text" class="form-control" name="delegate_position"
+                                    value="{{ old('delegate_position', $penyedia->delegate_position) }}" required>
                             </div>
 
                             <div class="text-end">
@@ -89,6 +91,4 @@
         </div>
 
     </div>
-    @include('layouts.footer')
-</div>
 @endsection

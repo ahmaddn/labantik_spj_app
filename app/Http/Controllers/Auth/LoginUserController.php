@@ -5,6 +5,7 @@ namespace App\Http\Controllers\auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class LoginUserController extends Controller
 {
@@ -21,12 +22,15 @@ class LoginUserController extends Controller
             $request->session()->regenerate();
 
             if ($remember_me) {
-                cookie()->queue(cookie('remember_username', $request->username, 43200));
-                cookie()->queue(cookie('remember_password', $request->password, 43200));
+                cookie()->queue(cookie('remember_username', $request->username, 10080));
+                cookie()->queue(cookie('remember_password', $request->password, 10080));
             }
 
             return redirect()->route('dashboard')->with('message', 'Login berhasil!');
         }
+
+        cookie()->queue(Cookie::forget('remember_username'));
+        cookie()->queue(Cookie::forget('remember_password'));
 
         return back()->withErrors(['username' => 'Username atau Password Salah!'])->withInput();
     }

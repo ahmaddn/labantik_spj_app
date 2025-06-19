@@ -41,8 +41,9 @@
                             <div class="form-group">
                                 <label>Password <span class="login-danger">*</span></label>
                                 <input class="form-control pass-input" type="password" name="password"
-                                    value="{{ old('username', request()->cookie('remember_password')) }}">
-                                <span class="profile-views feather-eye-off toggle-password"></span>
+                                    value="{{ old('password', request()->cookie('remember_password')) }}">
+                                <span class="profile-views feather-eye-off toggle-password"
+                                    style="cursor: pointer"></span>
                             </div>
                             <div class="forgotpass">
                                 <div class="remember-me">

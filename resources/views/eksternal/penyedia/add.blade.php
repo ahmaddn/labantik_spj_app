@@ -1,9 +1,6 @@
 @extends('layouts.app')
-@include('layouts.topbar')
-@include('layouts.sidebar')
 
 @section('content')
-<div class="page-wrapper">
     <div class="content container-fluid">
 
         <div class="page-header">
@@ -28,51 +25,62 @@
                         <form action="{{ route('eksternal.penyedia.store') }}" method="POST">
                             @csrf
 
-                            {{-- Validasi Error --}}
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
 
                             {{-- Nama Perusahaan --}}
                             <div class="form-group">
                                 <label>Nama Perusahaan</label>
-                                <input type="text" class="form-control" name="company" value="{{ old('company') }}" required>
+                                <input type="text" class="form-control" name="company" value="{{ old('company') }}"
+                                    autofocus>
+                                @error('company')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- NPWP --}}
                             <div class="form-group">
                                 <label>NPWP</label>
-                                <input type="number" class="form-control" name="npwp" value="{{ old('npwp') }}" required>
+                                <input type="number" class="form-control" name="npwp" value="{{ old('npwp') }}">
+                                @error('npwp')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- Alamat --}}
                             <div class="form-group">
                                 <label>Alamat</label>
-                                <textarea class="form-control" name="address" rows="3" required>{{ old('address') }}</textarea>
+                                <textarea class="form-control" name="address" rows="3">{{ old('address') }}</textarea>
+                                @error('address')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- Jumlah Rekening --}}
                             <div class="form-group">
-                                <label>Jumlah Rekening</label>
-                                <input type="number" class="form-control" name="account" value="{{ old('account') }}" required>
+                                <label>No. Rekening</label>
+                                <input type="number" class="form-control" name="account" value="{{ old('account') }}">
+                                @error('account')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- Nama Delegasi --}}
                             <div class="form-group">
                                 <label>Nama Delegasi</label>
-                                <input type="text" class="form-control" name="delegation_name" value="{{ old('delegation_name') }}" required>
+                                <input type="text" class="form-control" name="delegation_name"
+                                    value="{{ old('delegation_name') }}">
+                                @error('delegation_name')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- Jabatan Delegasi --}}
                             <div class="form-group">
                                 <label>Jabatan Delegasi</label>
-                                <input type="text" class="form-control" name="delegate_position" value="{{ old('delegate_position') }}" required>
+                                <input type="text" class="form-control" name="delegate_position"
+                                    value="{{ old('delegate_position') }}">
+                                @error('delegate_position')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="text-end">
@@ -88,6 +96,4 @@
         </div>
 
     </div>
-    @include('layouts.footer')
-</div>
 @endsection

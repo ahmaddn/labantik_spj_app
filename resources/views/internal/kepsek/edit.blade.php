@@ -9,7 +9,7 @@
                     <h3 class="page-title">Edit Data Kepala Sekolah</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('internal.kepsek.index') }}">Tabel Kepala
+                        <li class="breadcrumb-item"><a href="{{ route('internal.kepsek.index') }}">Daftar Kepala
                                 Sekolah</a></li>
                         <li class="breadcrumb-item active">Edit Data Kepala Sekolah</li>
                     </ul>
