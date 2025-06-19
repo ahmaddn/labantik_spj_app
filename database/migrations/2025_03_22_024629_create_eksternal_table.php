@@ -35,7 +35,7 @@ return new class extends Migration
         Schema::create('penyedia', function (Blueprint $table) {
             $table->increments('id');
             $table->string('company');
-            $table->integer('npwp');
+            $table->bigInteger('npwp');
             $table->string('address');
             $table->integer('account');
             $table->string('delegation_name');
@@ -43,7 +43,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-    
+
         Schema::create('pesanan', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('invoice_num');
@@ -57,8 +57,8 @@ return new class extends Migration
             $table->date('order');
             $table->date('paid');
             $table->timestamps();
-            $table->softDeletes();      
-            
+            $table->softDeletes();
+
             $table->foreign('kegiatanID')->references('id')->on('kegiatan');
             $table->foreign('penyediaID')->references('id')->on('penyedia');
             $table->foreign('penerimaID')->references('id')->on('penerima');
@@ -76,6 +76,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('pesanan');
+        Schema::dropIfExists('barang');
+        Schema::dropIfExists('kegiatan');
+        Schema::dropIfExists('penyedia');
+
         Schema::table('barang', function (Blueprint $table) {
             $table->dropSoftDeletes();
         });
@@ -88,12 +93,6 @@ return new class extends Migration
         Schema::table('penyedia', function (Blueprint $table) {
             $table->dropSoftDeletes();
         });
-
-        Schema::dropIfExists('barang');
-        Schema::dropIfExists('kegiatan');
-        Schema::dropIfExists('penyedia');
-        Schema::dropIfExists('pesanan');
-
     }
 
 };

@@ -25,14 +25,14 @@
                     <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Eksternal</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{{ route('eksternal.kegiatan.index') }}" 
-                                class="{{ Route::is('eksternal.kegiatan.index*') ? 'active' : '' }}">Kegiatan</a></li>
-                        <li><a href="{{ route('eksternal.barang.index') }}" 
-                                class="{{ Route::is('eksternal.barang.index*') ? 'active' : '' }}">Barang</a></li>
-                        <li><a href="{{ route('eksternal.penyedia.index') }}"     
-                                class="{{ Route::is('eksternal.penyedia.index*') ? 'active' : '' }}">Penyedia</a></li>
-                        <li><a href="{{ route('eksternal.pesanan.index') }}" 
-                                class="{{ Route::is('eksternal.pesanan.index*') ? 'active' : '' }}">Pesanan</a></li>
+                        <li><a href="{{ route('eksternal.kegiatan.index') }}"
+                                class="{{ Route::is('eksternal.kegiatan.index') ? 'active' : '' }}">Kegiatan</a></li>
+                        <li><a href="{{ route('eksternal.barang.index') }}"
+                                class="{{ Route::is('eksternal.barang.index') ? 'active' : '' }}">Barang</a></li>
+                        <li><a href="{{ route('eksternal.penyedia.index') }}"
+                                class="{{ Route::is('eksternal.penyedia.index') ? 'active' : '' }}">Penyedia</a></li>
+                        <li><a href="{{ route('eksternal.pesanan.index') }}"
+                                class="{{ Route::is('eksternal.pesanan.index') ? 'active' : '' }}">Pesanan</a></li>
                     </ul>
                 </li>
             </ul>
