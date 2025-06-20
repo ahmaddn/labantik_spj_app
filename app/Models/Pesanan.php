@@ -7,9 +7,11 @@ use App\Models\Penerima;
 use App\Models\Penyedia;
 use App\Models\Kegiatan;
 use App\Models\Barang;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pesanan extends Model
 {
+    use SoftDeletes;
     //
     protected $table='pesanan';
     protected $primaryKey='id';
