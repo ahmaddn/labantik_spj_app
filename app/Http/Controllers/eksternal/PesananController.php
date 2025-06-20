@@ -74,9 +74,6 @@ class PesananController extends Controller
             'penerimaID'    => 'required|exists:users,id',
             'barangID'      => 'required|exists:barang,id',
             'budget'        => 'required|integer',
-            'money_total'   => 'required|integer',
-            'money'         => 'required|string|max:255',
-            'order'         => 'required|date',
             'paid'          => 'required|date',
         ]);
 

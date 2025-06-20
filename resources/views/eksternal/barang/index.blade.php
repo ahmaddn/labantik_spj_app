@@ -56,7 +56,7 @@
                                             <tr class="border-b">
                                                 <td class="px-4 py-2">{{ $loop->iteration }}</td>
                                                 <td class="px-4 py-2">{{ $row->name }}</td>
-                                                <td class="px-4 py-2">{{ $row->amount }}</td>
+                                                <td class="px-4 py-2">{{ $row->amount . ' ' . $row->unit }}</td>
                                                 <td class="px-4 py-2">Rp {{ number_format($row->price, 0, ',', '.') }}
                                                 </td>
                                                 <td class="px-4 py-2">Rp {{ number_format($row->total, 0, ',', '.') }}

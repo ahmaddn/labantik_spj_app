@@ -27,6 +27,7 @@ class BarangController extends Controller
                 'name' => 'required|string|max:255',
                 'amount' => 'required|integer|min:1',
                 'price' => 'required|integer|min:0',
+                'unit' => 'required|string',
             ]);
 
             $total = $request->amount * $request->price;
@@ -35,6 +36,7 @@ class BarangController extends Controller
                 'name' => $request->input('name'),
                 'amount' => $request->input('amount'),
                 'price' => $request->input('price'),
+                'unit' => $request->input('unit'),
                 'total' => $total,
             ]);
 
@@ -66,6 +68,7 @@ class BarangController extends Controller
             'name' => $request->input('name'),
             'amount' => $request->input('amount'),
             'price' => $request->input('price'),
+            'unit' => $request->input('unit'),
             'total' => $total,
         ]);
 
