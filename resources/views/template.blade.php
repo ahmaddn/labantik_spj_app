@@ -27,6 +27,11 @@
             }
         }
 
+        .nowrap {
+            white-space: normal;
+            word-break: break-word;
+        }
+
 
         table,
         th,
@@ -56,8 +61,14 @@
         }
 
         .signature {
-            margin-top: 40px;
-            text-align: right;
+            text-align: left;
+            margin-left: 70%;
+        }
+
+        .signature-nota {
+
+            text-align: left;
+            margin-left: 70%;
         }
 
         .page-break {
@@ -146,10 +157,10 @@
 
 
 
-        <table style="width: 100%;">
+        <table style="width: 90%;">
             <thead>
                 <tr>
-                    <th  style="background-color: #d9d9d9">No</th>
+                    <th style="background-color: #d9d9d9">No</th>
                     <th style="background-color: #d9d9d9">Jenis</th>
                     <th style="background-color: #d9d9d9">Keterangan</th>
                 </tr>
@@ -290,27 +301,27 @@
 
         <p>Memperhatikan ketentuan-ketentuan sebagai berikut:</p>
 
-        <table class="table-bordered">
+        <table class="table-bordered" width="90%">
             <thead>
                 <tr>
-                    <th style="background-color: #d9d9d9" width="">No</th>
-                    <th style="background-color: #d9d9d9">Uraian/Jenis Barang/Spesifikasi</th>
-                    <th style="background-color: #d9d9d9">Jumlah Barang</th>
-                    <th style="background-color: #d9d9d9">Satuan</th>
-                    <th style="background-color: #d9d9d9">Harga Satuan</th>
-                    <th style="background-color: #d9d9d9">Jumlah Harga</th>
+                    <th style="background-color: #d9d9d9" width="5%">No</th>
+                    <th style="background-color: #d9d9d9;" class="nowrap">Uraian/Jenis Barang/Spesifikasi</th>
+                    <th style="background-color: #d9d9d9; text-align: center;">Jumlah Barang</th>
+                    <th style="background-color: #d9d9d9; text-align: center;">Satuan</th>
+                    <th style="background-color: #d9d9d9; text-align: center;">Harga Satuan</th>
+                    <th style="background-color: #d9d9d9; text-align: center;">Jumlah Harga</th>
                 </tr>
             </thead>
             <tbody>
 
                 @foreach ($barang as $index => $item)
                     <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $item->name }}</td>
-                        <td>{{ $item->amount }}</td>
-                        <td>Unit</td>
-                        <td>Rp. {{ number_format($item->price, 0, ',', '.') }}</td>
-                        <td>Rp. {{ number_format($item->total, 0, ',', '.') }}</td>
+                        <td style="text-align: center;">{{ $index + 1 }}</td>
+                        <td class="nowrap" width="19%">{{$item->name}}</td>
+                        <td style="text-align: center;"width="10%">{{ $item->amount }}</td>
+                        <td style="text-align: center">Unit</td>
+                        <td style="text-align: center">Rp. {{ number_format($item->price, 0, ',', '.') }}</td>
+                        <td style="text-align: center">Rp. {{ number_format($item->total, 0, ',', '.') }}</td>
                     </tr>
                     <tr>
                 @endforeach
@@ -345,11 +356,18 @@
         <br>
         <table class="no-border" style="width: 100%; border: none;">
             <tr>
-                <td colspan="2" style="text-align: right;">Majalengka, 5 April 2023</td>
+                <td colspan="2"
+                    style="text-align: right;
+                                        margin-right: 50px;">
+                    <div class="signature">Majalengka, 5 April 2023</div>
+                </td>
             </tr>
             <tr>
                 <td style="text-align: left;">Untuk dan atas nama<br>{{ $pesanan->penyedia->company }}</td>
-                <td style="text-align: right;">Untuk dan atas nama<br>Kepala SMKN 1 Talaga</td>
+                <td style="text-align: left;">
+                    <div style="margin-left: 40%">Untuk dan atas nama</div>
+                    <div style="margin-left: 40%">Kepala SMKN 1 Talaga</div>
+                </td>
             </tr>
             <tr>
                 <td style="text-align: left;"></td>
@@ -364,8 +382,10 @@
                     {{ $pesanan->penyedia->delegate_position }}
                 </td>
                 <td style="text-align: right;">
-                    <strong><u>{{ $kepsek->name }}</u></strong><br>
-                    NIP. {{ $kepsek->nip }}
+                    <div class="signature">
+                        <strong><u>{{ $kepsek->name }}</u></strong><br>
+                        NIP. {{ $kepsek->nip }}
+                    </div>
                 </td>
             </tr>
         </table>
@@ -376,20 +396,33 @@
         <div class="content">
             <h3 class="text-center">KWITANSI</h3>
             <table style="border: none" class="tulisan">
-            <tr>
-                <td>Telah diterima dari<br>Uang sejumlah<br>Untuk Pembayaran</td>
-                <td>: {{ $pesanan->penyedia->company }}<br>: {{ ucwords(terbilang($barang->sum('total'))) }}    <br>:
-                    {{ $pesanan->penyedia->delegation_name }}</td>
-            </tr>
+                <tr>
+                    <td>Telah diterima dari<br>Uang sejumlah<br>Untuk Pembayaran</td>
+                    <td>: {{ $pesanan->penyedia->company }}<br>: {{ ucwords(terbilang($barang->sum('total'))) }} <br>:
+                        {{ $pesanan->penyedia->delegation_name }}</td>
+                </tr>
 
-            
-        </table>
+
+            </table>
         </div>
 
-        <table class="table-bordered">
-            <tr >
-            </td><strong>Rp. {{ number_format($barang->sum('total'), 0, ',', '.') }}</strong></td></tr>
+        <table class="table-bordered" style="line-height: 2px">
+            <tr>
+                <strong>Rp. {{ number_format($barang->sum('total'), 0, ',', '.') }}</strong>
+
+            </tr>
+            <tr>
+
+            </tr>
+
         </table>
+        <div class="signature-nota">
+            Majalengka, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>
+            {{ $pesanan->penyedia->company }},<br><br><br><br><br>
+            <strong
+                style="text-decoration: underline;">{{ $pesanan->penyedia->delegation_name ?? 'Nama penyedia' }}</strong><br>
+
+        </div>
     </div>
 
 
