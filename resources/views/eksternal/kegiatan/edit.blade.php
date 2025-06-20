@@ -40,21 +40,21 @@
                             <div class="form-group">
                                 <label>Nama Kegiatan</label>
                                 <input type="text" class="form-control" name="name"
-                                    value="{{ old('name', $kegiatan->name) }}" required>
+                                    value="{{ old('name', $kegiatan->name) }}">
                             </div>
 
                             {{-- Tanggal Order --}}
                             <div class="form-group">
                                 <label>Tanggal Order</label>
                                 <input type="date" class="form-control" name="order"
-                                    value="{{ old('order', $kegiatan->order) }}" required>
+                                    value="{{ old('order', $kegiatan->order) }}" min="2025-01-01">
                             </div>
 
                             {{-- Tanggal Diterima --}}
                             <div class="form-group">
                                 <label>Tanggal Diterima</label>
                                 <input type="date" class="form-control" name="accepted"
-                                    value="{{ old('accepted', $kegiatan->accepted) }}" required>
+                                    value="{{ old('accepted', $kegiatan->accepted) }}" min="2025-01-01">
                             </div>
 
                             {{-- Waktu Selesai --}}

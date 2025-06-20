@@ -59,7 +59,7 @@
                                             <td>{{ $item->penyedia->company ?? '-' }}</td>
                                             <td>{{ $item->penerima->name ?? '-' }}</td>
                                             <td>{{ $item->barang->name ?? '-' }}</td>
-                                            <td>{{ $item->budget }}</td>
+                                            <td>Rp {{ number_format($item->budget, 0, ',', '.') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($item->paid)->translatedFormat('d F Y') }}</td>
                                             <td class="px-4 py-2">
                                                 <a href="{{ route('eksternal.pesanan.edit', $item->id) }}"
