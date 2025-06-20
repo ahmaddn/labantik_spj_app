@@ -60,7 +60,7 @@
                                             <td>{{ $item->penerima->name ?? '-' }}</td>
                                             <td>{{ $item->barang->name ?? '-' }}</td>
                                             <td>{{ $item->budget }}</td>
-                                            <td>{{ $item->paid }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($item->paid)->translatedFormat('d F Y') }}</td>
                                             <td class="px-4 py-2">
                                                 <a href="{{ route('eksternal.pesanan.edit', $item->id) }}"
                                                     class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
