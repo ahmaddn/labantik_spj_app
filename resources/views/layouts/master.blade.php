@@ -1,8 +1,12 @@
 @include('layouts.head')
 
 <body>
-    @yield('content')
-    @include('layouts/script')
+    <div class="main-wrapper login-body">
+        <div class="login-wrapper">
+            @yield('content')
+            @include('layouts/script')
+        </div>
+    </div>
 </body>
 
 </html>
