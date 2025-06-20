@@ -31,15 +31,12 @@ class PesananController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'invoice_num'   => 'required|integer',
+            'invoice_num'   => 'required',
             'kegiatanID'    => 'required|exists:kegiatan,id',
             'penyediaID'    => 'required|exists:penyedia,id',
             'penerimaID'    => 'required|exists:penerima,id',
             'barangID'      => 'required|exists:barang,id',
             'budget'        => 'required|integer',
-            'money_total'   => 'required|integer',
-            'money'         => 'required|string|max:255',
-            'order'         => 'required|date',
             'paid'          => 'required|date',
         ]);
 

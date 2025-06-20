@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string('company');
             $table->bigInteger('npwp');
             $table->string('address');
-            $table->integer('account');
+            $table->bigInteger('account');
             $table->string('delegation_name');
             $table->string('delegate_position');
             $table->timestamps();
@@ -52,9 +52,6 @@ return new class extends Migration
             $table->unsignedInteger('penerimaID');
             $table->unsignedInteger('barangID');
             $table->integer('budget');
-            $table->integer('money_total');
-            $table->string('money');
-            $table->date('order');
             $table->date('paid');
             $table->timestamps();
             $table->softDeletes();

@@ -24,11 +24,11 @@ class PenyediaController extends Controller
         if ($request->isMethod('post')) {
             $request->validate([
                 'company' => 'required|string|max:255',
-                'npwp' => 'required|string|max:50',
+                'npwp' => 'required|digits:15',
                 'address' => 'required|string|max:255',
                 'delegation_name' => 'required|string|max:255',
                 'delegate_position' => 'required|string|max:100',
-                'account' => 'required|string|max:100',
+                'account' => 'required|min_digits:10|max_digits:16',
             ]);
 
             Penyedia::create([

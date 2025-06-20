@@ -9,7 +9,7 @@
                     <h3 class="page-title">Edit Data Penerima</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('internal.penerima.index') }}">Tabel Penerima</a>
+                        <li class="breadcrumb-item"><a href="{{ route('internal.penerima.index') }}">Daftar Penerima</a>
                         </li>
                         <li class="breadcrumb-item active">Edit Data Penerima</li>
                     </ul>

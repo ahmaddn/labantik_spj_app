@@ -1,9 +1,6 @@
 @extends('layouts.app')
-@include('layouts.topbar')
-@include('layouts.sidebar')
 
 @section('content')
-<div class="page-wrapper">
     <div class="content container-fluid">
 
         <div class="page-header">
@@ -18,94 +15,107 @@
                 </div>
             </div>
         </div>
-         {{-- Validasi Error --}}
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-
-        <form action="{{ route('eksternal.pesanan.store') }}" method="POST">
-            @csrf
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Nomor Invoice</label>
-                        <input type="number" name="invoice_num" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Kegiatan</label>
-                        <select name="kegiatanID" class="form-control" required>
-                            <option value="">-- Pilih Kegiatan --</option>
-                            @foreach($kegiatan as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Penyedia</label>
-                        <select name="penyediaID" class="form-control" required>
-                            <option value="">-- Pilih Penyedia --</option>
-                            @foreach($penyedia as $item)
-                                <option value="{{ $item->id }}">{{ $item->company }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Penerima</label>
-                        <select name="penerimaID" class="form-control" required>
-                            <option value="">-- Pilih Penerima --</option>
-                            @foreach($penerima as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Barang</label>
-                        <select name="barangID" class="form-control" required>
-                            <option value="">-- Pilih Barang --</option>
-                            @foreach($barang as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Budget</label>
-                        <input type="number" name="budget" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Total Uang</label>
-                        <input type="number" name="money_total" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Deskripsi Uang</label>
-                        <input type="text" name="money" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Tanggal Order</label>
-                        <input type="date" name="order" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Tanggal Bayar</label>
-                        <input type="date" name="paid" class="form-control" required>
-                    </div>
-                </div>
-
-                <div class="col-md-12 mt-3">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a href="{{ route('eksternal.pesanan.index') }}" class="btn btn-secondary">Kembali</a>
-                </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Form Penyedia</h5>
             </div>
-        </form>
+            <div class="card-body">
 
+                <form action="{{ route('eksternal.pesanan.store') }}" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nomor Invoice</label>
+                                <input type="number" name="invoice_num" class="form-control">
+                                @error('invoice_num')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Kegiatan</label>
+                                <select name="kegiatanID" class="form-control" {{ $kegiatan->isEmpty() ? 'disabled' : '' }}>
+                                    <option value="">
+                                        {{ $kegiatan->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kegiatan --' }}
+                                    </option>
+                                    @foreach ($kegiatan as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('kegiatanID')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Penyedia</label>
+                                <select name="penyediaID" class="form-control" {{ $penyedia->isEmpty() ? 'disabled' : '' }}>
+                                    <option value="">
+                                        {{ $penyedia->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kegiatan --' }}
+                                    </option>
+                                    @foreach ($penyedia as $item)
+                                        <option value="{{ $item->id }}">{{ $item->company }}</option>
+                                    @endforeach
+                                </select>
+                                @error('penyediaID')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Penerima</label>
+                                <select name="penerimaID" class="form-control"
+                                    {{ $penerima->isEmpty() ? 'disabled' : '' }}>
+                                    <option value="">
+                                        {{ $penerima->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kegiatan --' }}
+                                    </option>
+                                    @foreach ($penerima as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('penerimaID')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Barang</label>
+                                <select name="barangID" class="form-control" {{ $barang->isEmpty() ? 'disabled' : '' }}>
+                                    <option value="">
+                                        {{ $barang->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kegiatan --' }}
+                                    </option>
+                                    @foreach ($barang as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('barangID')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Budget</label>
+                                <input type="number" name="budget" class="form-control">
+                                @error('budget')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Tanggal Bayar</label>
+                                <input type="date" name="paid" class="form-control">
+                                @error('paid')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <a href="{{ route('eksternal.pesanan.index') }}" class="btn btn-secondary">Kembali</a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
     </div>
-    @include('layouts.footer')
-</div>
 @endsection

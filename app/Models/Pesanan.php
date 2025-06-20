@@ -21,11 +21,8 @@ protected $fillable = [
         'penerimaID',
         'barangID',
         'budget',
-        'money_total',
-        'money',
-        'order',
         'paid'
-        
+
     ];
 
 

@@ -9,7 +9,7 @@
                     <h3 class="page-title">Edit Data Bendahara</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('internal.bendahara.index') }}">Tabel Bendahara</a>
+                        <li class="breadcrumb-item"><a href="{{ route('internal.bendahara.index') }}">Daftar Bendahara</a>
                         </li>
                         <li class="breadcrumb-item active">Edit Data Bendahara</li>
                     </ul>

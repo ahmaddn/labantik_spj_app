@@ -21,7 +21,7 @@
                                 class="{{ Route::is('internal.penerima.index') ? 'active' : '' }}">Penerima</a></li>
                     </ul>
                 </li>
-                <li class="{{ Route::is('eksternal.*') ? 'active' : '' }}">
+                <li class="submenu {{ Route::is('eksternal.*') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Eksternal</span> <span
                             class="menu-arrow"></span></a>
                     <ul>

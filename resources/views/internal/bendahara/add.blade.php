@@ -9,7 +9,7 @@
                     <h3 class="page-title">Add Data</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('internal.bendahara.index') }}">Tabel Kepala
+                        <li class="breadcrumb-item"><a href="{{ route('internal.bendahara.index') }}">Daftar Kepala
                                 Sekolah</a></li>
                         <li class="breadcrumb-item active">Add Data Bendahara</li>
                     </ul>
@@ -27,21 +27,13 @@
                         <form action="{{ route('internal.bendahara.addBendahara') }}" method="POST">
                             @csrf
 
-                            {{-- Validasi Error --}}
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-
                             {{-- Nama Bendahara --}}
                             <div class="form-group">
                                 <label>Nama Bendahara</label>
                                 <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                                @error('name')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             {{-- Nama Bendahara --}}
                             <div class="form-group">
@@ -49,14 +41,19 @@
                                 <select class="form-control" name="jenis">
                                     <option value="BOS">BOS</option>
                                     <option value="BODP">BODP</option>
-
                                 </select>
+                                @error('jenis')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- NIP --}}
                             <div class="form-group">
                                 <label>NIP</label>
-                                <input type="text" class="form-control" name="nip" value="{{ old('nip') }}">
+                                <input type="number" class="form-control" name="nip" value="{{ old('nip') }}">
+                                @error('nip')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- Tahun Ajaran --}}
@@ -64,9 +61,10 @@
                                 <label>Tahun Ajaran</label>
                                 <input type="number" class="form-control" name="school" min="1900" max="2100"
                                     value="{{ old('school') }}">
+                                @error('school')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
-
-
 
                             <div class="text-end">
                                 <a class="btn btn-secondary" href="{{ route('internal.bendahara.index') }}">Kembali</a>

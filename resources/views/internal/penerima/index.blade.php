@@ -6,14 +6,21 @@
         <div class="page-header">
             <div class="row">
                 <div class="col">
-                    <h3 class="page-title">Tabel Penerima</h3>
+                    <h3 class="page-title">Daftar Penerima</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Tabel Penerima</li>
+                        <li class="breadcrumb-item active">Daftar Penerima</li>
                     </ul>
                 </div>
             </div>
         </div>
+
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade-show">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <div class="card p-4 bg-white rounded shadow">
             <div class="flex justify-between mb-4">
@@ -31,7 +38,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="min-w-full text-left text-sm">
+                                <table class="table table-center">
                                     <thead>
                                         <tr class="bg-gray-200 text-gray-700">
                                             <th class="px-4 py-2">No</th>
@@ -50,19 +57,19 @@
                                                 <td class="px-4 py-2">{{ $row->school }}</td>
                                                 <td class="px-4 py-2">
                                                     <!-- Edit Button -->
-                                                    <a href="{{ route('internal.penerima.edit', $row->id) }}"
-                                                        class="btn btn-sm btn-warning text-white d-inline-block">
-                                                        <i class="fas fa-edit me-1"></i> Edit
+                                                    <a href="{{ route('internal.kepsek.edit', $row->id) }}"
+                                                        class="btn btn-sm btn-outline-info">
+                                                        <i class="fas fa-edit"></i>
                                                     </a>
 
                                                     <!-- Delete Button -->
-                                                    <form action="{{ route('internal.penerima.deletePenerima', $row->id) }}"
+                                                    <form action="{{ route('internal.kepsek.deleteKepsek', $row->id) }}"
                                                         method="POST" class="d-inline-block"
                                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger text-white">
-                                                            <i class="fas fa-trash-alt me-1"></i> Delete
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                            <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </form>
                                                 </td>
