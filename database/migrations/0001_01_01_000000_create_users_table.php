@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('username')->unique();
             $table->string('namalengkap');
-            $table->enum('level', ['admin', 'user'])->default('user');
+            $table->enum('level', ['admin', 'user'])->default('admin');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
