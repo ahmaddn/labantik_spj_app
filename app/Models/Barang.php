@@ -16,5 +16,7 @@ class Barang extends Model
         'name',
         'amount',
         'price',
-        'total'];
+        'total',
+        'unit'
+    ];
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('amount');
             $table->integer('price');
             $table->integer('total');
+            $table->string('unit');
             $table->timestamps();
             $table->softDeletes();
         });
