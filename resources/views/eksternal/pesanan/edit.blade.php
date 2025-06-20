@@ -10,14 +10,14 @@
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('eksternal.pesanan.index') }}">Pesanan</a></li>
-                        <li class="breadcrumb-item active">Tambah</li>
+                        <li class="breadcrumb-item active">Edit</li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">Form Penyedia</h5>
+                <h5 class="card-title">Form Edit Pesanan</h5>
             </div>
             <div class="card-body">
 
