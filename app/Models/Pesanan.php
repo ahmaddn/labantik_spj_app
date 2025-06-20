@@ -13,19 +13,16 @@ class Pesanan extends Model
     //
     protected $table='pesanan';
     protected $primaryKey='id';
-    public $timestamps = false;
-protected $fillable = [
-        'invoice_num',
-        'kegiatanID',
-        'penyediaID',
-        'penerimaID',
-        'barangID',
-        'budget',
-        'paid'
+    protected $fillable = [
+            'invoice_num',
+            'kegiatanID',
+            'penyediaID',
+            'penerimaID',
+            'barangID',
+            'budget',
+            'paid'
 
-    ];
-
-
+        ];
 
 
     public function kegiatan()
