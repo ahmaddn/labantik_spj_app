@@ -101,7 +101,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Tanggal Bayar</label>
-                                <input type="date" name="paid" class="form-control">
+                                <input type="date" name="paid" class="form-control" min="2025-01-01">
                                 @error('paid')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror

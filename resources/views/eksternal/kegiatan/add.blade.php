@@ -48,7 +48,8 @@
                             {{-- Tanggal Order --}}
                             <div class="form-group">
                                 <label>Tanggal Order</label>
-                                <input type="date" class="form-control" name="order" value="{{ old('order') }}">
+                                <input type="date" class="form-control" name="order" value="{{ old('order') }}"
+                                    min="2025-01-01">
                                 @error('order')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -57,7 +58,8 @@
                             {{-- Tanggal Diterima --}}
                             <div class="form-group">
                                 <label>Tanggal Diterima</label>
-                                <input type="date" class="form-control" name="accepted" value="{{ old('accepted') }}">
+                                <input type="date" class="form-control" name="accepted" value="{{ old('accepted') }}"
+                                    min="2025-01-01">
                                 @error('accepted')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
