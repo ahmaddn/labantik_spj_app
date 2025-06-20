@@ -28,7 +28,7 @@ class BendaharaController extends Controller
             $request->validate([
                 'name' => 'required|unique:bendahara,name',
                 'jenis' => 'required|in:BOS,BODP,',
-                'nip' => 'required|digits:16|unique:bendahara,nip',
+                'nip' => 'required|digits:18|unique:bendahara,nip',
                 'school' => 'required|numeric',
             ]);
 
@@ -72,7 +72,7 @@ class BendaharaController extends Controller
         $request->validate([
             'name' => 'required|unique:bendahara,name,' . $id,
             'jenis' => 'required|in:BOS,BODP,',
-            'nip' => 'required|digits:16digits:16|unique:bendahara,nip,' . $id,
+            'nip' => 'required|digits:18|unique:bendahara,nip,' . $id,
             'school' => 'required|numeric',
         ]);
 

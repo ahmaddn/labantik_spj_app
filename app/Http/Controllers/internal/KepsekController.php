@@ -27,8 +27,8 @@ class KepsekController extends Controller
         // Validasi input
         $request->validate([
             'name' => 'required|unique:kepsek,name',
-            'nip' => 'required|unique:kepsek,nip|digits:16',
-            'school' => 'required|numeric',
+            'nip' => 'required|unique:kepsek,nip|digits:18',
+            'school' => 'required',
             'address' => 'required|string',
         ]);
 
@@ -78,7 +78,7 @@ public function update(Request $request, $id)
 {
     $request->validate([
         'name' => 'required|unique:kepsek,name',
-        'nip' => 'required|digits:16',
+        'nip' => 'required|digits:18',
         'school' => 'required|numeric',
         'address' => 'required',
     ]);

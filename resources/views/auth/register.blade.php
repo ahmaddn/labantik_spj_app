@@ -1,4 +1,4 @@
-@include('layouts.head')
+@extends('layouts.master')
 @section('content')
 
     <body>
@@ -34,7 +34,8 @@
                                     <div class="form-group">
                                         <label>Password <span class="login-danger">*</span></label>
                                         <input class="form-control pass-input" type="password" name="password">
-                                        <span class="profile-views feather-eye-off toggle-password"></span>
+                                        <span class="profile-views feather-eye-off toggle-password"
+                                            style="cursor: pointer"></span>
                                         @error('password')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -43,7 +44,8 @@
                                         <label>Confirm password <span class="login-danger">*</span></label>
                                         <input class="form-control pass-confirm" type="password"
                                             name="password_confirmation">
-                                        <span class="profile-views feather-eye-off reg-toggle-password"></span>
+                                        <span class="profile-views feather-eye-off reg-toggle-password"
+                                            style="cursor: pointer"></span>
                                     </div>
                                     <div class=" dont-have">Already Registered? <a href="/">Login</a></div>
                                     <div class="form-group mb-0">
@@ -56,5 +58,3 @@
                 </div>
             </div>
         </div>
-
-        @include('layouts.footer')
