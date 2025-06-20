@@ -61,20 +61,20 @@
                                             <td>{{ $item->barang->name ?? '-' }}</td>
                                             <td>{{ $item->money_total }}</td>
                                             <td>{{ $item->paid }}</td>
-                                            <td class="px-4 py-2 flex space-x-2">
+                                            <td class="px-4 py-2">
                                                 <a href="{{ route('eksternal.pesanan.edit', $item->id) }}"
-                                                    class="btn btn-sm btn-outline-info"></a>
+                                                    class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
 
                                                 <form action="{{ route('eksternal.pesanan.delete', $item->id) }}"
-                                                    method="POST"
+                                                    method="POST" class="d-inline-block"
                                                     onsubmit="return confirm('Yakin ingin menghapus data ini?');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit"
-                                                        class="btn btn-sm btn-outline-danger">Delete</button>
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i
+                                                            class="fas fa-trash"></i></button>
                                                 </form>
                                                 <a href="{{ route('eksternal.pesanan.export', $item->id) }}"
-                                                    class="btn btn-sm btn-outline-primary"></a>
+                                                    class="btn btn-sm btn-outline-primary"><i class="fas fa-print"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->date('order');
             $table->date('accepted');
             $table->time('completed');
-            $table->string('info');
+            $table->string('info')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -77,19 +77,6 @@ return new class extends Migration
         Schema::dropIfExists('barang');
         Schema::dropIfExists('kegiatan');
         Schema::dropIfExists('penyedia');
-
-        Schema::table('barang', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
-        Schema::table('kegiatan', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
-        Schema::table('penyedia', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
-        Schema::table('penyedia', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
     }
 
 };

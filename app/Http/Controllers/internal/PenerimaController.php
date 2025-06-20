@@ -28,7 +28,7 @@ class PenerimaController extends Controller
         if ($request->isMethod('post')) {
             $request->validate([
                 'name' => 'required|unique:penerima,name',
-                'nip' => 'required|digits:16|unique:penerima,nip',
+                'nip' => 'required|digits:18|unique:penerima,nip',
                 'school' => 'required|numeric|',
             ]);
 
@@ -69,7 +69,7 @@ class PenerimaController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:penerima,name,' . $id,
-            'nip' => 'required|digits:16|unique:penerima,nip,' . $id,
+            'nip' => 'required|digits:18|unique:penerima,nip,' . $id,
             'school' => 'required|numeric',
         ]);
 
