@@ -8,13 +8,11 @@ class Kepsek extends Model
 {
     protected $table = 'kepsek';
     protected $primaryKey = 'id';
-    public $timestamps = false;
 
     protected $fillable = [
         'name',
         'nip',
         'school',
         'address',
-        
     ];
 }

@@ -9,13 +9,12 @@ class Bendahara extends Model
     //
     protected $table = 'bendahara';
     protected $primaryKey = 'id';
-    public $timestamps = false;
 
     protected $fillable = [
         'name',
         'jenis',
         'nip',
         'school',
-        
+
     ];
 }

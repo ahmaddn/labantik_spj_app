@@ -21,7 +21,7 @@ class RegisterUserController extends Controller
     {
         // Validasi input
         $request->validate([
-            'username' => ['required', 'string', 'max:255', 'unique:users', 'regex:/^[a-zA-Z0-9_.]+$/'],
+            'username' => ['required', 'string', 'max:255', 'unique:users', 'regex:/^[a-zA-Z0-9_.]+$/', 'min:6'],
             'namalengkap' => ['required', 'string', 'max:255',],
             'password' => ['required', 'confirmed','min:8'],
         ]);
