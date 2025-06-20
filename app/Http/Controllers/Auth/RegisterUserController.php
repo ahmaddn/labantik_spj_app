@@ -14,7 +14,7 @@ class RegisterUserController extends Controller
     //
     public function create()
     {
-        return view('auth.Register');
+        return view('auth.register');
     }
     // fungsi untuk input data ke database
     public function store(Request $request)
