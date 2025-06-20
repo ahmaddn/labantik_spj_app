@@ -62,7 +62,27 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            
+
+                            <div class="form-group">
+                                <label>Kategori Satuan</label>
+                                <div class="dropdown">
+                                    <input name="unit" type="text" class="form-control dropdown-toggle"
+                                        data-bs-toggle="dropdown" placeholder="Pilih atau Ketik Kategori" id="carDropdown">
+                                    <ul class="dropdown-menu" style="width:100%">
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="document.getElementById('carDropdown').value='Pcs'">Pcs</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="document.getElementById('carDropdown').value='Pasang'">Pasang</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="document.getElementById('carDropdown').value='Kg'">Kg</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="document.getElementById('carDropdown').value='Unit'">Unit</a></li>
+                                    </ul>
+                                </div>
+                            </div>
 
 
                             <div class="text-end">

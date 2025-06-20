@@ -58,6 +58,26 @@
                                     value="{{ old('price', $barang->price) }}" required>
                             </div>
 
+                            <div class="form-group">
+                                <label>Kategori Satuan</label>
+                                <div class="dropdown">
+                                    <input name="unit" type="text" class="form-control dropdown-toggle"
+                                        data-bs-toggle="dropdown" placeholder="Pilih mobil..." id="carDropdown">
+                                    <ul class="dropdown-menu" style="width:100%">
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="document.getElementById('carDropdown').value='Volvo'">Volvo</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="document.getElementById('carDropdown').value='Saab'">Saab</a></li>
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="document.getElementById('carDropdown').value='Mercedes'">Mercedes</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#"
+                                                onclick="document.getElementById('carDropdown').value='Audi'">Audi</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
                             <div class="text-end">
                                 <a href="{{ route('eksternal.barang.index') }}" class="btn btn-warning">Batal</a>
                                 <button type="submit" class="btn btn-primary">Perbarui</button>

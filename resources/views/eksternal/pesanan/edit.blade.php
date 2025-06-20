@@ -10,24 +10,26 @@
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('eksternal.pesanan.index') }}">Pesanan</a></li>
-                        <li class="breadcrumb-item active">Tambah</li>
+                        <li class="breadcrumb-item active">Edit</li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">Form Pesanan</h5>
+                <h5 class="card-title">Form Edit Pesanan</h5>
             </div>
             <div class="card-body">
 
-                <form action="{{ route('eksternal.pesanan.store') }}" method="POST">
+                <form action="{{ route('eksternal.pesanan.update', $pesanan->id) }}" method="post">
                     @csrf
+                    @method('PUT')
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Nomor Invoice</label>
-                                <input type="number" name="invoice_num" class="form-control">
+                                <input type="number" name="invoice_num" class="form-control"
+                                    value="{{ $pesanan->invoice_num }}">
                                 @error('invoice_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -39,7 +41,9 @@
                                         {{ $kegiatan->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kegiatan --' }}
                                     </option>
                                     @foreach ($kegiatan as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}"
+                                            {{ $item->id == $pesanan->kegiatan->id ? 'selected' : '' }}>{{ $item->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('kegiatanID')
@@ -48,12 +52,16 @@
                             </div>
                             <div class="form-group">
                                 <label>Penyedia</label>
-                                <select name="penyediaID" class="form-control" {{ $penyedia->isEmpty() ? 'disabled' : '' }}>
+                                <select name="penyediaID" class="form-control"
+                                    {{ $penyedia->isEmpty() ? 'disabled' : '' }}>
                                     <option value="">
                                         {{ $penyedia->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kegiatan --' }}
                                     </option>
                                     @foreach ($penyedia as $item)
-                                        <option value="{{ $item->id }}">{{ $item->company }}</option>
+                                        <option value="{{ $item->id }}"
+                                            {{ $item->id == $pesanan->penyedia->id ? 'selected' : '' }}>
+                                            {{ $item->company }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('penyediaID')
@@ -68,7 +76,9 @@
                                         {{ $penerima->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kegiatan --' }}
                                     </option>
                                     @foreach ($penerima as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}"
+                                            {{ $item->id == $pesanan->penerima->id ? 'selected' : '' }}>
+                                            {{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('penerimaID')
@@ -85,7 +95,9 @@
                                         {{ $barang->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kegiatan --' }}
                                     </option>
                                     @foreach ($barang as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}"
+                                            {{ $item->id == $pesanan->barang->id ? 'selected' : '' }}>{{ $item->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('barangID')
@@ -94,14 +106,15 @@
                             </div>
                             <div class="form-group">
                                 <label>Budget</label>
-                                <input type="number" name="budget" class="form-control">
+                                <input type="number" name="budget" class="form-control" value="{{ $pesanan->budget }}">
                                 @error('budget')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label>Tanggal Bayar</label>
-                                <input type="date" name="paid" class="form-control" min="2025-01-01">
+                                <input type="date" name="paid" class="form-control" min="2025-01-01"
+                                    value="{{ $pesanan->paid }}">
                                 @error('paid')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -109,7 +122,7 @@
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-success">Update</button>
                             <a href="{{ route('eksternal.pesanan.index') }}" class="btn btn-secondary">Kembali</a>
                         </div>
                     </div>
