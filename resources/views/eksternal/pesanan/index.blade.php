@@ -59,7 +59,7 @@
                                             <td>{{ $item->penyedia->company ?? '-' }}</td>
                                             <td>{{ $item->penerima->name ?? '-' }}</td>
                                             <td>{{ $item->barang->name ?? '-' }}</td>
-                                            <td>{{ $item->money_total }}</td>
+                                            <td>{{ $item->budget }}</td>
                                             <td>{{ $item->paid }}</td>
                                             <td class="px-4 py-2">
                                                 <a href="{{ route('eksternal.pesanan.edit', $item->id) }}"
