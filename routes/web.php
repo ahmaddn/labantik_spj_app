@@ -88,11 +88,11 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::delete('/penyedia/delete/{id}', [PenyediaController::class, 'deletePenyedia'])->name('penyedia.destroy');
 
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan.index');
-    Route::get('pesanan/add', [PesananController::class, 'add'])->name('pesanan.add');
-    Route::post('pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
-    Route::get('pesanan/edit/{id}', [PesananController::class, 'edit'])->name('pesanan.edit');
-    Route::post('pesanan/update/{id}', [PesananController::class, 'update'])->name('pesanan.update');
-    Route::delete('pesanan/delete/{id}', [PesananController::class, 'delete'])->name('pesanan.delete');
+    Route::get('/pesanan/add', [PesananController::class, 'add'])->name('pesanan.add');
+    Route::post('/pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
+    Route::get('/pesanan/edit/{id}', [PesananController::class, 'edit'])->name('pesanan.edit');
+    Route::put('/pesanan/update/{id}', [PesananController::class, 'update'])->name('pesanan.update');
+    Route::delete('/pesanan/delete/{id}', [PesananController::class, 'delete'])->name('pesanan.delete');
     Route::get('/eksternal/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
 
 });
