@@ -37,7 +37,7 @@ class PesananController extends Controller
             'penerimaID'    => 'required|exists:penerima,id',
             'barangID'      => 'required|exists:barang,id',
             'budget'        => 'required|integer',
-            'paid'          => 'required|date|after_or_equeal:2025-01-01',
+            'paid'          => 'required|date|after_or_equal:2025-01-01',
         ]);
 
         Pesanan::create($request->all());

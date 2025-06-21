@@ -189,7 +189,7 @@
                 <tr>
                     <td>5.</td>
                     <td>Alokasi anggaran</td>
-                    <td>Rp. {{ number_format($pesanan->money_total, 0, ',', '.') }},00 <b>BOS</b></td>
+                    <td>Rp. {{ number_format($pesanan->budget, 0, ',', '.') }},00 <b>BOS</b></td>
                 </tr>
                 <tr>
                     <td rowspan="4">6.</td>
@@ -401,8 +401,6 @@
                     <td>: {{ $pesanan->penyedia->company }}<br>: {{ ucwords(terbilang($barang->sum('total'))) }} <br>:
                         {{ $pesanan->penyedia->delegation_name }}</td>
                 </tr>
-
-
             </table>
         </div>
 
@@ -411,22 +409,9 @@
                 <strong>Rp. {{ number_format($barang->sum('total'), 0, ',', '.') }}</strong>
 
             </tr>
-            <tr>
-
-            </tr>
-
         </table>
-        <div class="signature-nota">
-            Majalengka, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>
-            {{ $pesanan->penyedia->company }},<br><br><br><br><br>
-            <strong
-                style="text-decoration: underline;">{{ $pesanan->penyedia->delegation_name ?? 'Nama penyedia' }}</strong><br>
-
         </div>
-    </div>
-
-
 </body>
-
 </html>
-"
+
+      

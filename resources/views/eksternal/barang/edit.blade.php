@@ -62,7 +62,8 @@
                                 <label>Kategori Satuan</label>
                                 <div class="dropdown">
                                     <input name="unit" type="text" class="form-control dropdown-toggle"
-                                        data-bs-toggle="dropdown" placeholder="Pilih mobil..." id="carDropdown">
+                                        data-bs-toggle="dropdown" placeholder="Pilih mobil..." id="carDropdown"
+                                        value="{{ old('unit', $barang->unit) }}">
                                     <ul class="dropdown-menu" style="width:100%">
                                         <li><a class="dropdown-item" href="#"
                                                 onclick="document.getElementById('carDropdown').value='Volvo'">Volvo</a>
