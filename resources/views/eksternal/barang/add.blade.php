@@ -62,6 +62,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
+
                             <div class="form-group">
                                 <label>Kategori Satuan</label>
                                 <div class="dropdown">
