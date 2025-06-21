@@ -55,7 +55,7 @@
                                 <select name="penyediaID" class="form-control"
                                     {{ $penyedia->isEmpty() ? 'disabled' : '' }}>
                                     <option value="">
-                                        {{ $penyedia->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kegiatan --' }}
+                                        {{ $penyedia->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Penyedia --' }}
                                     </option>
                                     @foreach ($penyedia as $item)
                                         <option value="{{ $item->id }}"
@@ -73,7 +73,7 @@
                                 <select name="penerimaID" class="form-control"
                                     {{ $penerima->isEmpty() ? 'disabled' : '' }}>
                                     <option value="">
-                                        {{ $penerima->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kegiatan --' }}
+                                        {{ $penerima->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Penerima --' }}
                                     </option>
                                     @foreach ($penerima as $item)
                                         <option value="{{ $item->id }}"
@@ -92,7 +92,7 @@
                                 <label>Barang</label>
                                 <select name="barangID" class="form-control" {{ $barang->isEmpty() ? 'disabled' : '' }}>
                                     <option value="">
-                                        {{ $barang->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kegiatan --' }}
+                                        {{ $barang->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Barang --' }}
                                     </option>
                                     @foreach ($barang as $item)
                                         <option value="{{ $item->id }}"
