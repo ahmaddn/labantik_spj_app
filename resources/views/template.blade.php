@@ -381,8 +381,6 @@
                     <td>: {{ $pesanan->penyedia->company }}<br>: {{ ucwords(terbilang($barang->sum('total'))) }} <br>:
                         {{ $pesanan->penyedia->delegation_name }}</td>
                 </tr>
-
-
             </table>
         </div>
 
@@ -397,4 +395,3 @@
 </body>
 
 </html>
-"
