@@ -1,6 +1,5 @@
 @extends('layouts.master')
 @section('content')
-
     <div class="container">
         <div class="loginbox">
             <div class="login-left">
@@ -50,3 +49,4 @@
             </div>
         </div>
     </div>
+@endsection
