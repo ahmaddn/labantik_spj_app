@@ -7,6 +7,8 @@ use App\Models\Penerima;
 use App\Models\Penyedia;
 use App\Models\Kegiatan;
 use App\Models\Barang;
+use App\Models\Bendahara;
+
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pesanan extends Model
@@ -21,6 +23,7 @@ class Pesanan extends Model
             'penyediaID',
             'penerimaID',
             'barangID',
+            'BendaharaID',
             'budget',
             'paid'
 
@@ -45,6 +48,10 @@ class Pesanan extends Model
     public function barang()
     {
         return $this->belongsTo(Barang::class, 'barangID', 'id');
+    }
+    public function bendahara()
+    {
+        return $this->belongsTo(Bendahara::class, 'BendaharaID', 'id');
     }
 
 }
