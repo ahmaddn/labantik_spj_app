@@ -93,6 +93,22 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label>Bendahara</label>
+                                <select name="BendaharaID" class="form-control"
+                                    {{ $bendahara->isEmpty() ? 'disabled' : '' }}>
+                                    <option value="">
+                                        {{ $bendahara->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Bendahara --' }}
+                                    </option>
+                                    @foreach ($bendahara as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+
+                                </select>
+                                @error('BendaharaID')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label>Budget</label>
                                 <input type="number" name="budget" class="form-control">
                                 @error('budget')

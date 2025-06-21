@@ -317,7 +317,7 @@
                 @foreach ($barang as $index => $item)
                     <tr>
                         <td style="text-align: center;">{{ $index + 1 }}</td>
-                        <td class="nowrap" width="19%">{{$item->name}}</td>
+                        <td class="nowrap" width="19%">{{ $item->name }}</td>
                         <td style="text-align: center;"width="10%">{{ $item->amount }}</td>
                         <td style="text-align: center">Unit</td>
                         <td style="text-align: center">Rp. {{ number_format($item->price, 0, ',', '.') }}</td>
@@ -381,8 +381,8 @@
                     <strong><u>{{ $pesanan->penyedia->delegation_name }}</u></strong><br>
                     {{ $pesanan->penyedia->delegate_position }}
                 </td>
-                <td style="text-align: right;">
-                    <div class="signature">
+                <td style="">
+                    <div class="" style="margin-left: 40%">
                         <strong><u>{{ $kepsek->name }}</u></strong><br>
                         NIP. {{ $kepsek->nip }}
                     </div>
@@ -395,23 +395,236 @@
     <div class="page with-bg">
         <div class="content">
             <h3 class="text-center">KWITANSI</h3>
-            <table style="border: none" class="tulisan">
+            <div style="width:100%; text-align:center; margin-bottom:10px; font-size:14px;">
+                <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }}</span>
+            </div>
+            <table style="width:100%; border:none; font-size:14px;" class="no-border">
                 <tr>
-                    <td>Telah diterima dari<br>Uang sejumlah<br>Untuk Pembayaran</td>
-                    <td>: {{ $pesanan->penyedia->company }}<br>: {{ ucwords(terbilang($barang->sum('total'))) }} <br>:
-                        {{ $pesanan->penyedia->delegation_name }}</td>
+                    <td style="width:180px;">Telah diterima dari</td>
+                    <td style="width:10px;">:</td>
+                    <td>{{ $pesanan->penyedia->company ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Uang Sejumlah</td>
+                    <td>:</td>
+                    <td>{{ ucwords(terbilang($barang->sum('total'))) }} Rupiah</td>
+                </tr>
+                <tr>
+                    <td>Untuk Pembayaran</td>
+                    <td>:</td>
+                    <td>{{ $pesanan->kegiatan->name ?? '-' }}</td>
                 </tr>
             </table>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:30px;">
+                <div style="min-width:180px;">
+                    <div
+                        style="border:1px solid #000; padding:8px 18px; display:inline-block; font-weight:bold; font-size:15px; margin-bottom:20px;">
+                        Rp. {{ number_format($barang->sum('total'), 0, ',', '.') }}</div>
+                </div>
+                <div style="text-align:left; min-width:300px; padding-left:42%;">
+                    Majalengka, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>
+                    {{ $pesanan->penyedia->company ?? '-' }}<br><br><br><br><br><br>
+                    <span
+                        style="font-weight:bold; text-decoration:underline;">{{ $pesanan->penyedia->delegation_name ?? '-' }}</span>
+                </div>
+            </div>
+            <div
+                style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:40px; flex-direction:column;">
+                <div style="display:flex; justify-content:space-between; width:100%; margin-bottom:10px;">
+                    <span style="font-size:13px;">Lunas dibayar :
+                        {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</span>
+                    <span style="font-size:13px; margin-right: 80px;">Tanggal Pemesanan :
+                        {{ \Carbon\Carbon::parse($pesanan->created_at)->translatedFormat('d F Y') }}</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; width:100%;">
+                    <div style="width:45%; text-align:left;">
+                        Setuju dibayar,<br>
+                        Kepala SMK Negeri 1 Talaga
+                    </div>
+                    <div style="width:45%; text-align:left; margin-left:130px;">
+                        Bendahara BOS
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:space-between; width:100%; margin-top:60px;">
+                    <div style="width:45%; text-align:left;">
+                        <strong style="text-decoration:underline;">UDIN WAHYUDIN, S.IP., M.Si</strong><br>
+                        NIP. {{ $kepsek->nip ?? '-' }}
+                    </div>
+                    <div style="width:45%; text-align:right;">
+                        <strong style="text-decoration:underline;"> {{$pesanan->bendahara->name}}</strong><br>
+                        NIP.{{ $pesanan->bendahara->nip ?? '-' }}
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <table class="table-bordered" style="line-height: 2px">
-            <tr>
-                <strong>Rp. {{ number_format($barang->sum('total'), 0, ',', '.') }}</strong>
-
-            </tr>
-        </table>
+    </div>
+    <div class="page-break"></div>
+    <div class="page with-bg">
+        <div class="content">
+            <h3 class="text-center" style="margin-bottom:0;">NOTA</h3>
+            <div style="width:100%; text-align:center; margin-bottom:10px; font-size:14px;">
+                <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }}</span>
+            </div>
+            <table style="width:100%; border:none; font-size:14px; margin-bottom:10px;" class="no-border">
+                <tr>
+                    <td style="width:80px;">Tn/Ny</td>
+                    <td style="width:10px;">:</td>
+                    <td>SMK Negeri 1 Talaga</td>
+                </tr>
+                <tr>
+                    <td>Di</td>
+                    <td>:</td>
+                    <td>J{{$kepsek->address}}<td>
+                </tr>
+            </table>
+            <table style="width:100%; font-size:14px; border-collapse:collapse; margin-bottom:20px;">
+                <thead>
+                    <tr style="background:#f5f5f5;">
+                        <th style="border:1px solid #000; padding:4px 8px;">Banyaknya</th>
+                        <th style="border:1px solid #000; padding:4px 8px;">Nama Barang</th>
+                        <th style="border:1px solid #000; padding:4px 8px;">Harga (Rp)</th>
+                        <th style="border:1px solid #000; padding:4px 8px;">Jumlah (Rp)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($barang as $item)
+                        <tr>
+                            <td style="border:1px solid #000; padding:4px 8px; text-align:center;">{{ $item->amount }}
+                            </td>
+                            <td style="border:1px solid #000; padding:4px 8px;">{{ $item->name }}</td>
+                            <td style="border:1px solid #000; padding:4px 8px; text-align:right;">Rp.
+                                {{ number_format($item->price, 0, ',', '.') }}</td>
+                            <td style="border:1px solid #000; padding:4px 8px; text-align:right;">Rp.
+                                {{ number_format($item->total, 0, ',', '.') }}</td>
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td colspan="3" style="border:1px solid #000; padding:4px 8px; text-align:right;">
+                            <strong>Total</strong></td>
+                        <td style="border:1px solid #000; padding:4px 8px; text-align:right;"><strong>Rp.
+                                {{ number_format($barang->sum('total'), 0, ',', '.') }}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:40px;">
+                <div style="width:45%; text-align:left;">
+                    Bendahara {{ $pesanan->bendahara->type ?? '-' }}
+                    <br><br><br>
+                    <strong style="text-decoration:underline;">{{$pesanan->bendahara->name}}</strong><br>
+                    NIP.{{ $pesanan->bendahara->nip ?? '-' }}
+                </div>
+                <div style="width:45%; text-align:right;">
+                    Majalengka, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>
+                    Hormat Kami,<br><br><br>
+                    <strong style="text-decoration:underline;">{{$pesanan->penyedia->delegation_name}}</strong>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="page-break"></div>
+    <div class="page with-bg">
+        <div class="content">
+            <h3 class="text-center" style="margin-bottom:0;">BERITA ACARA SERAH TERIMA</h3>
+            <div style="width:100%; text-align:center; margin-bottom:10px; font-size:14px;">
+                <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }}</span>
+            </div>
+            <p style="margin-bottom:10px;">Pada hari {{ \Carbon\Carbon::now()->isoFormat('dddd') }} tanggal {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>
+            Yang bertanda tangan di bawah ini :</p>
+            <table style="width:100%; border:none; font-size:14px; margin-bottom:10px;" class="no-border">
+                <tr>
+                    <td style="width:120px;">Nama</td>
+                    <td style="width:10px;">:</td>
+                    <td>{{ $pesanan->penyedia->delegation_name ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Jabatan</td>
+                    <td>:</td>
+                    <td>{{ $pesanan->penyedia->delegateD_position ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Nama Perusahaan</td>
+                    <td>:</td>
+                    <td>{{ $pesanan->penyedia->company ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Alamat</td>
+                    <td>:</td>
+                    <td>{{ $pesanan->penyedia->address ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3">Sebagai pihak yang menyerahkan, selanjutnya disebut PIHAK PERTAMA</td>
+                </tr>
+            </table>
+            <table style="width:100%; border:none; font-size:14px; margin-bottom:10px;" class="no-border">
+                <tr>
+                    <td style="width:120px;">Nama</td>
+                    <td style="width:10px;">:</td>
+                    <td>{{ $pesanan->penerima->name ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Jabatan</td>
+                    <td>:</td>
+                    <td>{{ $pesanan->penerima->position ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Nama Instansi</td>
+                    <td>:</td>
+                    <td>SMK Negeri 1 Talaga</td>
+                </tr>
+                <tr>
+                    <td>Alamat</td>
+                    <td>:</td>
+                    <td>{{ $kepsek->address ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3">Sebagai pihak yang menerima, selanjutnya disebut PIHAK KEDUA</td>
+                </tr>
+            </table>
+            <p style="margin-bottom:10px;">PIHAK PERTAMA menyerahkan hasil pekerjaan Belanja Peralatan Komputer dan Lainnya kepada PIHAK KEDUA, dan PIHAK KEDUA telah menerima hasil pekerjaan Belanja Peralatan Komputer dan Lainnya tersebut dalam jumlah lengkap dengan kondisi sesuai rincian sebagai berikut:</p>
+            <table style="width:100%; font-size:14px; border-collapse:collapse; margin-bottom:20px;">
+                <thead>
+                    <tr style="background:#f5f5f5;">
+                        <th style="border:1px solid #000; padding:4px 8px;">No</th>
+                        <th style="border:1px solid #000; padding:4px 8px;">Nama Barang/Jasa</th>
+                        <th style="border:1px solid #000; padding:4px 8px;">Jumlah Diserahkan</th>
+                        <th style="border:1px solid #000; padding:4px 8px;">Jumlah Diterima</th>
+                        <th style="border:1px solid #000; padding:4px 8px;">Kondisi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($barang as $index => $item)
+                    <tr>
+                        <td style="border:1px solid #000; padding:4px 8px; text-align:center;">{{ $index+1 }}</td>
+                        <td style="border:1px solid #000; padding:4px 8px;">{{ $item->name }}</td>
+                        <td style="border:1px solid #000; padding:4px 8px; text-align:center;">{{ $item->amount }}</td>
+                        <td style="border:1px solid #000; padding:4px 8px; text-align:center;">{{ $item->amount }}</td>
+                        <td style="border:1px solid #000; padding:4px 8px; text-align:center;">Baik</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <p style="margin-bottom:10px;">Berita Acara Serah Terima ini berfungsi sebagai Bukti Serah Terima hasil pekerjaan kepada PIHAK KEDUA, untuk selanjutnya dipergunakan sebagaimana mestinya. Berita Acara Serah Terima ini dibuat dengan sebenarnya dan ditandatangani oleh kedua belah pihak.</p>
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:40px; min-height:120px;">
+                <div style="width:30%; text-align:left; display:flex; flex-direction:column; justify-content:flex-end;">
+                    PIHAK PERTAMA<br><br>
+                    <strong style="text-decoration:underline;">{{ $pesanan->penerima->name ?? '-' }}</strong><br>
+                    NIP. {{ $pesanan->penerima->nip ?? '-' }}
+                </div>
+                <div style="width:30%; text-align:right; display:flex; flex-direction:column; justify-content:flex-end;">
+                    PIHAK KEDUA<br><br>
+                    <strong style="text-decoration:underline;">{{ $pesanan->penyedia->delegation_name ?? '-' }}</strong><br>
+                    NIP. {{ $pesanan->penyedia->nip ?? '-' }}
+                </div>
+            </div>
+            <div style="width:100%; text-align:center; margin-top:30px;">
+                Mengetahui,<br>Kepala Sekolah<br><br>
+                <strong style="text-decoration:underline;">{{ $kepsek->name ?? '-' }}</strong><br>
+                NIP. {{ $kepsek->nip ?? '-' }}
+            </div>
+        </div>
+    </div>
+    <div class="page-break"></div>
+
 </body>
-</html>
 
-      
+</html>

@@ -9,6 +9,7 @@ use App\Models\Kegiatan;
 use App\Models\Penyedia;
 use App\Models\Penerima;
 use App\Models\Barang;
+use App\Models\Bendahara;
 use App\Models\Kepsek;
 
 class PesananController extends Controller
@@ -25,7 +26,8 @@ class PesananController extends Controller
         $penyedia = Penyedia::all();
         $penerima = Penerima::all();
         $barang = Barang::all();
-        return view('eksternal.pesanan.add', compact('kegiatan', 'penyedia', 'penerima', 'barang'));
+        $bendahara = Bendahara::all(); // Ambil data bendahara (kepala sekolah)
+        return view('eksternal.pesanan.add', compact('kegiatan', 'penyedia', 'penerima', 'barang' , 'bendahara'));
     }
 
     public function store(Request $request)
@@ -36,6 +38,7 @@ class PesananController extends Controller
             'penyediaID'    => 'required|exists:penyedia,id',
             'penerimaID'    => 'required|exists:penerima,id',
             'barangID'      => 'required|exists:barang,id',
+            'BendaharaID'   => 'required|exists:bendahara,id',
             'budget'        => 'required|integer',
             'paid'          => 'required|date|after_or_equal:2025-01-01',
         ]);
@@ -62,7 +65,8 @@ class PesananController extends Controller
         $penyedia = Penyedia::all();
         $penerima = Penerima::all();
         $barang = Barang::all();
-        return view('eksternal.pesanan.edit', compact('pesanan', 'kegiatan', 'penyedia', 'penerima', 'barang'));
+        $bendahara = Bendahara::all(); // Ambil data bendahara (kepala sekolah)
+        return view('eksternal.pesanan.edit', compact('pesanan', 'kegiatan', 'penyedia', 'penerima', 'barang', 'bendahara'));
     }
 
     public function update(Request $request, $id)
@@ -73,6 +77,7 @@ class PesananController extends Controller
             'penyediaID'    => 'required|exists:penyedia,id',
             'penerimaID'    => 'required|exists:users,id',
             'barangID'      => 'required|exists:barang,id',
+            'BendaharaID'   => 'required|exists:bendahara,id',
             'budget'        => 'required|integer',
             'paid'          => 'required|date',
         ]);
@@ -86,10 +91,11 @@ class PesananController extends Controller
     // PesananController.php
 public function export($id)
 {
-    $pesanan = Pesanan::with(['barang', 'penyedia'])->findOrFail($id);
+    $pesanan = Pesanan::with(['barang', 'penyedia','bendahara'])->findOrFail($id);
     // return response()->json($pesanan);
     $kepsek = Kepsek::latest()->first(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
     $barang = Barang::all(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
+    
 
     return view('template', compact('pesanan', 'kepsek', 'barang'));
 }
