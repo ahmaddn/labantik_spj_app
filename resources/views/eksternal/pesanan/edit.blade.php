@@ -122,8 +122,8 @@
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <button type="submit" class="btn btn-success">Update</button>
                             <a href="{{ route('eksternal.pesanan.index') }}" class="btn btn-secondary">Kembali</a>
+                            <button type="submit" class="btn btn-success">Perbarui</button>
                         </div>
                     </div>
                 </form>

@@ -15,7 +15,7 @@
                     <div class="page-sub-header">
                         <h3 class="page-title">Welcome, {{ Auth::user()->namalengkap }}!</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                             <li class="breadcrumb-item active">Admin</li>
                         </ul>
                     </div>
