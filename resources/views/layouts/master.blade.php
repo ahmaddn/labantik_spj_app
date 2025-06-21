@@ -4,9 +4,9 @@
     <div class="main-wrapper login-body">
         <div class="login-wrapper">
             @yield('content')
-            @include('layouts/script')
         </div>
     </div>
+    @include('layouts/script')
 </body>
 
 </html>
