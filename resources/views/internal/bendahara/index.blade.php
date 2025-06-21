@@ -59,13 +59,14 @@
                                                 <td class="px-4 py-2">{{ $row->school }}</td>
                                                 <td class="px-4 py-2">
                                                     <!-- Edit Button -->
-                                                    <a href="{{ route('internal.kepsek.edit', $row->id) }}"
+                                                    <a href="{{ route('internal.bendahara.edit', $row->id) }}"
                                                         class="btn btn-sm btn-outline-info">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
 
                                                     <!-- Delete Button -->
-                                                    <form action="{{ route('internal.kepsek.deleteKepsek', $row->id) }}"
+                                                    <form
+                                                        action="{{ route('internal.bendahara.deleteBendahara', $row->id) }}"
                                                         method="POST" class="d-inline-block"
                                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                                         @csrf
