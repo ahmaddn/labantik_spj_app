@@ -149,7 +149,7 @@
         <table style="width: 100%;">
             <thead>
                 <tr>
-                    <th  style="background-color: #d9d9d9">No</th>
+                    <th style="background-color: #d9d9d9">No</th>
                     <th style="background-color: #d9d9d9">Jenis</th>
                     <th style="background-color: #d9d9d9">Keterangan</th>
                 </tr>
@@ -178,7 +178,7 @@
                 <tr>
                     <td>5.</td>
                     <td>Alokasi anggaran</td>
-                    <td>Rp. {{ number_format($pesanan->money_total, 0, ',', '.') }},00 <b>BOS</b></td>
+                    <td>Rp. {{ number_format($pesanan->budget, 0, ',', '.') }},00 <b>BOS</b></td>
                 </tr>
                 <tr>
                     <td rowspan="4">6.</td>
@@ -376,19 +376,20 @@
         <div class="content">
             <h3 class="text-center">KWITANSI</h3>
             <table style="border: none" class="tulisan">
-            <tr>
-                <td>Telah diterima dari<br>Uang sejumlah<br>Untuk Pembayaran</td>
-                <td>: {{ $pesanan->penyedia->company }}<br>: {{ ucwords(terbilang($barang->sum('total'))) }}    <br>:
-                    {{ $pesanan->penyedia->delegation_name }}</td>
-            </tr>
+                <tr>
+                    <td>Telah diterima dari<br>Uang sejumlah<br>Untuk Pembayaran</td>
+                    <td>: {{ $pesanan->penyedia->company }}<br>: {{ ucwords(terbilang($barang->sum('total'))) }} <br>:
+                        {{ $pesanan->penyedia->delegation_name }}</td>
+                </tr>
 
-            
-        </table>
+
+            </table>
         </div>
 
         <table class="table-bordered">
-            <tr >
-            </td><strong>Rp. {{ number_format($barang->sum('total'), 0, ',', '.') }}</strong></td></tr>
+            <tr>
+                </td><strong>Rp. {{ number_format($barang->sum('total'), 0, ',', '.') }}</strong></td>
+            </tr>
         </table>
     </div>
 

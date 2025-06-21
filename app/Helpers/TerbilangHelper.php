@@ -26,7 +26,19 @@ if (!function_exists('terbilang')) {
             $terbilang = terbilang($angka / 1000) . ' ribu ' . terbilang($angka % 1000);
         } elseif ($angka < 1000000000) {
             $terbilang = terbilang($angka / 1000000) . ' juta ' . terbilang($angka % 1000000);
+        } elseif ($angka < 1000000000000) {
+            $miliar = floor($angka / 1000000000); // jumlah miliar
+            $sisa = $angka % 1000000000;
+
+            if ($sisa == 0) {
+                $terbilang = terbilang($miliar) . ' miliar';
+            } else {
+                $terbilang = terbilang($miliar) . ' miliar ' . terbilang($sisa);
+            }
         }
+
+
+
 
         return trim($terbilang);
     }
