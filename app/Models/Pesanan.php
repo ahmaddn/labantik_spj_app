@@ -23,7 +23,7 @@ class Pesanan extends Model
             'penyediaID',
             'penerimaID',
             'barangID',
-            'BendaharaID',
+            'bendaharaID',
             'budget',
             'paid',
             'status',
@@ -55,7 +55,7 @@ class Pesanan extends Model
     }
     public function bendahara()
     {
-        return $this->belongsTo(Bendahara::class, 'BendaharaID', 'id');
+        return $this->belongsTo(Bendahara::class, 'bendaharaID', 'id');
     }
 
 }

@@ -27,7 +27,7 @@ class PesananController extends Controller
         $penerima = Penerima::all();
         $barang = Barang::all();
         $bendahara = Bendahara::all(); // Ambil data bendahara (kepala sekolah)
-        return view('eksternal.pesanan.add', compact('kegiatan', 'penyedia', 'penerima', 'barang' , 'bendahara'));
+        return view('eksternal.pesanan.add', compact('kegiatan', 'penyedia', 'penerima', 'barang', 'bendahara'));
     }
 
     public function store(Request $request)
@@ -46,7 +46,7 @@ class PesananController extends Controller
         Pesanan::create($request->all());
 
         return redirect()->route('eksternal.pesanan.index')
-                         ->with('success', 'Data Pesanan berhasil ditambahkan.');
+            ->with('success', 'Data Pesanan berhasil ditambahkan.');
     }
 
     public function delete($id)
@@ -55,7 +55,7 @@ class PesananController extends Controller
         $pesanan->delete();
 
         return redirect()->route('eksternal.pesanan.index')
-                         ->with('success', 'Data Pesanan berhasil dihapus.');
+            ->with('success', 'Data Pesanan berhasil dihapus.');
     }
 
     public function edit($id)
@@ -86,16 +86,16 @@ class PesananController extends Controller
         $pesanan->update($request->all());
 
         return redirect()->route('eksternal.pesanan.index')
-                         ->with('success', 'Data Pesanan berhasil diperbarui.');
+            ->with('success', 'Data Pesanan berhasil diperbarui.');
     }
     // PesananController.php
     public function export($id)
     {
-        $pesanan = Pesanan::with(['barang', 'penyedia','bendahara'])->findOrFail($id);
+        $pesanan = Pesanan::with(['barang', 'penyedia', 'bendahara'])->findOrFail($id);
         // return response()->json($pesanan);
         $kepsek = Kepsek::latest()->first(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
         $barang = Barang::all(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
-
+         // Ambil data bendahara (kepala sekolah)
 
         return view('template', compact('pesanan', 'kepsek', 'barang'));
     }
@@ -131,5 +131,4 @@ class PesananController extends Controller
 
         return redirect()->route('eksternal.pesanan.index')->with('success', 'Pesanan berhasil dikonfirmasi');
     }
-
 }
