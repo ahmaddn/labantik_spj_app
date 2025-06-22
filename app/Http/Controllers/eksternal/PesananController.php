@@ -116,7 +116,7 @@ class PesananController extends Controller
             'pesananID' => 'required|exists:pesanan,id',
             'amount' => 'required|numeric|max:' . $pesanan->barang->amount,
             'condition' => 'required',
-            'accepted' => 'required|date_format:Y-m-d H:i:s',
+            'accepted' => 'required|date_format:Y-m-d\TH:i',
             'billing' => 'nullable|date',
         ]);
 
