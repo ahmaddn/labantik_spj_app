@@ -48,7 +48,7 @@
                             {{-- Tahun Ajaran --}}
                             <div class="form-group">
                                 <label>Tahun Ajaran</label>
-                                <input type="number" class="form-control" name="school" min="1900" max="2100">
+                                <input type="number" class="form-control" name="school" min="2025" max="2100">
                                 @error('school')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror

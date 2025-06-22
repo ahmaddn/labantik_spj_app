@@ -25,8 +25,12 @@ class Pesanan extends Model
             'barangID',
             'BendaharaID',
             'budget',
-            'paid'
-
+            'paid',
+            'status',
+            'amount',
+            'condition',
+            'accepted',
+            'billing'
         ];
 
 

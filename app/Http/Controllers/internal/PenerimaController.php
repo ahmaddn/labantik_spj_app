@@ -29,13 +29,15 @@ class PenerimaController extends Controller
             $request->validate([
                 'name' => 'required|unique:penerima,name',
                 'nip' => 'required|digits:18|unique:penerima,nip',
-                'school' => 'required|numeric|',
+                'school' => 'required|numeric',
+                'position' => 'required|string',
             ]);
 
             Penerima::create([
                 'name' => $request->input('name'),
                 'nip' => $request->input('nip'),
                 'school' => $request->input('school'),
+                'position' => $request->input('position'),
             ]);
 
             return redirect()->route('internal.penerima.index')
@@ -71,6 +73,7 @@ class PenerimaController extends Controller
             'name' => 'required|unique:penerima,name,' . $id,
             'nip' => 'required|digits:18|unique:penerima,nip,' . $id,
             'school' => 'required|numeric',
+            'position' => 'required|string',
         ]);
 
         $penerima = Penerima::findOrFail($id);
@@ -78,6 +81,7 @@ class PenerimaController extends Controller
             'name' => $request->input('name'),
             'nip' => $request->input('nip'),
             'school' => $request->input('school'),
+            'position' => $request->input('position'),
         ]);
 
         return redirect()->route('internal.penerima.index')

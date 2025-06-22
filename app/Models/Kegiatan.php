@@ -15,8 +15,7 @@ class Kegiatan extends Model
     protected $fillable = [
         'name',
         'order',
-        'accepted',
-        'completed',
+        'deadline',
         'info',
     ];
     public function pesanan()

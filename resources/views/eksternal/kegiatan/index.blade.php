@@ -47,8 +47,7 @@
                                             <th class="px-4 py-2">No</th>
                                             <th class="px-4 py-2">Nama Kegiatan</th>
                                             <th class="px-4 py-2">Tanggal Order</th>
-                                            <th class="px-4 py-2">Tanggal Diterima</th>
-                                            <th class="px-4 py-2">Waktu Selesai</th>
+                                            <th class="px-4 py-2">Batas Akhir Pembayaran</th>
                                             <th class="px-4 py-2">Info</th>
                                             <th class="px-4 py-2">Action</th>
                                         </tr>
@@ -61,9 +60,8 @@
                                                 <td class="px-4 py-2">
                                                     {{ \Carbon\Carbon::parse($row->order)->translatedFormat('d F Y') }}</td>
                                                 <td class="px-4 py-2">
-                                                    {{ \Carbon\Carbon::parse($row->accepted)->translatedFormat('d F Y') }}
+                                                    {{ \Carbon\Carbon::parse($row->deadline)->translatedFormat('d F Y') }}
                                                 </td>
-                                                <td class="px-4 py-2">{{ $row->completed }}</td>
                                                 <td class="px-4 py-2">{{ $row->info }}</td>
                                                 <td class="px-4 py-2">
                                                     <a href="{{ route('eksternal.kegiatan.edit', $row->id) }}"

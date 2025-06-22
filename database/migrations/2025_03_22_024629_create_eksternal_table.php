@@ -26,8 +26,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->date('order');
-            $table->date('accepted');
-            $table->time('completed');
+            $table->date('deadline');
             $table->string('info')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -38,6 +37,7 @@ return new class extends Migration
             $table->string('company');
             $table->bigInteger('npwp');
             $table->string('address');
+            $table->string('bank');
             $table->bigInteger('account');
             $table->string('delegation_name');
             $table->string('delegate_position');
@@ -47,13 +47,19 @@ return new class extends Migration
 
         Schema::create('pesanan', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('invoice_num');
+            $table->string('invoice_num');
             $table->unsignedInteger('kegiatanID');
             $table->unsignedInteger('penyediaID');
             $table->unsignedInteger('penerimaID');
             $table->unsignedInteger('barangID');
+            $table->unsignedInteger('bendaharaID');
             $table->integer('budget');
             $table->date('paid');
+            $table->enum('status', ['process', 'done'])->default('process');
+            $table->integer('amount')->nullable();
+            $table->string('condition')->nullable();
+            $table->date('billing')->nullable();
+            $table->date('accepted')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -61,11 +67,7 @@ return new class extends Migration
             $table->foreign('penyediaID')->references('id')->on('penyedia');
             $table->foreign('penerimaID')->references('id')->on('penerima');
             $table->foreign('barangID')->references('id')->on('barang');
-
-            $table->index('kegiatanID');
-            $table->index('penyediaID');
-            $table->index('penerimaID');
-            $table->index('barangID');
+            $table->foreign('bendaharaID')->references('id')->on('bendahara');
         });
     }
 

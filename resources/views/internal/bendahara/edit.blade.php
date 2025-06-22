@@ -28,22 +28,29 @@
                             @csrf
                             @method('PUT')
 
-                            {{-- Validasi Error --}}
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
 
                             {{-- Nama Bendahara --}}
                             <div class="form-group">
                                 <label>Nama Bendahara</label>
                                 <input type="text" class="form-control" name="name"
                                     value="{{ old('name', $bendahara->name) }}">
+                                @error('name')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            {{-- Jenis Bendahara --}}
+                            <div class="form-group">
+                                <label>Jenis Bendahara</label>
+                                <select class="form-control" name="jenis">
+                                    <option value="BOS" {{ ($pesanan->type ?? '') === 'BOS' ? 'selected' : '' }}>BOS
+                                    </option>
+                                    <option value="BODP" {{ ($pesanan->type ?? '') === 'BODP' ? 'selected' : '' }}>BODP
+                                    </option>
+                                </select>
+                                @error('jenis')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- NIP --}}
@@ -51,6 +58,9 @@
                                 <label>NIP</label>
                                 <input type="text" class="form-control" name="nip"
                                     value="{{ old('nip', $bendahara->nip) }}">
+                                @error('nip')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
 
@@ -59,6 +69,9 @@
                                 <label>Tahun Ajaran</label>
                                 <input type="number" class="form-control" name="school" min="1900" max="2100"
                                     value="{{ old('school', $bendahara->school) }}">
+                                @error('school')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="text-end">
