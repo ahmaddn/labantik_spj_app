@@ -152,7 +152,7 @@
                     Alamat Satuan Pendidikan<br>
                     Kategori Barang dan Jasa</td>
                 <td>: SMK Negeri 1 Talaga <br>
-                    : Jl. Sekolah No 20 Talagakulon (0233) 319238 Talaga - Majalengka<br>
+                    : {{$kepsek->address}}<br>
                     : {{ $pesanan->kegiatan->name ?? '-' }}</td>
 
             </tr>
@@ -333,7 +333,6 @@
                 </tr>
             </tbody>
         </table>
-        <div class="page-break"></div>
         <p><strong>Terbilang :</strong> {{ ucwords(terbilang($barang->sum('total'))) }} Rupiah</p>
 
 
@@ -341,8 +340,9 @@
         <table class="tulisan" style="border: none;">
             <tr>
                 <td>1. Tanggal barang diterima<br>2. Waktu Penyelesaian<br>3. Alamat Pengiriman Barang</td>
-                <td>: {{ \Carbon\Carbon::parse($pesanan->accepted_date)->translatedFormat('d F Y') }}<br>: Hari
-                    Kalender<br>: {{ $kepsek->address }}
+                <td>: {{ \Carbon\Carbon::parse($pesanan->accepted)->translatedFormat('d F Y') }}<br>
+                    : {{ \Carbon\Carbon::parse($pesanan->kegiatan->order)->diffInDays(\Carbon\Carbon::parse($pesanan->accepted)) }} Hari Kalender<br>
+                    : {{ $kepsek->address }}
                 </td>
 
             </tr>
@@ -357,41 +357,39 @@
         </table>
 
         <br>
-        <table class="no-border" style="width: 100%; border: none;">
-            <tr>
-                <td colspan="2"
-                    style="text-align: right;
-                                        margin-right: 50px;">
-                    <div class="signature">Majalengka, 5 April 2023</div>
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align: left;">Untuk dan atas nama<br>{{ $pesanan->penyedia->company }}</td>
-                <td style="text-align: left;">
-                    <div style="margin-left: 40%">Untuk dan atas nama</div>
-                    <div style="margin-left: 40%">Kepala SMKN 1 Talaga</div>
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align: left;"></td>
-                <td style="text-align: right;"></td>
-            </tr>
-            <tr>
-                <td colspan="2"><br><br><br></td>
-            </tr>
-            <tr>
-                <td style="text-align: left;">
-                    <strong><u>{{ $pesanan->penyedia->delegation_name }}</u></strong><br>
-                    {{ $pesanan->penyedia->delegate_position }}
-                </td>
-                <td style="">
-                    <div class="" style="margin-left: 40%">
-                        <strong><u>{{ $kepsek->name }}</u></strong><br>
-                        NIP. {{ $kepsek->nip }}
-                    </div>
-                </td>
-            </tr>
-        </table>
+        <div style="page-break-inside: avoid;">
+            <table class="no-border" style="width: 100%; border: none;">
+                <tr>
+                    <td colspan="2" style="vertical-align:top;">
+                        <div style="display:flex; justify-content:space-between; width:100%;">
+                            <div style="text-align:left;">
+                                Untuk dan atas nama<br>
+                                {{ $pesanan->penyedia->company }}
+                            </div>
+                            <div style="text-align:right;">
+                                Majalengka, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>
+                                Untuk dan atas nama<br>
+                                Kepala SMKN 1 Talaga
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="vertical-align:top; padding-top:40px;">
+                        <div style="display:flex; justify-content:space-between; width:100%;">
+                            <div style="text-align:left;">
+                                <strong><u>{{ $pesanan->penyedia->delegation_name }}</u></strong><br>
+                                {{ $pesanan->penyedia->delegate_position }}
+                            </div>
+                            <div style="text-align:right;">
+                                <strong><u>{{ $kepsek->name }}</u></strong><br>
+                                NIP. {{ $kepsek->nip }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
     </div>
     <div class="page-break"></div>
@@ -399,7 +397,7 @@
         <div class="content">
             <h3 class="text-center">KWITANSI</h3>
             <div style="width:100%; text-align:center; margin-bottom:10px; font-size:14px;">
-                <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }}</span>
+                <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }} /{{$pesanan->penyedia->company ?? '-'}}/Kwitansi/IV/{{date('Y')}}</span>
             </div>
             <table style="width:100%; border:none; font-size:14px;" class="no-border">
                 <tr>
@@ -435,7 +433,7 @@
                 style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:40px; flex-direction:column;">
                 <div style="display:flex; justify-content:space-between; width:100%; margin-bottom:10px;">
                     <span style="font-size:13px;">Lunas dibayar :
-                        {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</span>
+                        {{ \Carbon\Carbon::parse($pesanan->paid)->translatedFormat('d F Y') }}</span>
                     <span style="font-size:13px; margin-right: 80px;">Tanggal Pemesanan :
                         {{ \Carbon\Carbon::parse($pesanan->created_at)->translatedFormat('d F Y') }}</span>
                 </div>
@@ -444,18 +442,18 @@
                         Setuju dibayar,<br>
                         Kepala SMK Negeri 1 Talaga
                     </div>
-                    <div style="width:45%; text-align:left; margin-left:130px;">
-                        Bendahara BOS
+                    <div style="width:45%; text-align:left; margin-left:260px;">
+                        Bendahara {{ $pesanan->bendahara->type ?? '-' }}
                     </div>
                 </div>
                 <div style="display:flex; justify-content:space-between; width:100%; margin-top:60px;">
                     <div style="width:45%; text-align:left;">
-                        <strong style="text-decoration:underline;">UDIN WAHYUDIN, S.IP., M.Si</strong><br>
+                        <strong style="text-decoration:underline;">{{ $kepsek->name ?? '-' }}</strong><br>
                         NIP. {{ $kepsek->nip ?? '-' }}
                     </div>
                     <div style="width:45%; text-align:right;">
-                        <strong style="text-decoration:underline;"> Nama bendahara</strong><br>
-                        NIP.nip bendahara
+                        <strong style="text-decoration:underline;">{{ $pesanan->bendahara->name ?? '-' }}</strong><br>
+                        NIP. {{ $pesanan->bendahara->nip ?? '-' }}
                     </div>
                 </div>
             </div>
@@ -466,7 +464,7 @@
         <div class="content">
             <h3 class="text-center" style="margin-bottom:0;">NOTA</h3>
             <div style="width:100%; text-align:center; margin-bottom:10px; font-size:14px;">
-                <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }}</span>
+                <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }} /{{ $pesanan->penyedia->company ?? '-' }}/Nota/IV/{{ date('Y') }}</span>
             </div>
             <table style="width:100%; border:none; font-size:14px; margin-bottom:10px;" class="no-border">
                 <tr>
@@ -477,7 +475,7 @@
                 <tr>
                     <td>Di</td>
                     <td>:</td>
-                    <td>J{{ $kepsek->address }}
+                    <td>{{ $kepsek->address }}
                     <td>
                 </tr>
             </table>
@@ -515,8 +513,8 @@
                 <div style="width:45%; text-align:left;">
                     Bendahara {{ $pesanan->bendahara->type ?? '-' }}
                     <br><br><br>
-                    <strong style="text-decoration:underline;">nama bendahara</strong><br>
-                    NIP.nip bendahara
+                    <strong style="text-decoration:underline;">{{ $pesanan->bendahara->name ?? '-' }}</strong><br>
+                    NIP. {{ $pesanan->bendahara->nip ?? '-' }}
                 </div>
                 <div style="width:45%; text-align:right;">
                     Majalengka, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>
@@ -531,11 +529,16 @@
         <div class="content">
             <h3 class="text-center" style="margin-bottom:0;">BERITA ACARA SERAH TERIMA</h3>
             <div style="width:100%; text-align:center; margin-bottom:10px; font-size:14px;">
-                <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }}</span>
+                <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }} /{{ $pesanan->penyedia->company ?? '-' }}/BA/IV/{{ date('Y') }}</span>
             </div>
-            <p style="margin-bottom:10px;">Pada hari {{ \Carbon\Carbon::now()->isoFormat('dddd') }} tanggal
-                {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>
-                Yang bertanda tangan di bawah ini :</p>
+            <p style="margin-bottom:10px;">
+                Pada hari {{ strtolower(ucwords(\Carbon\Carbon::parse($pesanan->created_at)->isoFormat('dddd'))) }}
+                tanggal {{ strtolower(ucwords(terbilang(\Carbon\Carbon::parse($pesanan->created_at)->format('d')))) }}
+                bulan {{ strtolower(ucwords(\Carbon\Carbon::parse($pesanan->created_at)->isoFormat('MMMM'))) }}
+                tahun {{ strtolower(ucwords(terbilang(\Carbon\Carbon::parse($pesanan->created_at)->format('Y')))) }}
+                <br>
+                Yang bertanda tangan di bawah ini :
+            </p>
             <table style="width:100%; border:none; font-size:14px; margin-bottom:10px;" class="no-border">
                 <tr>
                     <td style="width:120px;">Nama</td>
@@ -545,7 +548,7 @@
                 <tr>
                     <td>Jabatan</td>
                     <td>:</td>
-                    <td>{{ $pesanan->penyedia->delegateD_position ?? '-' }}</td>
+                    <td>{{ $pesanan->penyedia->delegate_position ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td>Nama Perusahaan</td>
@@ -605,11 +608,14 @@
                             <td style="border:1px solid #000; padding:4px 8px; text-align:center;">{{ $index + 1 }}
                             </td>
                             <td style="border:1px solid #000; padding:4px 8px;">{{ $item->name }}</td>
-                            <td style="border:1px solid #000; padding:4px 8px; text-align:center;">{{ $item->amount }}
+                            <td style="border:1px solid #000; padding:4px 8px; text-align:center;">
+                                {{ $pesanan->amount }}
                             </td>
-                            <td style="border:1px solid #000; padding:4px 8px; text-align:center;">{{ $item->amount }}
+                            <td style="border:1px solid #000; padding:4px 8px; text-align:center;">
+                                {{ $pesanan->amount }}
                             </td>
-                            <td style="border:1px solid #000; padding:4px 8px; text-align:center;">Baik</td>
+                            <td style="border:1px solid #000; padding:4px 8px; text-align:center;">
+                                {{ $pesanan->condition }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -639,7 +645,6 @@
                     <td style="text-align:right;">
                         <strong
                             style="text-decoration:underline;">{{ $pesanan->penyedia->delegation_name ?? '-' }}</strong><br>
-                        NIP. {{ $pesanan->penyedia->nip ?? '-' }}
                     </td>
                 </tr>
             </table>
@@ -684,7 +689,9 @@
                         <table style="border:none; font-size:13px; width:100%;">
                             <tr>
                                 <td>Batas Akhir Pembayaran</td>
-                                <td>: {{ $pesanan->due_date ?? '17 November 2022' }}</td>
+                                <td>:
+                                    {{ $pesanan->billing ? \Carbon\Carbon::parse($pesanan->billing)->translatedFormat('d F Y') : '' }}
+                                </td>
                             </tr>
                         </table>
                     </td>
@@ -696,14 +703,13 @@
                         <strong>Ditagihkan Kepada</strong><br>
                         Nama Lengkap : {{ $kepsek->name ?? 'UDIN WAHYUDIN, S.IP., M.Si' }}<br>
                         Nama Perusahaan : SMK Negeri 1 Talaga<br>
-                        Alamat Lengkap : Jl.Sekolah No 20 Talagakulon<br>
-                        Kec.Talaga Kab.Majalengka 45463<br>
-                        Kode POS : -
+                        Alamat Lengkap : {{ $kepsek->address ?? '-' }}<br>
+                        Kode POS : 45463<br>
                     </td>
                     <td style="width:50%; vertical-align:top;">
                         <strong>Ditagihkan Oleh</strong><br>
-                        Nama Lengkap : {{ $pesanan->penyedia->delegation_name ?? 'CV TECHRIA INDONESIA' }}<br>
-                        Alamat : Blok Kaler RT/RW 02/03<br>
+                        Nama Lengkap : {{ $pesanan->penyedia->delegation_name ?? '' }}<br>
+                        Alamat : {{ $pesanan->penyedia->address ?? '' }}<br>
                         Kode POS : 45466
                     </td>
                 </tr>
@@ -758,14 +764,14 @@
                 <tr>
                     <td style="width:50%; vertical-align:top;">
                         <strong>Cara Pembayaran</strong><br>
-                        Transfer via Bank BJB<br>
+                        Transfer via Bank {{ $pesanan->penyedia->bank }}<br>
                         a.n CV Techria Indonesia<br>
-                        No. Rek : 0110290195001
+                        No. Rek : {{ $pesanan->penyedia->account ?? '-' }}<br>
                     </td>
                     <td style="width:50%; text-align:right; vertical-align:top;">
                         CV Techria Indonesia<br>
                         Marketing,<br><br><br>
-                        <strong style="font-size:15px; text-decoration:underline;">ARIP ISKANDAR, S.E</strong>
+                        <strong style="font-size:15px; ">{{ $pesanan->penyedia->delegation_name ?? '-' }}</strong>
                     </td>
                 </tr>
             </table>
