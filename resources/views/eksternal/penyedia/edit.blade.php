@@ -57,6 +57,16 @@
                                 <textarea class="form-control" name="address" rows="3" required>{{ old('address', $penyedia->address) }}</textarea>
                             </div>
 
+                            {{-- Bank --}}
+                            <div class="form-group">
+                                <label>Bank</label>
+                                <input type="text" class="form-control" name="bank"
+                                    value="{{ old('bank', $penyedia->bank) }}">
+                                @error('bank')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
                             {{-- Jumlah Rekening --}}
                             <div class="form-group">
                                 <label>Jumlah Rekening</label>

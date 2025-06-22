@@ -26,15 +26,13 @@ class KegiatanController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'order' => 'required|date',
-                'accepted' => 'required|date|after_or_equal:order',
-                'completed' => 'required'    ,
+                'deadline' => 'required|date|after_or_equal:'. $request->order,
                 'info' => 'nullable|string|max:255',
             ]);
      Kegiatan::create([
                 'name' => $request->input('name'),
                 'order' => $request->input('order'),
-                'accepted' => $request->input('accepted'),
-                'completed' => $request->input('completed'),
+                'deadline' => $request->input('deadline'),
                 'info' => $request->input('info'),
             ]);
 
@@ -66,8 +64,7 @@ class KegiatanController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'order' => 'required|date',
-            'accepted' => 'required|date|after_or_equal:order',
-            'completed' => 'required|date_format:H:i:s',
+            'deadline' => 'required|date|after_or_equal:'. $request->order,
             'info' => 'nullable|string|max:255',
         ]);
 
@@ -75,8 +72,7 @@ class KegiatanController extends Controller
         $kegiatan->update([
             'name' => $request->input('name'),
             'order' => $request->input('order'),
-            'accepted' => $request->input('accepted'),
-            'completed' => $request->input('completed'),
+            'deadline' => $request->input('deadline'),
             'info' => $request->input('info'),
         ]);
 

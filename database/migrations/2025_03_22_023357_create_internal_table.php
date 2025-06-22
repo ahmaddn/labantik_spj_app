@@ -35,6 +35,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->bigInteger('nip');
+            $table->string('position');
             $table->year('school');
             $table->timestamps();
             $table->softDeletes();

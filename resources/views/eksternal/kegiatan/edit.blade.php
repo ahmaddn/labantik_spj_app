@@ -50,18 +50,14 @@
                                     value="{{ old('order', $kegiatan->order) }}" min="2025-01-01">
                             </div>
 
-                            {{-- Tanggal Diterima --}}
+                            {{-- Batas Akhir Pembayaran --}}
                             <div class="form-group">
-                                <label>Tanggal Diterima</label>
-                                <input type="date" class="form-control" name="accepted"
-                                    value="{{ old('accepted', $kegiatan->accepted) }}" min="2025-01-01">
-                            </div>
-
-                            {{-- Waktu Selesai --}}
-                            <div class="form-group">
-                                <label>Waktu Selesai</label>
-                                <input type="time" class="form-control" name="completed"
-                                    value="{{ old('completed', $kegiatan->completed) }}">
+                                <label>Batas Akhir Pembayaran</label>
+                                <input type="date" class="form-control" name="deadline"
+                                    value="{{ old('deadline', $kegiatan->deadline) }}" min="2025-01-01">
+                                @error('deadline')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- Info --}}

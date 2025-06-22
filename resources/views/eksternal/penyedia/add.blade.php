@@ -54,7 +54,16 @@
                                 @enderror
                             </div>
 
-                            {{-- Jumlah Rekening --}}
+                            {{-- Bank --}}
+                            <div class="form-group">
+                                <label>Bank</label>
+                                <input type="text" class="form-control" name="bank" value="{{ old('bank') }}">
+                                @error('bank')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            {{-- No Rekening --}}
                             <div class="form-group">
                                 <label>No. Rekening</label>
                                 <input type="number" class="form-control" name="account" value="{{ old('account') }}">

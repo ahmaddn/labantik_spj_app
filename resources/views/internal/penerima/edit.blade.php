@@ -28,22 +28,14 @@
                             @csrf
                             @method('PUT')
 
-                            {{-- Validasi Error --}}
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-
                             {{-- Nama Penerima --}}
                             <div class="form-group">
                                 <label>Nama Penerima</label>
                                 <input type="text" class="form-control" name="name"
                                     value="{{ old('name', $penerima->name) }}">
+                                @error('name')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- NIP Penerima --}}
@@ -51,6 +43,19 @@
                                 <label>NIP</label>
                                 <input type="text" class="form-control" name="nip"
                                     value="{{ old('nip', $penerima->nip) }}">
+                                @error('nip')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            {{-- Jabatan --}}
+                            <div class="form-group">
+                                <label>Jabatan</label>
+                                <input type="text" class="form-control" name="position"
+                                    value="{{ old('position', $penerima->position) }}">
+                                @error('position')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- Tahun Ajaran --}}
@@ -58,6 +63,9 @@
                                 <label>Tahun Ajaran</label>
                                 <input type="number" class="form-control" name="school" min="1900" max="2100"
                                     value="{{ old('school', $penerima->school) }}">
+                                @error('school')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="text-end">

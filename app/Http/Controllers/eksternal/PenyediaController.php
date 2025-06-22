@@ -28,6 +28,7 @@ class PenyediaController extends Controller
                 'address' => 'required|string|max:255',
                 'delegation_name' => 'required|string|max:255',
                 'delegate_position' => 'required|string|max:100',
+                'bank' => 'required|string',
                 'account' => 'required|min_digits:10|max_digits:16',
             ]);
 
@@ -37,6 +38,7 @@ class PenyediaController extends Controller
                 'address' => $request->input('address'),
                 'delegation_name' => $request->input('delegation_name'),
                 'delegate_position' => $request->input('delegate_position'),
+                'bank' => $request->input('bank'),
                 'account' => $request->input('account'),
             ]);
 
@@ -70,7 +72,8 @@ class PenyediaController extends Controller
             'address' => 'required|string|max:255',
             'delegation_name' => 'required|string|max:255',
             'delegate_position' => 'required|string|max:100',
-            'account' => 'required|string|max:100',
+            'bank' => 'required|string',
+            'account' => 'required|min_digits:10|max_digits:16',
         ]);
 
         $penyedia = Penyedia::findOrFail($id);
@@ -80,6 +83,7 @@ class PenyediaController extends Controller
             'address' => $request->input('address'),
             'delegation_name' => $request->input('delegation_name'),
             'delegate_position' => $request->input('delegate_position'),
+            'bank' => $request->input('bank'),
             'account' => $request->input('account'),
         ]);
 

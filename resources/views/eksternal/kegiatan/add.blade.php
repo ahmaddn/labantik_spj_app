@@ -25,16 +25,6 @@
                         <form action="{{ route('eksternal.kegiatan.addKegiatan') }}" method="POST">
                             @csrf
 
-                            {{-- Validasi Error --}}
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
 
                             {{-- Nama Kegiatan --}}
                             <div class="form-group">
@@ -55,24 +45,16 @@
                                 @enderror
                             </div>
 
-                            {{-- Tanggal Diterima --}}
+                            {{-- Batas Akhir Pembayaran --}}
                             <div class="form-group">
-                                <label>Tanggal Diterima</label>
-                                <input type="date" class="form-control" name="accepted" value="{{ old('accepted') }}"
+                                <label>Batas Akhir Pembayaran</label>
+                                <input type="date" class="form-control" name="deadline" value="{{ old('deadline') }}"
                                     min="2025-01-01">
-                                @error('accepted')
+                                @error('deadline')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
 
-                            {{-- Waktu Selesai --}}
-                            <div class="form-group">
-                                <label>Waktu Selesai</label>
-                                <input type="time" class="form-control" name="completed" value="{{ old('completed') }}">
-                                @error('completed')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
 
                             {{-- Info --}}
                             <div class="form-group">

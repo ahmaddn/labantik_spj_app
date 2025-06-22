@@ -93,6 +93,9 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::get('/pesanan/edit/{id}', [PesananController::class, 'edit'])->name('pesanan.edit');
     Route::put('/pesanan/update/{id}', [PesananController::class, 'update'])->name('pesanan.update');
     Route::delete('/pesanan/delete/{id}', [PesananController::class, 'delete'])->name('pesanan.delete');
-    Route::get('/eksternal/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
+    Route::get('/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
+
+    Route::get('/pesanan/submission/{id}', [PesananController::class, 'addSubmission'])->name('submission.add');
+    Route::put('/pesanan/submission', [PesananController::class, 'storeSubmission'])->name('submission.store');
 
 });

@@ -44,6 +44,9 @@
                                 <label>Nama Kepsek</label>
                                 <input type="text" class="form-control" name="name"
                                     value="{{ old('name', $kepsek->name) }}">
+                                @error('name')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- NIP --}}
@@ -51,6 +54,9 @@
                                 <label>NIP</label>
                                 <input type="text" class="form-control" name="nip"
                                     value="{{ old('nip', $kepsek->nip) }}">
+                                @error('nip')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- Tahun Ajaran --}}
@@ -58,13 +64,19 @@
                                 <label>Tahun Ajaran</label>
                                 <input type="number" class="form-control" name="school" min="1900" max="2100"
                                     value="{{ old('school', $kepsek->school) }}">
+                                @error('school')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             {{-- Nama Sekolah --}}
                             <div class="form-group">
-                                <label>Nama Sekolah</label>
+                                <label>Alamat Sekolah</label>
                                 <input type="text" class="form-control" name="address"
                                     value="{{ old('address', $kepsek->address) }}">
+                                @error('address')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="text-end">
