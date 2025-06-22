@@ -38,8 +38,8 @@
                             {{-- Tanggal Diterima --}}
                             <div class="form-group">
                                 <label>Tanggal Diterima</label>
-                                <input type="datetime-local" class="form-control" name="accepted"
-                                    value="{{ old('accepted') }}" min="2025-01-01">
+                                <input type="datetime" class="form-control" name="accepted" value="{{ old('accepted') }}"
+                                    min="2025-01-01">
                                 @error('accepted')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
