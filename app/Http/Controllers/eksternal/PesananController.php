@@ -38,7 +38,7 @@ class PesananController extends Controller
             'penyediaID'    => 'required|exists:penyedia,id',
             'penerimaID'    => 'required|exists:penerima,id',
             'barangID'      => 'required|exists:barang,id',
-            'BendaharaID'   => 'required|exists:bendahara,id',
+            'bendaharaID'   => 'required|exists:bendahara,id',
             'budget'        => 'required|integer',
             'paid'          => 'required|date|after_or_equal:2025-01-01',
         ]);
@@ -77,7 +77,7 @@ class PesananController extends Controller
             'penyediaID'    => 'required|exists:penyedia,id',
             'penerimaID'    => 'required|exists:users,id',
             'barangID'      => 'required|exists:barang,id',
-            'BendaharaID'   => 'required|exists:bendahara,id',
+            'bendaharaID'   => 'required|exists:bendahara,id',
             'budget'        => 'required|integer',
             'paid'          => 'required|date',
         ]);

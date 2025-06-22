@@ -94,7 +94,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Bendahara</label>
-                                <select name="BendaharaID" class="form-control"
+                                <select name="bendaharaID" class="form-control"
                                     {{ $bendahara->isEmpty() ? 'disabled' : '' }}>
                                     <option value="">
                                         {{ $bendahara->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Bendahara --' }}
