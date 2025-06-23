@@ -11,6 +11,7 @@ use App\Models\Penerima;
 use App\Models\Barang;
 use App\Models\Bendahara;
 use App\Models\Kepsek;
+use App\Models\Pesanan_barang;
 use Illuminate\Support\Facades\DB;
 
 class PesananController extends Controller
@@ -44,6 +45,14 @@ class PesananController extends Controller
             'budget'        => 'required|integer',
             'paid'          => 'required|date|after_or_equal:2025-01-01',
         ]);
+
+        $totalHarga = Barang::whereIn('id', $request->barangID)->sum('total');
+
+        if ($request->budget < $totalHarga) {
+            return back()->withErrors([
+                'budget' => 'Budget tidak boleh kurang dari total harga dari barang yang dipilih. (Total: Rp. ' . number_format($totalHarga, 0, ',', '.') . ')'
+            ])->withInput();
+        }
 
         try {
             DB::transaction(function () use ($request) {
@@ -94,7 +103,7 @@ class PesananController extends Controller
         $kegiatan = Kegiatan::findOrFail($request->kegiatanID);
 
         $request->validate([
-            'invoice_num'   => 'required',
+            'invoice_num'   => 'required|min_digits:3',
             'kegiatanID'    => 'required|exists:kegiatan,id',
             'penyediaID'    => 'required|exists:penyedia,id',
             'penerimaID'    => 'required|exists:penerima,id',
@@ -139,32 +148,68 @@ class PesananController extends Controller
 
     public function addSubmission($id)
     {
-        $pesanan = Pesanan::with('barang')->find($id);
+        $pesanan = Pesanan::with('barangs')->find($id);
 
         return view('eksternal.pesanan.submission', compact('pesanan'));
     }
 
     public function storeSubmission(Request $request)
     {
-        $pesanan = Pesanan::with('barang')->findOrFail($request->pesananID);
+        $pesanan = Pesanan::with('barangs')->findOrFail($request->pesananID);
 
 
         $request->validate([
             'pesananID' => 'required|exists:pesanan,id',
-            'amount' => 'required|numeric|max:' . $pesanan->barang->amount,
-            'condition' => 'required',
+            'amount_accepted' => 'required|array',
+            'condition' => 'required|array',
             'accepted' => 'required|date_format:Y-m-d\TH:i',
             'billing' => 'nullable|date',
         ]);
 
+        foreach($request->amount_accepted as $barangID => $jumlah) {
+            $barang = $pesanan->barangs->firstWhere('id', $barangID);
+
+            if (!$barang) {
+                return back()->withErrors([
+                    "amount_accepted.$barangID" => "Barang tidak valid."
+                ]);
+            }
+
+            if (!is_numeric($jumlah) || $jumlah < 0) {
+                return back()->withErrors([
+                    "amount_accepted.$barangID" => "Jumlah harus berupa angka positif."
+                ]);
+            }
+
+            if ($jumlah > $barang->amount) {
+                return back()->withErrors([
+                    "amount_accepted.$barangID" => "Jumlah melebihi stok pesanan: $barang->amount."
+                ]);
+            }
+
+            if (!isset($request->condition[$barangID]) || !in_array($request->condition[$barangID], ['Baik', 'Buruk'])) {
+                return back()->withErrors([
+                    "condition.$barangID" => "Kondisi tidak valid untuk barang ID $barangID."
+                ]);
+            }
+        }
 
         $pesanan->update([
-            'amount' => $request->amount,
-            'condition' => $request->condition,
             'accepted' => $request->accepted,
             'billing' => $request->billing,
             'status' => 'done'
         ]);
+
+        foreach ($request->amount_accepted as $barangID => $jumlah) {
+            DB::table('pesanan_barang')
+                ->where('pesananID', $pesanan->id)
+                ->where('barangID', $barangID)
+                ->update([
+                    'amount_accepted' => $jumlah,
+                    'condition' => $request->condition[$barangID],
+                ]);
+        }
+
 
         return redirect()->route('eksternal.pesanan.index')->with('success', 'Pesanan berhasil dikonfirmasi');
     }

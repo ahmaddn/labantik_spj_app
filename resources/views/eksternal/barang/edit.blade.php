@@ -46,16 +46,19 @@
 
                             {{-- Jumlah --}}
                             <div class="form-group">
-                                <label>Jumlah</label>
+                                <label>Jumlah Barang yang Ingin Dipesan</label>
                                 <input type="number" class="form-control" name="amount"
                                     value="{{ old('amount', $barang->amount) }}" required>
                             </div>
 
                             {{-- Harga --}}
                             <div class="form-group">
-                                <label>Harga</label>
-                                <input type="number" class="form-control" name="price"
-                                    value="{{ old('price', $barang->price) }}" required>
+                                <label>Harga Satuan</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="number" class="form-control" name="price"
+                                        value="{{ old('price', $barang->price) }}" required>
+                                </div>
                             </div>
 
                             <div class="form-group">

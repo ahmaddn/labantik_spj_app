@@ -27,7 +27,6 @@ class Pesanan extends Model
             'budget',
             'paid',
             'status',
-            'amount',
             'condition',
             'accepted',
             'billing'

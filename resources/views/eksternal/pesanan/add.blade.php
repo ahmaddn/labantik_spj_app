@@ -39,7 +39,9 @@
                                         {{ $kegiatan->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kegiatan --' }}
                                     </option>
                                     @foreach ($kegiatan as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}"
+                                            {{ old('kegiatanID') === $item->id ? 'selected' : '' }}>{{ $item->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('kegiatanID')
@@ -53,7 +55,9 @@
                                         {{ $penyedia->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Penyedia --' }}
                                     </option>
                                     @foreach ($penyedia as $item)
-                                        <option value="{{ $item->id }}">{{ $item->company }}</option>
+                                        <option value="{{ $item->id }}"
+                                            {{ old('penyediaID') === $item->id ? 'selected' : '' }}>{{ $item->company }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('penyediaID')
@@ -68,7 +72,9 @@
                                         {{ $penerima->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Penerima --' }}
                                     </option>
                                     @foreach ($penerima as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}"
+                                            {{ old('penerimaID') === $item->id ? 'selected' : '' }}>{{ $item->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('penerimaID')
@@ -80,10 +86,12 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Barang</label>
-                                <select id="selectBarang" name="barangID[]" class="form-select" multiple
+                                <select id="selectBarang" name="barangID[]" class="form-control" multiple
                                     {{ $barang->isEmpty() ? 'disabled' : '' }}>
                                     @foreach ($barang as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}"
+                                            {{ is_array(old('barangID')) && in_array($item->id, old('barangID')) ? 'selected' : '' }}>
+                                            {{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('barangID')
@@ -98,7 +106,9 @@
                                         {{ $bendahara->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Bendahara --' }}
                                     </option>
                                     @foreach ($bendahara as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}"
+                                            {{ old('bendaharaID') === $item->id ? 'selected' : '' }}>{{ $item->name }}
+                                        </option>
                                     @endforeach
 
                                 </select>

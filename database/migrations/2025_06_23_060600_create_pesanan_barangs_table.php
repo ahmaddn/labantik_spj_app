@@ -15,6 +15,8 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('pesananID');
             $table->unsignedInteger('barangID');
+            $table->string('condition')->nullable();
+            $table->integer('amount_accepted')->nullable();
 
             $table->foreign('pesananID')->references('id')->on('pesanan');
             $table->foreign('barangID')->references('id')->on('barang');

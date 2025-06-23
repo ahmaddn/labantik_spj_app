@@ -57,34 +57,40 @@
                             </div>
 
                             {{-- Jumlah --}}
-                            <div class="form-group">
-                                <label>Jumlah Barang yang Diterima</label>
-                                <input type="number" class="form-control" name="amount" value="{{ old('amount') }}">
-                                @error('amount')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label>Kondisi</label>
-                                <div class="dropdown">
-                                    <input name="condition" type="text" class="form-control dropdown-toggle"
-                                        data-bs-toggle="dropdown" placeholder="Pilih atau Ketik Kondisi"
-                                        id="conditionDropdown">
-                                    <ul class="dropdown-menu" style="width:100%">
-                                        <li><a class="dropdown-item" href="#"
-                                                onclick="document.getElementById('conditionDropdown').value='Baik'">Baik</a>
-                                        </li>
-                                        <li><a class="dropdown-item" href="#"
-                                                onclick="document.getElementById('conditionDropdown').value='Buruk'">Buruk</a>
-                                        </li>
-                                    </ul>
+                            @foreach ($pesanan->barangs as $barang)
+                                <div class="form-group">
+                                    <label>Jumlah {{ $barang->name }} yang Diterima</label>
+                                    <input type="number" class="form-control" name="amount_accepted[{{ $barang->id }}]"
+                                        value="{{ old('amount_accepted.' . $barang->id) }}">
+                                    @error("amount_accepted.$barang->id")
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
-                                @error('condition')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
+                            @endforeach
 
+                            @foreach ($pesanan->barangs as $barang)
+                                <div class="form-group">
+                                    <label>Kondisi {{ $barang->name }}</label>
+                                    <div class="dropdown">
+                                        <input name="condition[{{ $barang->id }}]" type="text"
+                                            class="form-control dropdown-toggle" data-bs-toggle="dropdown"
+                                            placeholder="Pilih atau Ketik Kondisi"
+                                            id="conditionDropdown{{ $barang->id }}"
+                                            value="{{ old('condition.' . $barang->id) }}">
+                                        <ul class="dropdown-menu" style="width:100%">
+                                            <li><a class="dropdown-item" href="#"
+                                                    onclick="document.getElementById('conditionDropdown{{ $barang->id }}').value='Baik'">Baik</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#"
+                                                    onclick="document.getElementById('conditionDropdown{{ $barang->id }}').value='Buruk'">Buruk</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    @error('condition.' . $barang->id)
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            @endforeach
 
                             <div class="text-end">
                                 <a href="{{ route('eksternal.pesanan.index') }}" class="btn btn-warning">Batal</a>
