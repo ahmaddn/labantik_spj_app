@@ -8,8 +8,7 @@
     <style>
         body {
             font-family: 'Calibri', 'Arial', sans-serif;
-
-            font-size: 14px;
+            font-size: 19px;
         }
 
         @media print {
@@ -42,14 +41,16 @@
         }
 
         .tulisan td {
-            line-height: 20px;
+            line-height: 25px;
             border: none;
+            font-size: 19px;
         }
 
         th,
         td {
             padding: 6px;
             vertical-align: top;
+            font-size: 19px;
         }
 
         .no-border td {
@@ -62,17 +63,19 @@
 
         .text-center {
             text-align: center;
+            font-size: 19px;
         }
 
         .signature {
             text-align: left;
             margin-left: 70%;
+            font-size: 19px;
         }
 
         .signature-nota {
-
             text-align: left;
             margin-left: 70%;
+            font-size: 19px;
         }
 
         .page-break {
@@ -81,12 +84,13 @@
 
         .konten-utama {
             margin-left: 60px;
+            font-size: 19px;
         }
 
         .page {
-
             height: 100%;
             position: relative;
+            font-size: 19px;
         }
 
         .with-bg {
@@ -100,12 +104,14 @@
             box-sizing: border-box;
             padding: 40px;
             /* atur jarak teks dari pinggir */
+            font-size: 19px;
         }
 
         .content {
             position: relative;
             z-index: 2;
             padding: 3cm 2cm;
+            font-size: 19px;
         }
     </style>
 </head>
@@ -118,14 +124,14 @@
                 <img src="{{ asset('jabar.png') }}" width="90">
             </td>
             <td style="text-align: center;">
-                <strong style="font-size: 14px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
+                <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
                     DINAS PENDIDIKAN<br>
                     CABANG DINAS PENDIDIKAN WILAYAH IX<br>
-                    <span style="font-size: 16px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
-                Jalan Sekolah Nomor 20 Telpon ☎ (0233) 319238<br>
+                    <span style="font-size: 21px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
+                <span style="font-size: 19px;">Jalan Sekolah Nomor 20 Telpon ☎ (0233) 319238<br>
                 FAX ✉ (0233) 319238 Website 🌐 www.smkn1talaga.sch.id – Email 📧 <a
                     href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
-                Desa Talagakulon Kec. Talaga Kab. Majalengka 45463
+                Desa Talagakulon Kec. Talaga Kab. Majalengka 45463</span>
             </td>
         </tr>
 
@@ -232,10 +238,10 @@
                     <img src="{{ asset('jabar.png') }}" width="90">
                 </td>
                 <td style="text-align: center;">
-                    <strong style="font-size: 14px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
+                    <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
                         DINAS PENDIDIKAN<br>
                         CABANG DINAS PENDIDIKAN WILAYAH IX<br>
-                        <span style="font-size: 16px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
+                        <span style="font-size: 21px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
                     Jalan Sekolah Nomor 20 Telpon ☎ (0233) 319238<br>
                     FAX ✉ (0233) 319238 Website 🌐 www.smkn1talaga.sch.id – Email 📧 <a
                         href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
@@ -398,11 +404,11 @@
     <div class="page with-bg">
         <div class="content">
             <h3 class="text-center">KWITANSI</h3>
-            <div style="width:100%; text-align:center; margin-bottom:10px; font-size:14px;">
+            <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
                 <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }}
                     /{{ $pesanan->penyedia->company ?? '-' }}/Kwitansi/IV/{{ date('Y') }}</span>
             </div>
-            <table style="width:100%; border:none; font-size:14px;" class="no-border">
+            <table style="width:100%; border:none; font-size:19px;" class="no-border">
                 <tr>
                     <td style="width:180px;">Telah diterima dari</td>
                     <td style="width:10px;">:</td>
@@ -435,9 +441,9 @@
             <div
                 style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:40px; flex-direction:column;">
                 <div style="display:flex; justify-content:space-between; width:100%; margin-bottom:10px;">
-                    <span style="font-size:13px;">Lunas dibayar :
+                    <span style="font-size:18px;">Lunas dibayar :
                         {{ \Carbon\Carbon::parse($pesanan->paid)->translatedFormat('d F Y') }}</span>
-                    <span style="font-size:13px; margin-right: 80px;">Tanggal Pemesanan :
+                    <span style="font-size:18px; margin-right: 80px;">Tanggal Pemesanan :
                         {{ \Carbon\Carbon::parse($pesanan->created_at)->translatedFormat('d F Y') }}</span>
                 </div>
                 <div style="display:flex; justify-content:space-between; width:100%;">
@@ -466,11 +472,11 @@
     <div class="page with-bg">
         <div class="content">
             <h3 class="text-center" style="margin-bottom:0;">NOTA</h3>
-            <div style="width:100%; text-align:center; margin-bottom:10px; font-size:14px;">
+            <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
                 <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }}
                     /{{ $pesanan->penyedia->company ?? '-' }}/Nota/IV/{{ date('Y') }}</span>
             </div>
-            <table style="width:100%; border:none; font-size:14px; margin-bottom:10px;" class="no-border">
+            <table style="width:100%; border:none; font-size:19px; margin-bottom:10px;" class="no-border">
                 <tr>
                     <td style="width:80px;">Tn/Ny</td>
                     <td style="width:10px;">:</td>
@@ -483,7 +489,7 @@
                     <td>
                 </tr>
             </table>
-            <table style="width:100%; font-size:14px; border-collapse:collapse; margin-bottom:20px;">
+            <table style="width:100%; font-size:19px; border-collapse:collapse; margin-bottom:20px;">
                 <thead>
                     <tr style="background:#f5f5f5;">
                         <th style="border:1px solid #000; padding:4px 8px;">Banyaknya</th>
@@ -532,9 +538,8 @@
         </div>
         <div class="page-break"></div>
         <div class="page with-bg">
-            <div class="content">
                 <h3 class="text-center" style="margin-bottom:0;">BERITA ACARA SERAH TERIMA</h3>
-                <div style="width:100%; text-align:center; margin-bottom:10px; font-size:14px;">
+                <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
                     <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }}
                         /{{ $pesanan->penyedia->company ?? '-' }}/BA/IV/{{ date('Y') }}</span>
                 </div>
@@ -548,7 +553,7 @@
                     <br>
                     Yang bertanda tangan di bawah ini :
                 </p>
-                <table style="width:100%; border:none; font-size:14px; margin-bottom:10px;" class="no-border">
+                <table style="width:100%; border:none; font-size:19px; margin-bottom:10px;" class="no-border">
                     <tr>
                         <td style="width:120px;">Nama</td>
                         <td style="width:10px;">:</td>
@@ -573,7 +578,7 @@
                         <td colspan="3">Sebagai pihak yang menyerahkan, selanjutnya disebut PIHAK PERTAMA</td>
                     </tr>
                 </table>
-                <table style="width:100%; border:none; font-size:14px; margin-bottom:10px;" class="no-border">
+                <table style="width:100%; border:none; font-size:19px; margin-bottom:10px;" class="no-border">
                     <tr>
                         <td style="width:120px;">Nama</td>
                         <td style="width:10px;">:</td>
@@ -602,7 +607,7 @@
                     Lainnya kepada PIHAK KEDUA, dan PIHAK KEDUA telah menerima hasil pekerjaan Belanja Peralatan
                     Komputer
                     dan Lainnya tersebut dalam jumlah lengkap dengan kondisi sesuai rincian sebagai berikut:</p>
-                <table style="width:100%; font-size:14px; border-collapse:collapse; margin-bottom:20px;">
+                <table style="width:100%; font-size:19px; border-collapse:collapse; margin-bottom:20px;">
                     <thead>
                         <tr style="background:#f5f5f5;">
                             <th style="border:1px solid #000; padding:4px 8px;">No</th>
@@ -673,17 +678,15 @@
                         </td>
                     </tr>
                 </table>
-            </div>
         </div>
         <div class="page-break"></div>
         <div class="page-break"></div>
         <div class="page with-bg">
-            <div class="content" style="position:relative; min-height:900px;">
                 <h3 style="text-align:center; margin-bottom:20px;">FAKTUR</h3>
-                <table style="width:100%; border:none; font-size:14px; margin-bottom:10px;">
+                <table style="width:100%; border:none; font-size:19px; margin-bottom:10px;">
                     <tr>
                         <td style="width:33%; vertical-align:top;" class="no-border-td">
-                            <table style="border:none; font-size:13px; width:100%;">
+                            <table style="border:none; font-size:18px; width:100%;">
                                 <tr>
                                     <td>Nomor Faktur</td>
                                     <td>: {{ $pesanan->invoice_num ?? '007' }}</td>
@@ -691,7 +694,7 @@
                             </table>
                         </td>
                         <td style="width:33%; vertical-align:top;" class="no-border-td">
-                            <table style="border:none; font-size:13px; width:100%;">
+                            <table style="border:none; font-size:18px; width:100%;">
                                 <tr>
                                     <td>Tanggal Penagihan</td>
                                     <td>:
@@ -701,7 +704,7 @@
                             </table>
                         </td>
                         <td style="width:33%; vertical-align:top;" class="no-border-td">
-                            <table style="border:none; font-size:13px; width:100%;">
+                            <table style="border:none; font-size:18px; width:100%;">
                                 <tr>
                                     <td>Batas Akhir Pembayaran</td>
                                     <td>:
@@ -712,7 +715,7 @@
                         </td>
                     </tr>
                 </table>
-                <table style="width:100%; border:none; font-size:13px; margin-bottom:10px;" class="no-border">
+                <table style="width:100%; border:none; font-size:18px; margin-bottom:10px;" class="no-border">
                     <tr>
                         <td style="width:50%; vertical-align:top;">
                             <strong>Ditagihkan Kepada</strong><br>
@@ -730,7 +733,7 @@
                     </tr>
                 </table>
                 <table
-                    style="width:100%; border:1px solid #000; border-collapse:collapse; font-size:13px; margin-bottom:10px;">
+                    style="width:100%; border:1px solid #000; border-collapse:collapse; font-size:18px; margin-bottom:10px;">
                     <thead>
                         <tr style="background:#f5f5f5;">
                             <th style="border:1px solid #000; padding:4px 6px;">No</th>
@@ -793,10 +796,9 @@
                         </td>
                     </tr>
                 </table>
-                <div style="width:100%; font-size:12px; margin-top:10px;">
+                <div style="width:100%; font-size:18px; margin-top:10px;">
                     <em>*) Mohon lakukan pembayaran maksimal 15 hari setelah faktur dikirim</em>
                 </div>
-            </div>
         </div>
 </body>
 
