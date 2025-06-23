@@ -55,8 +55,6 @@ return new class extends Migration
             $table->integer('budget');
             $table->date('paid');
             $table->enum('status', ['process', 'done'])->default('process');
-            $table->integer('amount')->nullable();
-            $table->string('condition')->nullable();
             $table->date('billing')->nullable();
             $table->date('accepted')->nullable();
             $table->timestamps();

@@ -11,6 +11,7 @@ class Pesanan_barang extends Model
 
     protected $fillable = [
         'barangID',
-        'pesananID'
+        'pesananID',
+        'amount_accepted'
     ];
 }

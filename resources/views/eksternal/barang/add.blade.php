@@ -47,7 +47,7 @@
 
                             {{-- Jumlah --}}
                             <div class="form-group">
-                                <label>Jumlah</label>
+                                <label>Jumlah Barang yang Ingin Dipesan</label>
                                 <input type="number" class="form-control" name="amount" value="{{ old('amount') }}">
                                 @error('amount')
                                     <small class="text-danger">{{ $message }}</small>
@@ -56,8 +56,11 @@
 
                             {{-- Harga --}}
                             <div class="form-group">
-                                <label>Harga</label>
-                                <input type="number" class="form-control" name="price" value="{{ old('price') }}">
+                                <label>Harga Satuan</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="number" class="form-control" name="price" value="{{ old('price') }}">
+                                </div>
                                 @error('price')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror

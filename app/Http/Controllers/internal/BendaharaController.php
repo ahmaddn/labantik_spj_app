@@ -80,6 +80,7 @@ class BendaharaController extends Controller
         $bendahara->update([
             'name' => $request->input('name'),
             'nip' => $request->input('nip'),
+            'type' => $request->input('jenis'),
             'school' => $request->input('school'),
             ]);
 

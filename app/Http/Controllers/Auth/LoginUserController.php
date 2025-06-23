@@ -26,7 +26,7 @@ class LoginUserController extends Controller
                 cookie()->queue(cookie('remember_password', $request->password, 10080));
             }
 
-            return redirect()->route('dashboard')->with('message', 'Login berhasil!');
+            return redirect()->route('dashboard')->with('success', 'Login berhasil!');
         }
 
         cookie()->queue(Cookie::forget('remember_username'));
