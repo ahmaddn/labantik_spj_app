@@ -33,6 +33,6 @@ class RegisterUserController extends Controller
         ]);
         Auth::login($user);
         // Redirect ke dashboard atau halaman utama
-        return redirect()->route('login')->with('success', 'Registrasi berhasil!');
+        return redirect()->route('dashboard')->with('success', 'Registrasi berhasil!');
     }
 }

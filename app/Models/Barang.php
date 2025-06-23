@@ -19,4 +19,9 @@ class Barang extends Model
         'total',
         'unit'
     ];
+
+    public function pesanans()
+    {
+        return $this->belongsToMany(Pesanan::class, 'pesanan_barang', 'barangID', 'pesananID');
+    }
 }

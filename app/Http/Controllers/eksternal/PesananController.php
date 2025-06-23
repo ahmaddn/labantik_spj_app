@@ -11,6 +11,7 @@ use App\Models\Penerima;
 use App\Models\Barang;
 use App\Models\Bendahara;
 use App\Models\Kepsek;
+use Illuminate\Support\Facades\DB;
 
 class PesananController extends Controller
 {
@@ -27,7 +28,7 @@ class PesananController extends Controller
         $penerima = Penerima::all();
         $barang = Barang::all();
         $bendahara = Bendahara::all(); // Ambil data bendahara (kepala sekolah)
-        return view('eksternal.pesanan.add', compact('kegiatan', 'penyedia', 'penerima', 'barang', 'bendahara'));
+        return view('eksternal.pesanan.add', compact('kegiatan', 'penyedia', 'penerima', 'barang' , 'bendahara'));
     }
 
     public function store(Request $request)
@@ -37,16 +38,35 @@ class PesananController extends Controller
             'kegiatanID'    => 'required|exists:kegiatan,id',
             'penyediaID'    => 'required|exists:penyedia,id',
             'penerimaID'    => 'required|exists:penerima,id',
-            'barangID'      => 'required|exists:barang,id',
+            'barangID'      => 'required|array',
+            'barangID.*'      => 'exists:barang,id',
             'bendaharaID'   => 'required|exists:bendahara,id',
             'budget'        => 'required|integer',
             'paid'          => 'required|date|after_or_equal:2025-01-01',
         ]);
 
-        Pesanan::create($request->all());
+        try {
+            DB::transaction(function () use ($request) {
+                $pesanan = Pesanan::create([
+                    'invoice_num' => $request->invoice_num,
+                    'kegiatanID' => $request->kegiatanID,
+                    'penyediaID' => $request->penyediaID,
+                    'penerimaID' => $request->penerimaID,
+                    'bendaharaID' => $request->bendaharaID,
+                    'budget' => $request->budget,
+                    'paid' => $request->paid,
+                ]);
 
-        return redirect()->route('eksternal.pesanan.index')
-            ->with('success', 'Data Pesanan berhasil ditambahkan.');
+                $pesanan->barangs()->attach($request->barangID);
+            });
+
+            return redirect()->route('eksternal.pesanan.index')
+                            ->with('success', 'Data Pesanan berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Gagal menyimpanan pesanan: ' . $e->getMessage()]);
+        }
+
+
     }
 
     public function delete($id)
@@ -55,12 +75,12 @@ class PesananController extends Controller
         $pesanan->delete();
 
         return redirect()->route('eksternal.pesanan.index')
-            ->with('success', 'Data Pesanan berhasil dihapus.');
+                         ->with('success', 'Data Pesanan berhasil dihapus.');
     }
 
     public function edit($id)
     {
-        $pesanan = Pesanan::findOrFail($id);
+        $pesanan = Pesanan::with('barangs')->findOrFail($id);
         $kegiatan = Kegiatan::all();
         $penyedia = Penyedia::all();
         $penerima = Penerima::all();
@@ -71,31 +91,48 @@ class PesananController extends Controller
 
     public function update(Request $request, $id)
     {
+        $kegiatan = Kegiatan::findOrFail($request->kegiatanID);
+
         $request->validate([
-            'invoice_num'   => 'required|unique:pesanan',
+            'invoice_num'   => 'required',
             'kegiatanID'    => 'required|exists:kegiatan,id',
             'penyediaID'    => 'required|exists:penyedia,id',
-            'penerimaID'    => 'required|exists:users,id',
-            'barangID'      => 'required|exists:barang,id',
+            'penerimaID'    => 'required|exists:penerima,id',
+            'barangID'      => 'required|array',
+            'barangID.*'      => 'exists:barang,id',
             'bendaharaID'   => 'required|exists:bendahara,id',
             'budget'        => 'required|integer',
-            'paid'          => 'required|date',
+            'paid'          => 'required|date|after_or_equal:' . $kegiatan->order,
         ]);
 
-        $pesanan = Pesanan::findOrFail($id);
-        $pesanan->update($request->all());
+
+        DB::transaction(function () use ($request, $id) {
+            $pesanan = Pesanan::with('barangs')->findOrFail($id);
+
+            $pesanan->update([
+                'invoice_num' => $request->invoice_num,
+                'kegiatanID' => $request->kegiatanID,
+                'penyediaID' => $request->penyediaID,
+                'penerimaID' => $request->penerimaID,
+                'bendaharaID' => $request->bendaharaID,
+                'budget' => $request->budget,
+                'paid' => $request->paid,
+            ]);
+
+            $pesanan->barangs()->sync($request->barangID);
+        });
 
         return redirect()->route('eksternal.pesanan.index')
-            ->with('success', 'Data Pesanan berhasil diperbarui.');
+                         ->with('success', 'Data Pesanan berhasil diperbarui.');
     }
     // PesananController.php
     public function export($id)
     {
-        $pesanan = Pesanan::with(['barang', 'penyedia', 'bendahara'])->findOrFail($id);
+        $pesanan = Pesanan::with(['barang', 'penyedia','bendahara'])->findOrFail($id);
         // return response()->json($pesanan);
         $kepsek = Kepsek::latest()->first(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
         $barang = Barang::all(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
-         // Ambil data bendahara (kepala sekolah)
+
 
         return view('template', compact('pesanan', 'kepsek', 'barang'));
     }
@@ -131,4 +168,5 @@ class PesananController extends Controller
 
         return redirect()->route('eksternal.pesanan.index')->with('success', 'Pesanan berhasil dikonfirmasi');
     }
+
 }

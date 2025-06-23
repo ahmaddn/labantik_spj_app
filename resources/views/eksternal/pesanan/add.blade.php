@@ -80,10 +80,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Barang</label>
-                                <select name="barangID" class="form-control" {{ $barang->isEmpty() ? 'disabled' : '' }}>
-                                    <option value="">
-                                        {{ $barang->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Barang --' }}
-                                    </option>
+                                <select id="selectBarang" name="barangID[]" class="form-select" multiple
+                                    {{ $barang->isEmpty() ? 'disabled' : '' }}>
                                     @foreach ($barang as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach

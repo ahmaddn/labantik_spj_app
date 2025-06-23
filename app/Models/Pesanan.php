@@ -58,4 +58,9 @@ class Pesanan extends Model
         return $this->belongsTo(Bendahara::class, 'bendaharaID', 'id');
     }
 
+
+    public function barangs()
+    {
+        return $this->belongsToMany(Barang::class, 'pesanan_barang', 'pesananID', 'barangID');
+    }
 }

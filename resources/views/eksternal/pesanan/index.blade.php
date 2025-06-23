@@ -59,7 +59,9 @@
                                             <td>{{ $item->kegiatan->name ?? '-' }}</td>
                                             <td>{{ $item->penyedia->company ?? '-' }}</td>
                                             <td>{{ $item->penerima->name ?? '-' }}</td>
-                                            <td>{{ $item->barang->name ?? '-' }}</td>
+                                            <td class="text-wrap" style="white-space: normal">
+                                                {{ $item->barangs->pluck('name')->implode(' | ') ?: '-' }}
+                                            </td>
                                             <td>Rp {{ number_format($item->budget, 0, ',', '.') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($item->paid)->translatedFormat('d F Y') }}</td>
                                             <td>
