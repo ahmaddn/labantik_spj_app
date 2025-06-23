@@ -90,17 +90,34 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Barang</label>
-                                <select name="barangID" class="form-control" {{ $barang->isEmpty() ? 'disabled' : '' }}>
-                                    <option value="">
-                                        {{ $barang->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Barang --' }}
-                                    </option>
+                                <select id="selectBarang" name="barangID[]" class="form-select"
+                                    {{ $barang->isEmpty() ? 'disabled' : '' }} multiple>
                                     @foreach ($barang as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ $item->id == $pesanan->barang->id ? 'selected' : '' }}>{{ $item->name }}
+                                            {{ in_array($item->id, $pesanan->barangs->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                            {{ $item->name }}
                                         </option>
                                     @endforeach
                                 </select>
                                 @error('barangID')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Bendahara</label>
+                                <select name="bendaharaID" class="form-control"
+                                    {{ $bendahara->isEmpty() ? 'disabled' : '' }}>
+                                    <option value="">
+                                        {{ $bendahara->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Bendahara --' }}
+                                    </option>
+                                    @foreach ($bendahara as $item)
+                                        <option value="{{ $item->id }}"
+                                            {{ $item->id === $pesanan->bendahara->id ? 'selected' : '' }}>
+                                            {{ $item->name }}</option>
+                                    @endforeach
+
+                                </select>
+                                @error('BendaharaID')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
