@@ -109,6 +109,7 @@
                                             <li><a href="#0" data-date="21/06/2025">21 Jun</a>
                                             <li><a href="#0" data-date="22/06/2025">22 Jun</a>
                                             <li><a href="#0" data-date="23/06/2025">23 Jun</a>
+                                            <li><a href="#0" data-date="24/06/2025">24 Jun</a>
                                             </li>
                                         </ol>
                                         <span class="filling-line" aria-hidden="true"></span>
@@ -310,6 +311,17 @@
                                             2. Menyesuaikan dengan format PDF.
                                             3. Merapikan format tulisan agar sesuai dengan sampel.
                                             4. Menambahkan timeline di halaman dashboard.
+                                        </p>
+                                    </li>
+                                    <li data-date="24/06/2025">
+                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
+                                        <p class="m-t-40"><strong>
+                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
+                                        </p>
+                                        <p class="m-t-10">
+                                            1. Memperbaiki fitur edit bendahara, kepsek, dan penerima serta menampilkan
+                                            semua
+                                            input jika error di halaman form penyerahan
                                         </p>
                                     </li>
                                 </ol>
