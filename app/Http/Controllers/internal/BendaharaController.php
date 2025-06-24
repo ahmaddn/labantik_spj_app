@@ -70,7 +70,7 @@ class BendaharaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique:bendahara,name,' . $id,
+            'name' => 'required' . $id,
             'jenis' => 'required|in:BOS,BODP,',
             'nip' => 'required|digits:18|unique:bendahara,nip,' . $id,
             'school' => 'required|numeric',

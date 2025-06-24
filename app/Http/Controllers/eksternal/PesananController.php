@@ -172,25 +172,25 @@ class PesananController extends Controller
             if (!$barang) {
                 return back()->withErrors([
                     "amount_accepted.$barangID" => "Barang tidak valid."
-                ]);
+                ])->withInput();
             }
 
             if (!is_numeric($jumlah) || $jumlah < 0) {
                 return back()->withErrors([
                     "amount_accepted.$barangID" => "Jumlah harus berupa angka positif."
-                ]);
+                ])->withInput();
             }
 
             if ($jumlah > $barang->amount) {
                 return back()->withErrors([
                     "amount_accepted.$barangID" => "Jumlah melebihi stok pesanan: $barang->amount."
-                ]);
+                ])->withInput();
             }
 
             if (!isset($request->condition[$barangID]) || !in_array($request->condition[$barangID], ['Baik', 'Buruk'])) {
                 return back()->withErrors([
                     "condition.$barangID" => "Kondisi tidak valid untuk barang ID $barangID."
-                ]);
+                ])->withInput();
             }
         }
 
