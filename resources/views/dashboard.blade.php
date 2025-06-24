@@ -88,7 +88,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Development Process</h5>
+                        <h3 class="card-title">Development Progress</h3>
 
                         <div class="cd-horizontal-timeline">
                             <div class="timeline">
@@ -105,7 +105,6 @@
                                             <li><a href="#0" data-date="19/05/2025">19 Mei</a>
                                             <li><a href="#0" data-date="21/05/2025">21 Mei</a>
                                             <li><a href="#0" data-date="18/06/2025">18 Jun</a>
-                                            <li><a href="#0" data-date="19/06/2025">19 Jun</a>
                                             <li><a href="#0" data-date="20/06/2025">20 Jun</a>
                                             <li><a href="#0" data-date="21/06/2025">21 Jun</a>
                                             <li><a href="#0" data-date="22/06/2025">22 Jun</a>
@@ -227,15 +226,6 @@
                                     </li>
                                     <li data-date="18/06/2025">
                                         <h3><small>Helper Terbilang</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Menambahkan helper untuk mendeskripsikan "terbilang".
-                                        </p>
-                                    </li>
-                                    <li data-date="19/06/2025">
-                                        <h3><small>Add Helper Terbilang</small></h3>
                                         <p class="m-t-40"><strong>
                                                 Berikut merupakan beberapa perubahan di tanggal ini:</strong>
                                         </p>

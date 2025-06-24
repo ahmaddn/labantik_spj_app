@@ -77,7 +77,7 @@ public function edit($id)
 public function update(Request $request, $id)
 {
     $request->validate([
-        'name' => 'required|unique:kepsek,name',
+        'name' => 'required',
         'nip' => 'required|digits:18',
         'school' => 'required|numeric',
         'address' => 'required',

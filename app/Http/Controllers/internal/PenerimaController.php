@@ -70,7 +70,7 @@ class PenerimaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique:penerima,name,' . $id,
+            'name' => 'required|',
             'nip' => 'required|digits:18|unique:penerima,nip,' . $id,
             'school' => 'required|numeric',
             'position' => 'required|string',
