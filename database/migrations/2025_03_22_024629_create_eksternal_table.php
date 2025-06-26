@@ -11,29 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('barang', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->integer('amount');
-            $table->integer('price');
-            $table->integer('total');
-            $table->string('unit');
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
         Schema::create('kegiatan', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('userID');
             $table->string('name');
             $table->date('order');
             $table->date('deadline');
             $table->string('info')->nullable();
-            $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('userID')->references('id')->on('users');
         });
 
         Schema::create('penyedia', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('userID');
             $table->string('company');
             $table->bigInteger('npwp');
             $table->string('address');
@@ -41,29 +33,48 @@ return new class extends Migration
             $table->bigInteger('account');
             $table->string('delegation_name');
             $table->string('delegate_position');
-            $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('userID')->references('id')->on('users');
         });
 
         Schema::create('pesanan', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('userID');
             $table->string('invoice_num');
+            $table->string('order_num');
+            $table->string('note_num');
+            $table->string('bast_num');
+            $table->integer('type_num');
             $table->unsignedInteger('kegiatanID');
             $table->unsignedInteger('penyediaID');
             $table->unsignedInteger('penerimaID');
             $table->unsignedInteger('bendaharaID');
-            $table->integer('budget');
             $table->date('paid');
-            $table->enum('status', ['process', 'done'])->default('process');
             $table->date('billing')->nullable();
-            $table->date('accepted')->nullable();
-            $table->timestamps();
+            $table->date('accepted');
             $table->softDeletes();
 
             $table->foreign('kegiatanID')->references('id')->on('kegiatan');
             $table->foreign('penyediaID')->references('id')->on('penyedia');
             $table->foreign('penerimaID')->references('id')->on('penerima');
             $table->foreign('bendaharaID')->references('id')->on('bendahara');
+            $table->foreign('userID')->references('id')->on('users');
+        });
+
+        Schema::create('barang', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('pesananID');
+            $table->unsignedInteger('userID');
+            $table->string('name');
+            $table->integer('amount');
+            $table->integer('price');
+            $table->integer('total');
+            $table->string('unit');
+            $table->softDeletes();
+
+            $table->foreign('pesananID')->references('id')->on('pesanan');
+            $table->foreign('userID')->references('id')->on('users');
         });
     }
 
@@ -77,5 +88,4 @@ return new class extends Migration
         Schema::dropIfExists('kegiatan');
         Schema::dropIfExists('penyedia');
     }
-
 };

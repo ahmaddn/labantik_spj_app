@@ -1,27 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\eksternal;
+namespace App\Http\Controllers\internal;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Penyedia;
+use Illuminate\Support\Facades\Auth;
 
 class PenyediaController extends Controller
 {
     public function index()
     {
-        $penyedia = Penyedia::all();
-        return view('eksternal.penyedia.index', compact('penyedia'));
+        $id = Auth::id();
+        $penyedia = Penyedia::where('userID', $id)->get();
+        return view('internal.penyedia.index', compact('penyedia'));
     }
 
     public function add()
     {
-        return view('eksternal.penyedia.add');
+        return view('internal.penyedia.add');
     }
 
     public function addPenyedia(Request $request)
     {
         if ($request->isMethod('post')) {
+            $id = Auth::id();
             $request->validate([
                 'company' => 'required|string|max:255',
                 'npwp' => 'required|digits:15',
@@ -40,10 +43,11 @@ class PenyediaController extends Controller
                 'delegate_position' => $request->input('delegate_position'),
                 'bank' => $request->input('bank'),
                 'account' => $request->input('account'),
+                'userID' => $id
             ]);
 
-            return redirect()->route('eksternal.penyedia.index')
-                             ->with('success', 'Data Penyedia berhasil ditambahkan.');
+            return redirect()->route('internal.penyedia.index')
+                ->with('success', 'Data Penyedia berhasil ditambahkan.');
         }
 
         return redirect()->back();
@@ -54,14 +58,14 @@ class PenyediaController extends Controller
         $penyedia = Penyedia::findOrFail($id);
         $penyedia->delete();
 
-        return redirect()->route('eksternal.penyedia.index')
-                         ->with('success', 'Data Penyedia berhasil dihapus.');
+        return redirect()->route('internal.penyedia.index')
+            ->with('success', 'Data Penyedia berhasil dihapus.');
     }
 
     public function edit($id)
     {
         $penyedia = Penyedia::findOrFail($id);
-        return view('eksternal.penyedia.edit', compact('penyedia'));
+        return view('internal.penyedia.edit', compact('penyedia'));
     }
 
     public function update(Request $request, $id)
@@ -87,7 +91,7 @@ class PenyediaController extends Controller
             'account' => $request->input('account'),
         ]);
 
-        return redirect()->route('eksternal.penyedia.index')
-                         ->with('success', 'Data Penyedia berhasil diperbarui.');
+        return redirect()->route('internal.penyedia.index')
+            ->with('success', 'Data Penyedia berhasil diperbarui.');
     }
 }

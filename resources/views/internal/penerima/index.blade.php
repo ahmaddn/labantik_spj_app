@@ -45,7 +45,6 @@
                                             <th class="px-4 py-2">Nama Penerima</th>
                                             <th class="px-4 py-2">NIP</th>
                                             <th class="px-4 py-2">Jabatan</th>
-                                            <th class="px-4 py-2">Tahun Ajaran</th>
                                             <th class="px-4 py-2">Action</th>
                                         </tr>
                                     </thead>
@@ -56,7 +55,6 @@
                                                 <td class="px-4 py-2">{{ $row->name }}</td>
                                                 <td class="px-4 py-2">{{ $row->nip }}</td>
                                                 <td class="px-4 py-2">{{ $row->position ?? '' }}</td>
-                                                <td class="px-4 py-2">{{ $row->school }}</td>
                                                 <td class="px-4 py-2">
                                                     <!-- Edit Button -->
                                                     <a href="{{ route('internal.penerima.edit', $row->id) }}"

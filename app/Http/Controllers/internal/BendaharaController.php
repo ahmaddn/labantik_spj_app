@@ -13,7 +13,8 @@ class BendaharaController extends Controller
 {
     public function index()
     {
-        $bendahara = Bendahara::all();
+        $id = Auth::id();
+        $bendahara = Bendahara::where('userID', $id)->get();
         return view('internal.bendahara.index', compact('bendahara'));
     }
 
@@ -25,22 +26,24 @@ class BendaharaController extends Controller
     public function addBendahara(Request $request)
     {
         if ($request->isMethod('post')) {
+            $id = Auth::id();
+
             $request->validate([
                 'name' => 'required|unique:bendahara,name',
                 'jenis' => 'required|in:BOS,BODP,',
                 'nip' => 'required|digits:18|unique:bendahara,nip',
-                'school' => 'required|numeric',
             ]);
 
             Bendahara::create([
                 'name' => $request->input('name'),
                 'type' => $request->input('jenis'),
                 'nip' => $request->input('nip'),
-                'school' => $request->input('school'),
+                'userID' => $id
+
             ]);
 
             return redirect()->route('internal.bendahara.index')
-                             ->with('success', 'Data Bendahara berhasil ditambahkan.');
+                ->with('success', 'Data Bendahara berhasil ditambahkan.');
         }
 
         $data['user'] = User::find(Session::get('userid'));
@@ -53,7 +56,7 @@ class BendaharaController extends Controller
         $bendahara->delete();
 
         return redirect()->route('internal.bendahara.index')
-                         ->with('success', 'Data Bendahara berhasil dihapus.');
+            ->with('success', 'Data Bendahara berhasil dihapus.');
     }
 
     public function edit($id)
@@ -73,7 +76,6 @@ class BendaharaController extends Controller
             'name' => 'required' . $id,
             'jenis' => 'required|in:BOS,BODP,',
             'nip' => 'required|digits:18|unique:bendahara,nip,' . $id,
-            'school' => 'required|numeric',
         ]);
 
         $bendahara = Bendahara::findOrFail($id);
@@ -81,10 +83,9 @@ class BendaharaController extends Controller
             'name' => $request->input('name'),
             'nip' => $request->input('nip'),
             'type' => $request->input('jenis'),
-            'school' => $request->input('school'),
-            ]);
+        ]);
 
         return redirect()->route('internal.bendahara.index')
-                         ->with('success', 'Data Bendahara berhasil diperbarui.');
+            ->with('success', 'Data Bendahara berhasil diperbarui.');
     }
 }

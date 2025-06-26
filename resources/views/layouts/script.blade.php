@@ -3,14 +3,23 @@
 <script src="{{ asset('assets/js/feather.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/timeline/horizontal-timeline.js') }}"></script>
+<script src="{{ asset('assets/plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/twitter-bootstrap-wizard/prettify.js') }}"></script>
+<script src="{{ asset('assets/plugins/twitter-bootstrap-wizard/form-wizard.js') }}"></script>
 <script src="{{ asset('assets/js/script.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
 <script>
-    $(document).ready(function() {
-        $('#selectBarang').select2({
-            placeholder: '-- Pilih atau Cari Barang --',
-            allowClear: true
+    document.addEventListener('input', function() {
+        const rows = document.querySelectorAll('.row.mb-3.pb-3');
+        rows.forEach(row => {
+            const hargaInput = row.querySelector('.harga');
+            const jumlahInput = row.querySelector('.jumlah');
+            const totalInput = row.querySelector('.total');
+
+            const harga = parseInt(hargaInput?.value || 0);
+            const jumlah = parseInt(jumlahInput?.value || 0);
+            totalInput.value = harga * jumlah;
+
+
         });
     });
 </script>

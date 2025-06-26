@@ -25,66 +25,6 @@
 
 
         <div class="row">
-            <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                <div class="card bg-comman w-100">
-                    <div class="card-body">
-                        <div class="db-widgets d-flex justify-content-between align-items-center">
-                            <div class="db-info">
-                                <h6>Students</h6>
-                                <h3>50055</h3>
-                            </div>
-                            <div class="db-icon">
-                                <img src="assets/img/icons/dash-icon-01.svg" alt="Dashboard Icon">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                <div class="card bg-comman w-100">
-                    <div class="card-body">
-                        <div class="db-widgets d-flex justify-content-between align-items-center">
-                            <div class="db-info">
-                                <h6>Awards</h6>
-                                <h3>50+</h3>
-                            </div>
-                            <div class="db-icon">
-                                <img src="assets/img/icons/dash-icon-02.svg" alt="Dashboard Icon">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                <div class="card bg-comman w-100">
-                    <div class="card-body">
-                        <div class="db-widgets d-flex justify-content-between align-items-center">
-                            <div class="db-info">
-                                <h6>Department</h6>
-                                <h3>30+</h3>
-                            </div>
-                            <div class="db-icon">
-                                <img src="assets/img/icons/dash-icon-03.svg" alt="Dashboard Icon">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-12 d-flex">
-                <div class="card bg-comman w-100">
-                    <div class="card-body">
-                        <div class="db-widgets d-flex justify-content-between align-items-center">
-                            <div class="db-info">
-                                <h6>Revenue</h6>
-                                <h3>$505</h3>
-                            </div>
-                            <div class="db-icon">
-                                <img src="assets/img/icons/dash-icon-04.svg" alt="Dashboard Icon">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
@@ -110,6 +50,7 @@
                                             <li><a href="#0" data-date="22/06/2025">22 Jun</a>
                                             <li><a href="#0" data-date="23/06/2025">23 Jun</a>
                                             <li><a href="#0" data-date="24/06/2025">24 Jun</a>
+                                            <li><a href="#0" data-date="26/06/2025">26 Jun</a>
                                             </li>
                                         </ol>
                                         <span class="filling-line" aria-hidden="true"></span>
@@ -307,10 +248,10 @@
                                         <p class="m-t-10">
                                             1. Memperbaiki logika payload form penerimaan/penyerahan dan penanganan
                                             backend-nya, menyesuaikan migrasi pesanan dan pesanan barang, serta menyesuaikan
-                                            tampilan di form penerimaan/penyerahan.
-                                            2. Menyesuaikan dengan format PDF.
-                                            3. Merapikan format tulisan agar sesuai dengan sampel.
-                                            4. Menambahkan timeline di halaman dashboard.
+                                            tampilan di form penerimaan/penyerahan. <br>
+                                            2. Menyesuaikan dengan format PDF. <br>
+                                            3. Merapikan format tulisan agar sesuai dengan sampel. <br>
+                                            4. Menambahkan timeline di halaman dashboard. <br>
                                         </p>
                                     </li>
                                     <li data-date="24/06/2025">
@@ -322,6 +263,19 @@
                                             1. Memperbaiki fitur edit bendahara, kepsek, dan penerima serta menampilkan
                                             semua
                                             input jika error di halaman form penyerahan
+                                        </p>
+                                    </li>
+                                    <li data-date="26/06/2025">
+                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
+                                        <p class="m-t-40"><strong>
+                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
+                                        </p>
+                                        <p class="m-t-10">
+                                            1. Memperbaiki workflow (alur kerja) pesanan. <br>
+                                            2. Mengubah form add pesanan menjadi form wizard. <br>
+                                            3. Menyesuaikan migrasi pesanan dan relasi pesanan. <br>
+                                            4. Menghapus menu barang dan inputan yang tidak diperlukan. <br>
+                                            5. Mengintegrasikan input barang ke form wizard pesanan. <br>
                                         </p>
                                     </li>
                                 </ol>

@@ -11,6 +11,7 @@ class Penyedia extends Model
     //
     protected $table = 'penyedia';
     protected $primaryKey = 'id';
+    public $timestamps = false;
 
     protected $fillable = [
         'company',
@@ -20,5 +21,6 @@ class Penyedia extends Model
         'account',
         'delegation_name',
         'delegate_position',
+        'userID'
     ];
 }

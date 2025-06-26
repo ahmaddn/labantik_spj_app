@@ -53,19 +53,20 @@
                                         @foreach ($kepsek as $row)
                                             <tr class="border-b">
                                                 <td class="px-4 py-2">{{ $loop->iteration }}</td>
-                                                <td class="px-4 py-2">{{ $row->name }}</td>
-                                                <td class="px-4 py-2">{{ $row->nip }}</td>
-                                                <td class="px-4 py-2">{{ $row->school }}</td>
-                                                <td class="px-4 py-2">{{ $row->address }}</td>
+                                                <td class="px-4 py-2">{{ $row->name ?? '' }}</td>
+                                                <td class="px-4 py-2">{{ $row->nip ?? '' }}</td>
+                                                <td class="px-4 py-2">{{ $row->school ?? '' }}</td>
+                                                <td class="px-4 py-2">{{ $row->address ?? '' }}</td>
                                                 <td class="px-4 py-2">
                                                     <!-- Edit Button -->
-                                                    <a href="{{ route('internal.kepsek.edit', $row->id) }}"
+                                                    <a href="{{ route('internal.kepsek.edit', $row->id ?? '') }}"
                                                         class="btn btn-sm btn-outline-info">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
 
                                                     <!-- Delete Button -->
-                                                    <form action="{{ route('internal.kepsek.deleteKepsek', $row->id) }}"
+                                                    <form
+                                                        action="{{ route('internal.kepsek.deleteKepsek', $row->id ?? '') }}"
                                                         method="POST" class="d-inline-block"
                                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                                         @csrf
@@ -77,6 +78,12 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                        @if ($kepsek->isEmpty())
+                                            <tr>
+                                                <td colspan="6" class="text-center py-4 text-gray-500">Tidak ada
+                                                    data kepala sekolah.</td>
+                                            </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

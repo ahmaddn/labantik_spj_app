@@ -10,11 +10,13 @@ class Kepsek extends Model
     use SoftDeletes;
     protected $table = 'kepsek';
     protected $primaryKey = 'id';
+    public $timestamps = false;
 
     protected $fillable = [
         'name',
         'nip',
         'school',
         'address',
+        'userID'
     ];
 }

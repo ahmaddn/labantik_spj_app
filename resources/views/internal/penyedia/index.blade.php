@@ -1,14 +1,15 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="content container-fluid">
 
         <div class="page-header">
             <div class="row">
                 <div class="col">
-                    <h3 class="page-title">Data Barang</h3>
+                    <h3 class="page-title">Data Penyedia</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Data Barang</li>
+                        <li class="breadcrumb-item active">Data Penyedia</li>
                     </ul>
                 </div>
             </div>
@@ -23,19 +24,19 @@
 
         <div class="card p-4 bg-white rounded shadow">
             <div class="flex justify-between mb-4">
-                <a href="{{ route('eksternal.barang.add') }}"
+                <a href="{{ route('internal.penyedia.add') }}"
                     class="btn btn-primary text-white px-4 py-2 rounded hover:bg-blue-600">
-                    Tambah Barang
+                    Tambah Penyedia
                 </a>
             </div>
 
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="card">
+                    <div class="card card-table">
                         <div class="card-header">
-                            <h5 class="card-title mb-2">Daftar Barang</h5>
+                            <h5 class="card-title mb-2">Daftar Penyedia</h5>
                             <p class="card-text">
-                                Ini adalah daftar barang yang telah dicatat.
+                                Berikut adalah daftar penyedia yang terdaftar dalam sistem.
                             </p>
                         </div>
                         <div class="card-body">
@@ -44,30 +45,30 @@
                                     <thead>
                                         <tr class="bg-gray-200 text-gray-700">
                                             <th class="px-4 py-2">No</th>
-                                            <th class="px-4 py-2">Nama Barang</th>
-                                            <th class="px-4 py-2">Jumlah</th>
-                                            <th class="px-4 py-2">Harga</th>
-                                            <th class="px-4 py-2">Total</th>
+                                            <th class="px-4 py-2">Perusahaan</th>
+                                            <th class="px-4 py-2">NPWP</th>
+                                            <th class="px-4 py-2">Alamat</th>
+                                            <th class="px-4 py-2">Nama Delegasi</th>
+                                            <th class="px-4 py-2">Jabatan</th>
                                             <th class="px-4 py-2">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($barang as $row)
+                                        @foreach ($penyedia as $item)
                                             <tr class="border-b">
                                                 <td class="px-4 py-2">{{ $loop->iteration }}</td>
-                                                <td class="px-4 py-2">{{ $row->name }}</td>
-                                                <td class="px-4 py-2">{{ $row->amount . ' ' . $row->unit }}</td>
-                                                <td class="px-4 py-2">Rp {{ number_format($row->price, 0, ',', '.') }}
-                                                </td>
-                                                <td class="px-4 py-2">Rp {{ number_format($row->total, 0, ',', '.') }}
-                                                </td>
+                                                <td class="px-4 py-2">{{ $item->company }}</td>
+                                                <td class="px-4 py-2">{{ $item->npwp }}</td>
+                                                <td class="px-4 py-2">{{ $item->address }}</td>
+                                                <td class="px-4 py-2">{{ $item->delegation_name }}</td>
+                                                <td class="px-4 py-2">{{ $item->delegate_position }}</td>
                                                 <td class="px-4 py-2">
-                                                    <a href="{{ route('eksternal.barang.edit', $row->id) }}"
+                                                    <a href="{{ route('internal.penyedia.edit', $item->id) }}"
                                                         class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
 
-                                                    <form action="{{ route('eksternal.barang.destroy', $row->id) }}"
+                                                    <form action="{{ route('internal.penyedia.destroy', $item->id) }}"
                                                         method="POST" class="d-inline-block"
-                                                        onsubmit="return confirm('Yakin ingin menghapus barang ini?');">
+                                                        onsubmit="return confirm('Yakin ingin menghapus kegiatan ini?');">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-sm btn-outline-danger"><i
@@ -76,10 +77,10 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-                                        @if ($barang->isEmpty())
+                                        @if ($penyedia->isEmpty())
                                             <tr>
-                                                <td colspan="6" class="text-center py-4 text-gray-500">Tidak ada data
-                                                    barang.</td>
+                                                <td colspan="7" class="text-center py-4 text-gray-500">Belum ada data
+                                                    penyedia.</td>
                                             </tr>
                                         @endif
                                     </tbody>

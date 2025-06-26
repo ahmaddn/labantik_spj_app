@@ -58,7 +58,8 @@
                                                 <td class="px-4 py-2">{{ $loop->iteration }}</td>
                                                 <td class="px-4 py-2">{{ $row->name }}</td>
                                                 <td class="px-4 py-2">
-                                                    {{ \Carbon\Carbon::parse($row->order)->translatedFormat('d F Y') }}</td>
+                                                    {{ \Carbon\Carbon::parse($row->order)->translatedFormat('d F Y') }}
+                                                </td>
                                                 <td class="px-4 py-2">
                                                     {{ \Carbon\Carbon::parse($row->deadline)->translatedFormat('d F Y') }}
                                                 </td>

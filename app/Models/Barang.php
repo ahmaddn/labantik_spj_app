@@ -9,15 +9,17 @@ class Barang extends Model
 {
     use SoftDeletes;
     //
-     protected $table = 'barang';
+    protected $table = 'barang';
     protected $primaryKey = 'id';
-
+    public $timestamps = false;
     protected $fillable = [
         'name',
+        'pesananID',
+        'userID',
         'amount',
         'price',
         'total',
-        'unit'
+        'unit',
     ];
 
     public function pesanans()

@@ -13,7 +13,8 @@ class PenerimaController extends Controller
 {
     public function index()
     {
-        $penerima = Penerima::all();
+        $id = Auth::user()->id;
+        $penerima = Penerima::where('userID', $id)->get();
         return view('internal.penerima.index', compact('penerima'));
     }
 
@@ -26,22 +27,22 @@ class PenerimaController extends Controller
     public function addPenerima(Request $request)
     {
         if ($request->isMethod('post')) {
+            $id = Auth::id();
             $request->validate([
                 'name' => 'required|unique:penerima,name',
                 'nip' => 'required|digits:18|unique:penerima,nip',
-                'school' => 'required|numeric',
                 'position' => 'required|string',
             ]);
 
             Penerima::create([
                 'name' => $request->input('name'),
                 'nip' => $request->input('nip'),
-                'school' => $request->input('school'),
                 'position' => $request->input('position'),
+                'userID' => $id
             ]);
 
             return redirect()->route('internal.penerima.index')
-                             ->with('success', 'Data Penerima berhasil ditambahkan.');
+                ->with('success', 'Data Penerima berhasil ditambahkan.');
         }
 
         return redirect()->back();
@@ -53,7 +54,7 @@ class PenerimaController extends Controller
         $penerima->delete();
 
         return redirect()->route('internal.penerima.index')
-                         ->with('success', 'Data Penerima berhasil dihapus.');
+            ->with('success', 'Data Penerima berhasil dihapus.');
     }
 
     public function edit($id)
@@ -72,7 +73,6 @@ class PenerimaController extends Controller
         $request->validate([
             'name' => 'required|',
             'nip' => 'required|digits:18|unique:penerima,nip,' . $id,
-            'school' => 'required|numeric',
             'position' => 'required|string',
         ]);
 
@@ -80,11 +80,10 @@ class PenerimaController extends Controller
         $penerima->update([
             'name' => $request->input('name'),
             'nip' => $request->input('nip'),
-            'school' => $request->input('school'),
             'position' => $request->input('position'),
         ]);
 
         return redirect()->route('internal.penerima.index')
-                         ->with('success', 'Data Penerima berhasil diperbarui.');
+            ->with('success', 'Data Penerima berhasil diperbarui.');
     }
 }
