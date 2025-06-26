@@ -45,7 +45,6 @@
                                             <th class="px-4 py-2">Nama Bendahara</th>
                                             <th class="px-4 py-2">Bendahara</th>
                                             <th class="px-4 py-2">NIP</th>
-                                            <th class="px-4 py-2">Tahun Ajaran</th>
                                             <th class="px-4 py-2">Action</th>
                                         </tr>
                                     </thead>
@@ -56,7 +55,6 @@
                                                 <td class="px-4 py-2">{{ $row->name }}</td>
                                                 <td class="px-4 py-2">{{ $row->type }}</td>
                                                 <td class="px-4 py-2">{{ $row->nip }}</td>
-                                                <td class="px-4 py-2">{{ $row->school }}</td>
                                                 <td class="px-4 py-2">
                                                     <!-- Edit Button -->
                                                     <a href="{{ route('internal.bendahara.edit', $row->id) }}"
@@ -78,6 +76,12 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                        @if ($bendahara->isEmpty())
+                                            <tr>
+                                                <td colspan="5" class="text-center py-4 text-gray-500">Tidak ada
+                                                    data bendahara.</td>
+                                            </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

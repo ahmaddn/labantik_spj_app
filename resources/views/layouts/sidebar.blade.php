@@ -19,6 +19,8 @@
                                 class="{{ Route::is('internal.bendahara.index') ? 'active' : '' }}">Bendahara</a></li>
                         <li><a href="{{ route('internal.penerima.index') }}"
                                 class="{{ Route::is('internal.penerima.index') ? 'active' : '' }}">Penerima</a></li>
+                        <li><a href="{{ route('internal.penyedia.index') }}"
+                                class="{{ Route::is('internal.penyedia.index') ? 'active' : '' }}">Penyedia</a></li>
                     </ul>
                 </li>
                 <li class="submenu {{ Route::is('eksternal.*') ? 'active' : '' }}">
@@ -27,10 +29,6 @@
                     <ul>
                         <li><a href="{{ route('eksternal.kegiatan.index') }}"
                                 class="{{ Route::is('eksternal.kegiatan.index') ? 'active' : '' }}">Kegiatan</a></li>
-                        <li><a href="{{ route('eksternal.barang.index') }}"
-                                class="{{ Route::is('eksternal.barang.index') ? 'active' : '' }}">Barang</a></li>
-                        <li><a href="{{ route('eksternal.penyedia.index') }}"
-                                class="{{ Route::is('eksternal.penyedia.index') ? 'active' : '' }}">Penyedia</a></li>
                         <li><a href="{{ route('eksternal.pesanan.index') }}"
                                 class="{{ Route::is('eksternal.pesanan.index') ? 'active' : '' }}">Pesanan</a></li>
                     </ul>

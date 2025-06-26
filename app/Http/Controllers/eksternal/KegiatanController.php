@@ -5,13 +5,15 @@ namespace App\Http\Controllers\eksternal;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Kegiatan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class KegiatanController extends Controller
 {
     public function index()
     {
-        $kegiatan = Kegiatan::all();
+        $id = Auth::id();
+        $kegiatan = Kegiatan::where('userID', $id)->get();
         return view('eksternal.kegiatan.index', compact('kegiatan'));
     }
 
@@ -23,21 +25,23 @@ class KegiatanController extends Controller
     public function addKegiatan(Request $request)
     {
         if ($request->isMethod('post')) {
+            $id = Auth::id();
             $request->validate([
                 'name' => 'required|string|max:255',
                 'order' => 'required|date',
-                'deadline' => 'required|date|after_or_equal:'. $request->order,
+                'deadline' => 'required|date|after_or_equal:' . $request->order,
                 'info' => 'nullable|string|max:255',
             ]);
-     Kegiatan::create([
+            Kegiatan::create([
                 'name' => $request->input('name'),
                 'order' => $request->input('order'),
                 'deadline' => $request->input('deadline'),
                 'info' => $request->input('info'),
+                'userID' => $id
             ]);
 
             return redirect()->route('eksternal.kegiatan.index')
-                             ->with('success', 'Data Kegiatan berhasil ditambahkan.');
+                ->with('success', 'Data Kegiatan berhasil ditambahkan.');
         }
 
         return redirect()->back();
@@ -49,7 +53,7 @@ class KegiatanController extends Controller
         $kegiatan->delete();
 
         return redirect()->route('eksternal.kegiatan.index')
-                         ->with('success', 'Data Kegiatan berhasil dihapus.');
+            ->with('success', 'Data Kegiatan berhasil dihapus.');
     }
 
     public function edit($id)
@@ -64,7 +68,7 @@ class KegiatanController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'order' => 'required|date',
-            'deadline' => 'required|date|after_or_equal:'. $request->order,
+            'deadline' => 'required|date|after_or_equal:' . $request->order,
             'info' => 'nullable|string|max:255',
         ]);
 
@@ -77,6 +81,6 @@ class KegiatanController extends Controller
         ]);
 
         return redirect()->route('eksternal.kegiatan.index')
-                         ->with('success', 'Data Kegiatan berhasil diperbarui.');
+            ->with('success', 'Data Kegiatan berhasil diperbarui.');
     }
 }

@@ -8,11 +8,8 @@ use App\Http\Controllers\internal\BendaharaController;
 use App\Http\Controllers\internal\PenerimaController;
 
 use App\Http\Controllers\eksternal\KegiatanController;
-use App\Http\Controllers\eksternal\BarangController;
-use App\Http\Controllers\eksternal\PenyediaController;
 use App\Http\Controllers\eksternal\PesananController;
-
-
+use App\Http\Controllers\internal\PenyediaController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -63,6 +60,13 @@ Route::prefix('internal')->name('internal.')->middleware('auth')->group(function
     Route::post('penerima/tambah', [PenerimaController::class, 'addPenerima'])->name('penerima.addPenerima');
     Route::post('/penerima/{id}/update', [PenerimaController::class, 'update'])->name('internal.penerima.update');
     Route::delete('penerima/deletepenerima/{id}', [PenerimaController::class, 'deletePenerima'])->name('penerima.deletePenerima');
+
+    Route::get('/penyedia', [PenyediaController::class, 'index'])->name('penyedia.index');
+    Route::get('/penyedia/add', [PenyediaController::class, 'add'])->name('penyedia.add');
+    Route::post('/penyedia/add', [PenyediaController::class, 'addPenyedia'])->name('penyedia.store');
+    Route::get('/penyedia/edit/{id}', [PenyediaController::class, 'edit'])->name('penyedia.edit');
+    Route::put('/penyedia/update/{id}', [PenyediaController::class, 'update'])->name('penyedia.update');
+    Route::delete('/penyedia/delete/{id}', [PenyediaController::class, 'deletePenyedia'])->name('penyedia.destroy');
 });
 
 Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(function () {
@@ -73,29 +77,13 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::put('/update/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
     Route::delete('/delete/{id}', [KegiatanController::class, 'deleteKegiatan'])->name('kegiatan.deleteKegiatan');
 
-    Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
-    Route::get('/barang/add', [BarangController::class, 'add'])->name('barang.add');
-    Route::post('/barang/add', [BarangController::class, 'store'])->name('barang.store');
-    Route::get('/barang/edit/{id}', [BarangController::class, 'edit'])->name('barang.edit');
-    Route::put('/barang/update/{id}', [BarangController::class, 'update'])->name('barang.update');
-    Route::delete('/barang/delete/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
-
-    Route::get('/penyedia', [PenyediaController::class, 'index'])->name('penyedia.index');
-    Route::get('/penyedia/add', [PenyediaController::class, 'add'])->name('penyedia.add');
-    Route::post('/penyedia/add', [PenyediaController::class, 'addPenyedia'])->name('penyedia.store');
-    Route::get('/penyedia/edit/{id}', [PenyediaController::class, 'edit'])->name('penyedia.edit');
-    Route::put('/penyedia/update/{id}', [PenyediaController::class, 'update'])->name('penyedia.update');
-    Route::delete('/penyedia/delete/{id}', [PenyediaController::class, 'deletePenyedia'])->name('penyedia.destroy');
-
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan.index');
-    Route::get('/pesanan/add', [PesananController::class, 'add'])->name('pesanan.add');
+    Route::get('/pesanan/addSession', [PesananController::class, 'addSession'])->name('pesanan.addSession');
+    Route::get('/pesanan/addForm', [PesananController::class, 'addForm'])->name('pesanan.addForm');
+    Route::post('/pesanan/session', [PesananController::class, 'session'])->name('pesanan.session');
     Route::post('/pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
     Route::get('/pesanan/edit/{id}', [PesananController::class, 'edit'])->name('pesanan.edit');
     Route::put('/pesanan/update/{id}', [PesananController::class, 'update'])->name('pesanan.update');
     Route::delete('/pesanan/delete/{id}', [PesananController::class, 'delete'])->name('pesanan.delete');
     Route::get('/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
-
-    Route::get('/pesanan/submission/{id}', [PesananController::class, 'addSubmission'])->name('submission.add');
-    Route::put('/pesanan/submission', [PesananController::class, 'storeSubmission'])->name('submission.store');
-
 });

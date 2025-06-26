@@ -15,22 +15,27 @@ class Pesanan extends Model
 {
     use SoftDeletes;
     //
-    protected $table='pesanan';
-    protected $primaryKey='id';
+    protected $table = 'pesanan';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
     protected $fillable = [
-            'invoice_num',
-            'kegiatanID',
-            'penyediaID',
-            'penerimaID',
-            'barangID',
-            'bendaharaID',
-            'budget',
-            'paid',
-            'status',
-            'condition',
-            'accepted',
-            'billing'
-        ];
+        'invoice_num',
+        'order_num',
+        'note_num',
+        'bast_num',
+        'type_num',
+        'userID',
+        'kegiatanID',
+        'penyediaID',
+        'penerimaID',
+        'barangID',
+        'bendaharaID',
+        'paid',
+        'status',
+        'condition',
+        'accepted',
+        'billing'
+    ];
 
 
     public function kegiatan()
@@ -50,16 +55,10 @@ class Pesanan extends Model
 
     public function barang()
     {
-        return $this->belongsTo(Barang::class, 'barangID', 'id');
+        return $this->hasMany(Barang::class, 'pesananID', 'id');
     }
     public function bendahara()
     {
         return $this->belongsTo(Bendahara::class, 'bendaharaID', 'id');
-    }
-
-
-    public function barangs()
-    {
-        return $this->belongsToMany(Barang::class, 'pesanan_barang', 'pesananID', 'barangID');
     }
 }

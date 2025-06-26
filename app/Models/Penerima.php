@@ -11,11 +11,13 @@ class Penerima extends Model
     //
     protected $table = 'penerima';
     protected $primaryKey = 'id';
+    public $timestamps = false;
 
     protected $fillable = [
         'name',
         'nip',
         'position',
         'school',
+        'userID'
     ];
 }

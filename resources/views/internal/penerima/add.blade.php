@@ -54,16 +54,6 @@
                                 @enderror
                             </div>
 
-                            {{-- Tahun Ajaran --}}
-                            <div class="form-group">
-                                <label>Tahun Ajaran</label>
-                                <input type="number" class="form-control" name="school" min="2025" max="2100"
-                                    value="{{ old('school') }}">
-                                @error('school')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-
                             <div class="text-end">
                                 <a class="btn btn-secondary" href="{{ route('internal.penerima.index') }}">Kembali</a>
                                 <button type="submit" class="btn btn-primary">Simpan</button>

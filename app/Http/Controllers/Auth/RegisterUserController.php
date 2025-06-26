@@ -24,6 +24,7 @@ class RegisterUserController extends Controller
             'username' => ['required', 'string', 'max:255', 'unique:users', 'regex:/^[a-zA-Z0-9_.]+$/', 'min:6'],
             'namalengkap' => ['required', 'string', 'max:255',],
             'password' => ['required', 'confirmed','min:8'],
+            'password_confirmation' => ['required']
         ]);
         // Simpan user ke database
         $user = User::create([
