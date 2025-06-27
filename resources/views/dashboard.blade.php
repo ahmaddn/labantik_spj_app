@@ -288,6 +288,7 @@
                                             1. Menambahkan form wizard single page di halaman tambah barang. <br>
                                             2. Menyesuaikan tampilan edit pesanan. <br>
                                             3. Memperbaiki dan menyesuaikan fungsi update pesanan. <br>
+                                            3. Menyesuaikan tampilan print dengan sample pdf. <br>
                                         </p>
                                     </li>
                                 </ol>
