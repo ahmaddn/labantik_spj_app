@@ -233,6 +233,6 @@ class PesananController extends Controller
         $kepsek = Kepsek::where('userID', $userID)->first(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
 
 
-        return view('template', compact('pesanan', 'kepsek', 'barang'));
+        return view('template', compact('pesanan', 'kepsek'));
     }
 }

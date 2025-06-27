@@ -65,7 +65,10 @@
                                                 <a href="{{ route('eksternal.pesanan.edit', $item->id) }}"
                                                     class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
                                                 <a href="{{ route('eksternal.pesanan.export', $item->id) }}"
-                                                    class="btn btn-sm btn-outline-primary"><i class="fas fa-print"></i></a>
+                                                    class="btn btn-sm btn-outline-primary" target="_blank">
+                                                    <i class="fas fa-print"></i>
+                                                </a>
+
                                                 <form action="{{ route('eksternal.pesanan.delete', $item->id) }}"
                                                     method="POST" class="d-inline-block"
                                                     onsubmit="return confirm('Yakin ingin menghapus data ini?');">
