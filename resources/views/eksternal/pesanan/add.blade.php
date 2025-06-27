@@ -95,10 +95,6 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-
-                        </div>
-
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Kegiatan</label>
                                 <select name="kegiatanID" class="form-control"
@@ -116,6 +112,9 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
+                        </div>
+
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Penyedia</label>
                                 <select name="penyediaID" class="form-control"
@@ -160,6 +159,28 @@
                                 <label>Jumlah Jenis Barang</label>
                                 <input type="number" name="type_num" class="form-control" value="{{ old('type_num') }}">
                                 @error('type_num')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Pajak</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp.</span>
+                                    <input type="number" name="tax" class="form-control"
+                                        value="{{ old('tax') }}">
+                                </div>
+                                @error('tax')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Ongkos Kirim</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp.</span>
+                                    <input type="number" name="shipping_cost" class="form-control"
+                                        value="{{ old('shipping_cost') }}">
+                                </div>
+                                @error('shipping_cost')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
