@@ -51,6 +51,7 @@
                                             <li><a href="#0" data-date="23/06/2025">23 Jun</a>
                                             <li><a href="#0" data-date="24/06/2025">24 Jun</a>
                                             <li><a href="#0" data-date="26/06/2025">26 Jun</a>
+                                            <li><a href="#0" data-date="27/06/2025">26 Jun</a>
                                             </li>
                                         </ol>
                                         <span class="filling-line" aria-hidden="true"></span>
@@ -276,6 +277,17 @@
                                             3. Menyesuaikan migrasi pesanan dan relasi pesanan. <br>
                                             4. Menghapus menu barang dan inputan yang tidak diperlukan. <br>
                                             5. Mengintegrasikan input barang ke form wizard pesanan. <br>
+                                        </p>
+                                    </li>
+                                    <li data-date="27/06/2025">
+                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
+                                        <p class="m-t-40"><strong>
+                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
+                                        </p>
+                                        <p class="m-t-10">
+                                            1. Menambahkan form wizard single page di halaman tambah barang. <br>
+                                            2. Menyesuaikan tampilan edit pesanan. <br>
+                                            3. Memperbaiki dan menyesuaikan fungsi update pesanan. <br>
                                         </p>
                                     </li>
                                 </ol>

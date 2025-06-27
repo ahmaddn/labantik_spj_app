@@ -10,7 +10,7 @@
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('eksternal.pesanan.index') }}">Pesanan</a></li>
-                        <li class="breadcrumb-item active">Tambah</li>
+                        <li class="breadcrumb-item active">Tambah Pesanan</li>
                     </ul>
                 </div>
             </div>
@@ -20,6 +20,12 @@
                 <h5 class="card-title">Form Pesanan</h5>
             </div>
             <div class="card-body">
+
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
                 <form action="{{ route('eksternal.pesanan.session') }}" method="POST">
                     @csrf
@@ -127,7 +133,6 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-
                             <div class="form-group">
                                 <label>Tanggal Penagihan</label>
                                 <input type="date" name="billing" class="form-control" value="{{ old('billing') }}">

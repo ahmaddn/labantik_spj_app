@@ -6,11 +6,11 @@
         <div class="page-header">
             <div class="row">
                 <div class="col">
-                    <h3 class="page-title">Tambah Pesanan</h3>
+                    <h3 class="page-title">Edit Pesanan</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('eksternal.pesanan.index') }}">Pesanan</a></li>
-                        <li class="breadcrumb-item active">Edit</li>
+                        <li class="breadcrumb-item active">Edit Pesanan</li>
                     </ul>
                 </div>
             </div>
@@ -21,9 +21,8 @@
             </div>
             <div class="card-body">
 
-                <form action="{{ route('eksternal.pesanan.update', $pesanan->id) }}" method="post">
+                <form action="{{ route('eksternal.pesanan.editBarang') }}" method="post">
                     @csrf
-                    @method('PUT')
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -35,14 +34,76 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label>Nomor Pesanan</label>
+                                <input type="number" name="order_num" class="form-control"
+                                    value="{{ $pesanan->order_num }}">
+                                @error('order_num')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Nomor Nota</label>
+                                <input type="number" name="note_num" class="form-control" value="{{ $pesanan->note_num }}">
+                                @error('note_num')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Nomor Berita Acara Serah Terima</label>
+                                <input type="number" name="bast_num" class="form-control" value="{{ $pesanan->bast_num }}">
+                                @error('bast_num')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Bendahara</label>
+                                <select name="bendaharaID" class="form-control"
+                                    {{ $bendahara->isEmpty() ? 'disabled' : '' }}>
+                                    <option value="">
+                                        {{ $bendahara->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Bendahara --' }}
+                                    </option>
+                                    @foreach ($bendahara as $item)
+                                        <option value="{{ $item->id }}"
+                                            {{ $item->id === $pesanan->bendahara->id ? 'selected' : '' }}>
+                                            {{ $item->name }}</option>
+                                    @endforeach
+
+                                </select>
+                                @error('BendaharaID')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Penerima</label>
+                                <select name="penerimaID" class="form-control"
+                                    {{ $penerima->isEmpty() ? 'disabled' : '' }}>
+                                    <option value="">
+                                        {{ $penerima->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Penerima --' }}
+                                    </option>
+                                    @foreach ($penerima as $item)
+                                        <option value="{{ $item->id }}"
+                                            {{ $item->id == $pesanan->penerima->id ? 'selected' : '' }}>
+                                            {{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('penerimaID')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label>Kegiatan</label>
-                                <select name="kegiatanID" class="form-control" {{ $kegiatan->isEmpty() ? 'disabled' : '' }}>
+                                <select name="kegiatanID" class="form-control"
+                                    {{ $kegiatan->isEmpty() ? 'disabled' : '' }}>
                                     <option value="">
                                         {{ $kegiatan->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kegiatan --' }}
                                     </option>
                                     @foreach ($kegiatan as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ $item->id == $pesanan->kegiatan->id ? 'selected' : '' }}>{{ $item->name }}
+                                            {{ $item->id == $pesanan->kegiatan->id ? 'selected' : '' }}>
+                                            {{ $item->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -69,62 +130,9 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Penerima</label>
-                                <select name="penerimaID" class="form-control"
-                                    {{ $penerima->isEmpty() ? 'disabled' : '' }}>
-                                    <option value="">
-                                        {{ $penerima->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Penerima --' }}
-                                    </option>
-                                    @foreach ($penerima as $item)
-                                        <option value="{{ $item->id }}"
-                                            {{ $item->id == $pesanan->penerima->id ? 'selected' : '' }}>
-                                            {{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('penerimaID')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Barang</label>
-                                <select id="selectBarang" name="barangID[]" class="form-select"
-                                    {{ $barang->isEmpty() ? 'disabled' : '' }} multiple>
-                                    @foreach ($barang as $item)
-                                        <option value="{{ $item->id }}"
-                                            {{ in_array($item->id, $pesanan->barangs->pluck('id')->toArray()) ? 'selected' : '' }}>
-                                            {{ $item->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('barangID')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>Bendahara</label>
-                                <select name="bendaharaID" class="form-control"
-                                    {{ $bendahara->isEmpty() ? 'disabled' : '' }}>
-                                    <option value="">
-                                        {{ $bendahara->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Bendahara --' }}
-                                    </option>
-                                    @foreach ($bendahara as $item)
-                                        <option value="{{ $item->id }}"
-                                            {{ $item->id === $pesanan->bendahara->id ? 'selected' : '' }}>
-                                            {{ $item->name }}</option>
-                                    @endforeach
-
-                                </select>
-                                @error('BendaharaID')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>Budget</label>
-                                <input type="number" name="budget" class="form-control" value="{{ $pesanan->budget }}">
-                                @error('budget')
+                                <label>Tanggal Penagihan</label>
+                                <input type="date" name="billing" class="form-control" value="{{ $pesanan->billing }}">
+                                @error('billing')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
@@ -136,11 +144,27 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label>Tanggal Diterima</label>
+                                <input type="date" name="accepted" class="form-control" min="2025-01-01"
+                                    value="{{ $pesanan->accepted }}">
+                                @error('accepted')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Jumlah Jenis Barang</label>
+                                <input type="number" name="type_num" class="form-control"
+                                    value="{{ $pesanan->type_num }}">
+                                @error('type_num')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="col-md-12 mt-3">
                             <a href="{{ route('eksternal.pesanan.index') }}" class="btn btn-secondary">Kembali</a>
-                            <button type="submit" class="btn btn-success">Perbarui</button>
+                            <button type="submit" class="btn btn-success">Lanjut</button>
                         </div>
                     </div>
                 </form>
