@@ -48,7 +48,10 @@ class PesananController extends Controller
 
     public function session(Request $request)
     {
-        $kegiatan = Kegiatan::findOrFail($request->kegiatanID);
+        $kegiatan = Kegiatan::find($request->kegiatanID);
+        if (!$kegiatan) {
+            return back()->withErrors(['error', 'Data Kegiatan Tidak Ditemukan!'])->withInput();
+        }
         $request->validate([
             'invoice_num'   => 'required|unique:pesanan',
             'order_num'   => 'required|unique:pesanan',
@@ -123,50 +126,96 @@ class PesananController extends Controller
     public function edit($id)
     {
         $userID = Auth::id();
-        $pesanan = Pesanan::with('barang')->findOrFail($id);
+        $pesanan = Pesanan::with('barang')->where('userID', $userID)->findOrFail($id);
         $kegiatan = Kegiatan::where('userID', $userID)->get();
         $penyedia = Penyedia::where('userID', $userID)->get();
         $penerima = Penerima::where('userID', $userID)->get();
-        $bendahara = Bendahara::where('userID', $userID)->get(); // Ambil data bendahara (kepala sekolah)
-        return view('eksternal.pesanan.edit', compact('pesanan', 'kegiatan', 'penyedia', 'penerima', 'barang', 'bendahara'));
+        $bendahara = Bendahara::where('userID', $userID)->get();
+
+        session([
+            'edit_pesanan' => array_merge($pesanan->toArray(), ['type_num' => $pesanan->type_num]),
+            'edit_barang' => $pesanan->barang,
+        ]);
+        return view('eksternal.pesanan.edit', compact('pesanan', 'kegiatan', 'penyedia', 'penerima', 'bendahara'));
+    }
+
+    public function editBarang(Request $request)
+    {
+        $kegiatan = Kegiatan::findOrFail($request->kegiatanID);
+
+        $validated = $request->validate([
+            'invoice_num'   => 'required',
+            'order_num'   => 'required',
+            'note_num'   => 'required',
+            'bast_num'   => 'required',
+            'type_num'   => 'required',
+            'kegiatanID'    => 'required|exists:kegiatan,id',
+            'penyediaID'    => 'required|exists:penyedia,id',
+            'penerimaID'    => 'required|exists:penerima,id',
+            'bendaharaID'   => 'required|exists:bendahara,id',
+            'accepted'          => "required|date|after_or_equal:$kegiatan->order",
+            'billing'          => "nullable|date",
+            'paid'          => "required|date|after_or_equal:$kegiatan->order",
+        ]);
+        session(['data_editPesanan' => $validated]);
+
+
+        $pesanan = session('edit_pesanan');
+        $pesanan = (object) array_merge((array) $pesanan, ['type_num' => $validated['type_num']]);
+        session(['edit_pesanan' => $pesanan]);
+        $barang = session('edit_barang');
+
+        return view('eksternal.pesanan.editBarang', compact('pesanan', 'barang'));
     }
 
     public function update(Request $request, $id)
     {
-        $kegiatan = Kegiatan::findOrFail($request->kegiatanID);
 
-        $request->validate([
-            'invoice_num'   => 'required|min_digits:3',
-            'order_num'   => 'required|min_digits:3',
-            'note_num'   => 'required|min_digits:3',
-            'bast_num'   => 'required|min_digits:3',
-            'kegiatanID'    => 'required|exists:kegiatan,id',
-            'penyediaID'    => 'required|exists:penyedia,id',
-            'penerimaID'    => 'required|exists:penerima,id',
-            'barangID'      => 'required|array',
-            'barangID.*'      => 'exists:barang,id',
-            'bendaharaID'   => 'required|exists:bendahara,id',
-            'budget'        => 'required|integer',
-            'paid'          => 'required|date|after_or_equal:' . $kegiatan->order,
-        ]);
+        $editPesanan = session('data_editPesanan');
+        if (!$editPesanan) {
+            return back()->withErrors(['error' => 'Data pesanan tidak ditemukan di session.'])->withInput();
+        }
+        $items = $request->input('items', []);
 
+        DB::transaction(function () use ($editPesanan, $items, $id) {
+            $pesanan = Pesanan::with('barang')->findOrFail($id);
+            $pesanan->update($editPesanan);
 
-        DB::transaction(function () use ($request, $id) {
-            $pesanan = Pesanan::with('barangs')->findOrFail($id);
+            $existingIds = $pesanan->barang->pluck('id')->toArray();
+            $incomingIds = [];
 
-            $pesanan->update([
-                'invoice_num' => $request->invoice_num,
-                'order_num' => $request->order_num,
-                'note_num' => $request->note_num,
-                'bast_num' => $request->bast_num,
-                'kegiatanID' => $request->kegiatanID,
-                'penyediaID' => $request->penyediaID,
-                'penerimaID' => $request->penerimaID,
-                'bendaharaID' => $request->bendaharaID,
-                'budget' => $request->budget,
-                'paid' => $request->paid,
-            ]);
+            foreach ($items as $item) {
+                if (isset($item['id'])) {
+
+                    $barang = $pesanan->barang()->where('id', $item['id'])->first();
+
+                    if ($barang) {
+                        $barang->update([
+                            'name' => $item['name'],
+                            'price' => $item['price'],
+                            'amount' => $item['amount'],
+                            'unit' => $item['unit'],
+                            'total' => $item['total'],
+                        ]);
+                        $incomingIds[] = $item['id'];
+                    }
+                } else {
+                    $pesanan->barang()->create([
+                        'userID' => $pesanan->userID,
+                        'name' => $item['name'],
+                        'price' => $item['price'],
+                        'amount' => $item['amount'],
+                        'unit' => $item['unit'],
+                        'total' => $item['total'],
+                    ]);
+                }
+            }
+
+            $barangToDelete = array_diff($existingIds, $incomingIds);
+            Barang::whereIn('id', $barangToDelete)->delete();
         });
+
+        session()->forget(['edit_pesanan', 'edit_barang', 'data_editPesanan']);
 
         return redirect()->route('eksternal.pesanan.index')
             ->with('success', 'Data Pesanan berhasil diperbarui.');
