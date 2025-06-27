@@ -118,17 +118,18 @@
 
 <body>
 
-    <table width="100%" class="no-border" style="border: none;">
+    <table width="100%" class="no-border" style="border: none; margin-bottom: 0;">
         <tr>
-            <td width="15%" style="text-align: center;">
-                <img src="{{ asset('jabar.png') }}" width="90">
+            <td width="10%" style="text-align: center; vertical-align: middle;
+            ">
+                <img src="{{ asset('jabar.png') }}" width="100" style="margin-left:50px; display:block;" />
             </td>
-            <td style="text-align: center;">
+            <td width="90%" style="text-align: center; vertical-align: middle;">
                 <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
                     DINAS PENDIDIKAN<br>
-                    CABANG DINAS PENDIDIKAN WILAYAH IX<br>
+                    <span style="font-size: 29px;">CABANG DINAS PENDIDIKAN WILAYAH IX</span><br>
                     <span style="font-size: 21px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
-                <span style="font-size: 19px;">Jalan Sekolah Nomor 20 Telpon ☎ (0233) 319238<br>
+                <span style="font-size: 14px;">Jalan Sekolah Nomor 20 Telpon ☎ (0233) 319238<br>
                     FAX ✉ (0233) 319238 Website 🌐 www.smkn1talaga.sch.id – Email 📧 <a
                         href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
                     Desa Talagakulon Kec. Talaga Kab. Majalengka 45463</span>
@@ -232,22 +233,24 @@
 
     <div class="page-break"></div>
     <div style="text-align: center;">
-        <table width="100%" class="no-border" style="border: none;">
+        <table width="100%" class="no-border" style="border: none; margin-bottom: 0;">
             <tr>
-                <td width="15%" style="text-align: center;">
-                    <img src="{{ asset('jabar.png') }}" width="90">
+                <td width="15%" style="text-align: center; vertical-align: middle;
+            ">
+                    <img src="{{ asset('jabar.png') }}" width="100" style="margin-left:50px; display:block;" />
                 </td>
-                <td style="text-align: center;">
+                <td style="text-align: center; vertical-align: middle;">
                     <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
                         DINAS PENDIDIKAN<br>
-                        CABANG DINAS PENDIDIKAN WILAYAH IX<br>
+                        <span style="font-size: 29px;">CABANG DINAS PENDIDIKAN WILAYAH IX</span><br>
                         <span style="font-size: 21px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
-                    Jalan Sekolah Nomor 20 Telpon ☎ (0233) 319238<br>
-                    FAX ✉ (0233) 319238 Website 🌐 www.smkn1talaga.sch.id – Email 📧 <a
-                        href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
-                    Desa Talagakulon Kec. Talaga Kab. Majalengka 45463
+                    <span style="font-size: 14px;">Jalan Sekolah Nomor 20 Telpon ☎ (0233) 319238<br>
+                        FAX ✉ (0233) 319238 Website 🌐 www.smkn1talaga.sch.id – Email 📧 <a
+                            href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
+                        Desa Talagakulon Kec. Talaga Kab. Majalengka 45463</span>
                 </td>
             </tr>
+
         </table>
         <svg viewBox="0 0 1000 6" width="100%" height="6" xmlns="http://www.w3.org/2000/svg">
             <!-- Garis atas: 2px -->
