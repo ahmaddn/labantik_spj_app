@@ -46,6 +46,8 @@ return new class extends Migration
             $table->string('note_num');
             $table->string('bast_num');
             $table->integer('type_num');
+            $table->integer('tax');
+            $table->integer('shipping_cost');
             $table->unsignedInteger('kegiatanID');
             $table->unsignedInteger('penyediaID');
             $table->unsignedInteger('penerimaID');

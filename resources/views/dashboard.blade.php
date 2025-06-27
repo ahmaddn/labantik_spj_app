@@ -289,6 +289,8 @@
                                             2. Menyesuaikan tampilan edit pesanan. <br>
                                             3. Memperbaiki dan menyesuaikan fungsi update pesanan. <br>
                                             3. Menyesuaikan tampilan print dengan sample pdf. <br>
+                                            4. Menambahkan input pajak dan ongkos kirim di form pesanan. <br>
+                                            5. Menambahkan seeder user.
                                         </p>
                                     </li>
                                 </ol>

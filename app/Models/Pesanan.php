@@ -24,6 +24,8 @@ class Pesanan extends Model
         'note_num',
         'bast_num',
         'type_num',
+        'tax',
+        'shipping_cost',
         'userID',
         'kegiatanID',
         'penyediaID',
