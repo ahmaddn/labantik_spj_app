@@ -51,7 +51,8 @@
                                             <li><a href="#0" data-date="23/06/2025">23 Jun</a>
                                             <li><a href="#0" data-date="24/06/2025">24 Jun</a>
                                             <li><a href="#0" data-date="26/06/2025">26 Jun</a>
-                                            <li><a href="#0" data-date="27/06/2025">26 Jun</a>
+                                            <li><a href="#0" data-date="27/06/2025">27 Jun</a>
+                                            <li><a href="#0" data-date="28/06/2025">28 Jun</a>
                                             </li>
                                         </ol>
                                         <span class="filling-line" aria-hidden="true"></span>
@@ -291,6 +292,15 @@
                                             3. Menyesuaikan tampilan print dengan sample pdf. <br>
                                             4. Menambahkan input pajak dan ongkos kirim di form pesanan. <br>
                                             5. Menambahkan seeder user.
+                                        </p>
+                                    </li>
+                                    <li data-date="28/06/2025">
+                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
+                                        <p class="m-t-40"><strong>
+                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
+                                        </p>
+                                        <p class="m-t-10">
+                                            1. Menambahkan menu laporan dan fungsinya. <br>
                                         </p>
                                     </li>
                                 </ol>
