@@ -17,7 +17,6 @@ class Pesanan extends Model
     //
     protected $table = 'pesanan';
     protected $primaryKey = 'id';
-    public $timestamps = false;
     protected $fillable = [
         'invoice_num',
         'order_num',
