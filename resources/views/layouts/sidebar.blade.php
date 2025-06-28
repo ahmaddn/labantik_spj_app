@@ -33,6 +33,13 @@
                                 class="{{ Route::is('eksternal.pesanan.index') ? 'active' : '' }}">Pesanan</a></li>
                     </ul>
                 </li>
+                <li class="{{ Route::is('laporan') ? 'active' : '' }}">
+                    <a href="{{ route('laporan') }}" class="{{ Route::is('laporan') ? 'active' : '' }}">
+                        <i class="fas fa-file-alt"></i> <span> Laporan</span>
+                    </a>
+
+                </li>
+
             </ul>
         </div>
     </div>

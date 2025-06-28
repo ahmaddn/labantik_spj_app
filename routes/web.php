@@ -10,6 +10,7 @@ use App\Http\Controllers\internal\PenerimaController;
 use App\Http\Controllers\eksternal\KegiatanController;
 use App\Http\Controllers\eksternal\PesananController;
 use App\Http\Controllers\internal\PenyediaController;
+use App\Http\Controllers\LaporanController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -88,3 +89,5 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::delete('/pesanan/delete/{id}', [PesananController::class, 'delete'])->name('pesanan.delete');
     Route::get('/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
 });
+
+Route::get('/laporan', [LaporanController::class, 'index'])->middleware('auth')->name('laporan');

@@ -56,6 +56,7 @@ return new class extends Migration
             $table->date('billing')->nullable();
             $table->date('accepted');
             $table->softDeletes();
+            $table->timestamps();
 
             $table->foreign('kegiatanID')->references('id')->on('kegiatan');
             $table->foreign('penyediaID')->references('id')->on('penyedia');
