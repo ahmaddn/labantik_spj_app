@@ -88,14 +88,16 @@
         .konten-utama {
             align-items: center;
             justify-content: center;
-            margin: 50px 60px 60px;
+            padding: 0 30px 30px 30px;
+
             font-size: 19px;
         }
 
         .page {
-            margin: 100px 100px 100px 100px;
             height: 100%;
+            background-image: url("{{ asset('assets/img/bg.jpg') }}");
             align-items: center;
+            padding: 0 30px 30px 30px;
             justify-content: center;
             font-size: 19px;
         }
@@ -894,81 +896,97 @@
     </div>
 
     <style>
-        
+        @media print {
+            @page {
+                size: A4 portrait;
+                padding-top: 20mm;
+                padding-left: 15mm;
+                padding-right: 15mm;
+                padding-bottom: 15mm;
 
-       
-        @page {
-            size: A4;
-            margin: 0;
-        }
 
-        /* Pastikan after-table-content utuh di halaman pertama */
-        .avoid-break {
-            page-break-inside: avoid;
-            break-inside: avoid;
-            -webkit-page-break-inside: avoid;
-            display: block;
-        }
+            }
 
-        .after-table-content.avoid-break {
-            page-break-inside: avoid;
-            break-inside: avoid;
-            -webkit-page-break-inside: avoid;
-            display: block;
-        }
+            /* kalau kamu pakai wrapper .konten-utama */
+            .konten-utama {
+                /* tambahan ruang di dalam halaman (setiap halaman) */
+                padding-top: 0mm !important;
+            }
 
-        /* Tabel boleh dipecah */
-        table.data-table {
-            page-break-inside: auto;
-            break-inside: auto;
-        }
+            /* biarkan page-break-inside: avoid berfungsi */
+            .page-break-inside-avoid {
+                page-break-inside: avoid !important;
+            }
 
-        table.data-table th,
-        table.data-table td {
-            page-break-inside: auto;
-            break-inside: auto;
-        }
+            /* Pastikan after-table-content utuh di halaman pertama */
+            .avoid-break {
+                page-break-inside: avoid;
+                break-inside: avoid;
+                -webkit-page-break-inside: avoid;
+                display: block;
+                margin-top: 100px;
 
-        /* Tabel berrita acara dan faktur boleh ter-split */
-        table.data-table,
-        table.invoice-table {
-            page-break-inside: auto;
-            break-inside: auto;
-        }
+            }
 
-        /* Paksakan break setelah halaman Berita Acara */
-        .page.berita-acara {
-            page-break-after: always;
-            break-after: page;
-        }
+            .after-table-content.avoid-break {
+                page-break-inside: avoid;
+                break-inside: avoid;
+                -webkit-page-break-inside: avoid;
+                display: block;
+                margin-top: 100px;
+            }
 
-        .page.nota {
-            page-break-after: always;
-            break-after: page;
-        }
+            /* Tabel boleh dipecah */
+            table.data-table {
+                page-break-inside: auto;
+                break-inside: auto;
+            }
 
-        /* Faktur otomatis mulai di halaman baru */
-        .page.faktur {
-            page-break-before: always;
-            break-before: page;
-        }
+            table.data-table th,
+            table.data-table td {
+                page-break-inside: auto;
+                break-inside: auto;
+            }
 
-        /* Tidak ada blank page di akhir */
-        .page:last-of-type {
-            page-break-after: auto;
-            break-after: auto;
-        }
+            /* Tabel berrita acara dan faktur boleh ter-split */
+            table.data-table,
+            table.invoice-table {
+                page-break-inside: auto;
+                break-inside: auto;
+            }
+
+            /* Paksakan break setelah halaman Berita Acara */
+            .page.berita-acara {
+                page-break-after: always;
+                break-after: page;
+            }
+
+            .page.nota {
+                page-break-after: always;
+                break-after: page;
+            }
+
+            /* Faktur otomatis mulai di halaman baru */
+            .page.faktur {
+                page-break-before: always;
+                break-before: page;
+            }
+
+            /* Tidak ada blank page di akhir */
+            .page:last-of-type {
+                page-break-after: auto;
+                break-after: auto;
+            }
         }
     </style>
 
 
-       <script>
-    window.onload = function () {
-        window.print();
-    }
+    <script>
+        window.onload = function() {
+            window.print();
+        }
         window.onafterprint = () => window.close();
-
-</script>
+    </script>
 
 </body>
 
