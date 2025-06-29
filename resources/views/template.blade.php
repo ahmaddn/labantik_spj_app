@@ -171,7 +171,15 @@
                 <tr>
                     <td>1.</td>
                     <td>Jumlah barang/jasa</td>
-                    <td>Nama Barang Dummy</td>
+                    <td>
+                        @php
+                            $jumlahBarang = 0;
+                            foreach ($pesanan->barang as $item) {
+                                $jumlahBarang += is_array($item) ? $item['amount'] ?? 0 : $item->amount ?? 0;
+                            }
+                        @endphp
+                        {{ $jumlahBarang }}
+                    </td>
                 </tr>
                 <tr>
                     <td>2.</td>
@@ -191,7 +199,18 @@
                 <tr>
                     <td>5.</td>
                     <td>Alokasi anggaran</td>
-                    <td>Rp. {{ number_format($pesanan->budget, 0, ',', '.') }},00 <b>BOS</b></td>
+                    <td>
+                        @php
+                            $total = 0;
+                            foreach ($pesanan->barang as $item) {
+                                $amount = is_array($item) ? $item['amount'] ?? 0 : $item->amount ?? 0;
+                                $price = is_array($item) ? $item['price'] ?? 0 : $item->price ?? 0;
+                                $total += $amount * $price;
+                            }
+                            $alokasi = $total + ($pesanan->tax ?? 0) + ($pesanan->shipping_cost ?? 0);
+                        @endphp
+                        Rp. {{ number_format($alokasi, 0, ',', '.') }},00 <b>{{ $pesanan->bendahara->type }}</b>
+                    </td>
                 </tr>
                 <tr>
                     <td rowspan="4">6.</td>
@@ -255,7 +274,7 @@
     <div class="konten-utama">
         <div class="text-center">
             <h4>SURAT PESANAN</h4>
-            <p>Nomor: {{ $pesanan->invoice_num }}</p>
+            <p>Nomor: {{ $pesanan->order_num }}</p>
         </div>
 
         <table class="tulisan" style="border: none">
@@ -503,10 +522,10 @@
         <h3 class="text-center" style="margin-bottom:0;">NOTA</h3>
         <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
             <span style="display:inline-block;">Nomor :
-                {{ $pesanan->invoice_num ?? '-' }}/{{ $pesanan->penyedia->company ?? '-' }}/Nota/IV/{{ date('Y') }}</span>
+                {{ $pesanan->note_num ?? '-' }}/{{ $pesanan->penyedia->company ?? '-' }}/Nota/IV/{{ date('Y') }}</span>
         </div>
         <!-- Header nota -->
-        <table class="no-border" style="width:100%; font-size:19px; margin-bottom:10px;">
+        <table class="no-border" style="width:100%; font-size:19px; margin-bottom:10px; border: none;">
             <tr>
                 <td style="width:80px;">Tn/Ny</td>
                 <td style="width:10px;">:</td>
@@ -591,7 +610,7 @@
     <div class="page berita-acara">
         <h3 class="text-center" style="margin-bottom:0;">BERITA ACARA SERAH TERIMA</h3>
         <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
-            <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }}
+            <span style="display:inline-block;">Nomor : {{ $pesanan->bast_num ?? '-' }}
                 /{{ $pesanan->penyedia->company ?? '-' }}/BA/IV/{{ date('Y') }}</span>
         </div>
 
@@ -658,8 +677,10 @@
         </table>
 
         <!-- Rincian barang -->
-        <p style="margin-bottom:10px;">PIHAK PERTAMA menyerahkan hasil pekerjaan Belanja Peralatan Komputer dan
-            Lainnya kepada PIHAK KEDUA...</p>
+        <p style="margin-bottom:10px;">PIHAK PERTAMA menyerahkan hasil pekerjaan {{ $pesanan->kegiatan->name }}
+            kepada PIHAK KEDUA, dan PIHAK KEDUA telah menerima pekerjaan {{ $pesanan->kegiatan->name }} tersebut dalam
+            jumlah lengkap dengan kondisi sesuai rincian sebagai
+            berikut:</p>
         <table class="data-table" style="width:100%; font-size:19px; border-collapse:collapse; margin-bottom:20px;">
             <thead>
                 <tr style="background:#f5f5f5;">
@@ -858,7 +879,7 @@
                     <td style="border:1px solid #000; padding:4px 6px;">
                         <div style="display:flex; align-items:center; justify-content:space-between;">
                             <span style="min-width:40px;">Rp.</span>
-                            <span style="text-align:right; flex:1;">0</span>
+                            <span style="text-align:right; flex:1;">{{ $pesanan->tax }}</span>
                         </div>
                     </td>
                 </tr>
@@ -868,7 +889,7 @@
                     <td style="border:1px solid #000; padding:4px 6px;">
                         <div style="display:flex; align-items:center; justify-content:space-between;">
                             <span style="min-width:40px;">Rp.</span>
-                            <span style="text-align:right; flex:1;">0</span>
+                            <span style="text-align:right; flex:1;">{{ $pesanan->shipping_cost }}</span>
                         </div>
                     </td>
                 </tr>
