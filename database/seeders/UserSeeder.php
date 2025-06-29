@@ -13,6 +13,14 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Pastikan ada user dengan id=1
+        User::unguard();
+        User::updateOrCreate(['id' => 1], [
+            'username' => 'admin_utama',
+            'namalengkap' => 'Admin Utama',
+            'password' => 'aadmin_utama'
+        ]);
+        // Data user lain
         $users = [
             [
                 'username' => 'admin_1',
@@ -31,7 +39,8 @@ class UserSeeder extends Seeder
             ],
         ];
         foreach ($users as $user) {
-            User::create($user);
+            \App\Models\User::firstOrCreate(['username' => $user['username']], $user);
         }
+        User::reguard();
     }
 }

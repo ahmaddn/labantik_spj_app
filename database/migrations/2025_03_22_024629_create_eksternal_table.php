@@ -1,5 +1,6 @@
 <?php
 
+use Database\Seeders\EksternalSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -79,6 +80,7 @@ return new class extends Migration
             $table->foreign('pesananID')->references('id')->on('pesanan');
             $table->foreign('userID')->references('id')->on('users');
         });
+        ((new EksternalSeeder())->run());
     }
 
     /**
