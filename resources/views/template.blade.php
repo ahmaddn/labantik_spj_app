@@ -973,6 +973,7 @@
             table.data-table,
             table.invoice-table {
                 page-break-inside: auto;
+                
                 break-inside: auto;
             }
 
