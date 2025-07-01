@@ -58,11 +58,11 @@
                                             <td>{{ $item->penyedia->company ?? '-' }}</td>
                                             <td>{{ $item->penerima->name ?? '-' }}</td>
                                             <td class="text-wrap" style="white-space: normal">
-                                                <ol style="list-style: decimal; margin-left: 1rem">
+                                                <ul>
                                                     @foreach ($item->barang->pluck('name') as $barang)
-                                                        <li>{{ $barang ?? '-' }}</li>
+                                                        <li>- {{ $barang ?? '-' }}</li>
                                                     @endforeach
-                                                </ol>
+                                                </ul>
                                             </td>
 
                                             <td>{{ \Carbon\Carbon::parse($item->paid)->translatedFormat('d F Y') }}</td>

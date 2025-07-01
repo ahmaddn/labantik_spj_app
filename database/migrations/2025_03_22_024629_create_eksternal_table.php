@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('company');
             $table->bigInteger('npwp');
             $table->string('address');
+            $table->string('post_code');
             $table->string('bank');
             $table->bigInteger('account');
             $table->string('delegation_name');

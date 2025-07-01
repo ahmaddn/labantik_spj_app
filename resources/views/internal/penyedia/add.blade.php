@@ -54,6 +54,15 @@
                                 @enderror
                             </div>
 
+                            {{-- Kode Pos --}}
+                            <div class="form-group">
+                                <label>Kode Pos</label>
+                                <input type="text" class="form-control" name="post_code" value="{{ old('post_code') }}">
+                                @error('post_code')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
                             {{-- Bank --}}
                             <div class="form-group">
                                 <label>Bank</label>
