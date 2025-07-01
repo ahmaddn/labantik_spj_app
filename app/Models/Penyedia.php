@@ -17,6 +17,7 @@ class Penyedia extends Model
         'company',
         'npwp',
         'address',
+        'post_code',
         'bank',
         'account',
         'delegation_name',
