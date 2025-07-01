@@ -58,8 +58,13 @@
                                             <td>{{ $item->penyedia->company ?? '-' }}</td>
                                             <td>{{ $item->penerima->name ?? '-' }}</td>
                                             <td class="text-wrap" style="white-space: normal">
-                                                {{ $item->barang->pluck('name')->join(' | ') ?? '-' }}
+                                                <ol style="list-style: decimal; margin-left: 1rem">
+                                                    @foreach ($item->barang->pluck('name') as $barang)
+                                                        <li>{{ $barang ?? '-' }}</li>
+                                                    @endforeach
+                                                </ol>
                                             </td>
+
                                             <td>{{ \Carbon\Carbon::parse($item->paid)->translatedFormat('d F Y') }}</td>
                                             <td class="px-4 py-2">
                                                 <a href="{{ route('eksternal.pesanan.edit', $item->id) }}"

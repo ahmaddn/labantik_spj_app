@@ -405,26 +405,28 @@
         <div class="page-break-inside-avoid">
             <table class="tulisan" style="border: none;">
                 <tr>
-                    <td style="padding-top: 0; padding-bottom: 0;" ><strong>Terbilang</strong></td>
+                    <td style="padding-top: 0; padding-bottom: 0;"><strong>Terbilang</strong></td>
                     <td style="padding-top: 0; padding-bottom: 0;">:</td>
                     <td style=" padding-top: 0; padding-bottom: 0;">{{ ucwords(terbilang($total)) }} Rupiah</td>
                 </tr>
 
             </table>
             <tr>
-                    <td style="width: 200px">Barang yang dipesan sebagai berikut :</td>
-                </tr>
+                <td style="width: 200px">Barang yang dipesan sebagai berikut :</td>
+            </tr>
             <table class="tulisan" style="border: none;">
                 <tr>
                     <td style="padding-top:0; padding-bottom:0;">1. Tanggal barang diterima</td>
                     <td style="padding-top:0; padding-bottom:0;">:</td>
-                    <td style="padding-top:0; padding-bottom:0;">{{ \Carbon\Carbon::parse($pesanan->accepted)->translatedFormat('d F Y') }}</td>
+                    <td style="padding-top:0; padding-bottom:0;">
+                        {{ \Carbon\Carbon::parse($pesanan->accepted)->translatedFormat('d F Y') }}</td>
                 </tr>
                 <tr>
                     <td style="padding-top:0; padding-bottom:0;">2. Waktu Penyelesaian</td>
                     <td style="padding-top:0; padding-bottom:0;">:</td>
                     <td style="padding-top:0; padding-bottom:0;">
-                        {{ \Carbon\Carbon::parse($pesanan->kegiatan->order)->diffInDays(\Carbon\Carbon::parse($pesanan->accepted)) }} Hari Kalender
+                        {{ \Carbon\Carbon::parse($pesanan->kegiatan->order)->diffInDays(\Carbon\Carbon::parse($pesanan->accepted)) }}
+                        Hari Kalender
                     </td>
                 </tr>
                 <tr>
@@ -444,9 +446,11 @@
 
             <br>
             <div style="page-break-inside: avoid;">
-                <table class="no-border "style="width: 100%; border: none;" >
-                    <td colspan="2" style="text-align: right;">                            <div style="text-align:right; width: 605px; padding-bottom: 0; padding-top:0;">Majalengka, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</div>
-</td>
+                <table class="no-border "style="width: 100%; border: none;">
+                    <td colspan="2" style="text-align: right;">
+                        <div style="text-align:right; width: 605px; padding-bottom: 0; padding-top:0;">Majalengka,
+                            {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</div>
+                    </td>
                     <tr>
                         <td colspan="2" style="vertical-align:top; padding-top: 0; padding-bottom: 0;">
                             <div style="display:flex; justify-content:space-between; width:100%;">
@@ -638,38 +642,38 @@
             </table>
 
             <table style="width: 100%; border: none; border-collapse: collapse; margin-top: 20px;" class="no-border">
-    <!-- Baris tanggal -->
-    <tr>
-        <td colspan="2" style="text-align: right; padding-right: 20px;">
-            Majalengka, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}
-        </td>
-    </tr>
+                <!-- Baris tanggal -->
+                <tr>
+                    <td colspan="2" style="text-align: right; padding-right: 20px;">
+                        Majalengka, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}
+                    </td>
+                </tr>
 
-    <!-- Baris jabatan -->
-    <tr>
-        <td style="text-align: left; padding-top: 20px; width: 70%;">
-            Bendahara {{ $pesanan->bendahara->type ?? '-' }}
-        </td>
-        <td style="text-align: left; padding-top: 20px; ">
-            Hormat Kami,
-        </td>
-    </tr>
+                <!-- Baris jabatan -->
+                <tr>
+                    <td style="text-align: left; padding-top: 20px; width: 70%;">
+                        Bendahara {{ $pesanan->bendahara->type ?? '-' }}
+                    </td>
+                    <td style="text-align: left; padding-top: 20px; ">
+                        Hormat Kami,
+                    </td>
+                </tr>
 
-    <!-- Baris tanda tangan -->
-    <tr>
-        <td style="text-align: left; padding-top: 50px;">
-            <strong style="text-decoration: underline;">
-                {{ $pesanan->bendahara->name ?? '-' }}
-            </strong><br>
-            NIP. {{ $pesanan->bendahara->nip ?? '-' }}
-        </td>
-        <td style="text-align: left; padding-top: 50px;">
-            <strong style="text-decoration: underline;">
-                {{ $pesanan->penyedia->delegation_name }}
-            </strong>
-        </td>
-    </tr>
-</table>
+                <!-- Baris tanda tangan -->
+                <tr>
+                    <td style="text-align: left; padding-top: 50px;">
+                        <strong style="text-decoration: underline;">
+                            {{ $pesanan->bendahara->name ?? '-' }}
+                        </strong><br>
+                        NIP. {{ $pesanan->bendahara->nip ?? '-' }}
+                    </td>
+                    <td style="text-align: left; padding-top: 50px;">
+                        <strong style="text-decoration: underline;">
+                            {{ $pesanan->penyedia->delegation_name }}
+                        </strong>
+                    </td>
+                </tr>
+            </table>
 
         </div>
 
@@ -703,7 +707,7 @@
                 <td>{{ $pesanan->penyedia->delegate_position ?? '-' }}</td>
             </tr>
             <tr>
-                <td >Nama Perusahaan</td>
+                <td>Nama Perusahaan</td>
                 <td>:</td>
                 <td>{{ $pesanan->penyedia->company ?? '-' }}</td>
             </tr>
@@ -974,7 +978,7 @@
                 <td style="width:30%; text-align:justify; vertical-align:top;">
                     CV Techria Indonesia<br>
                     {{ $pesanan->penyedia->delegate_position }},<br><br><br>
-                    <strong  >{{ $pesanan->penyedia->delegation_name ?? '-' }}</strong>
+                    <strong>{{ $pesanan->penyedia->delegation_name ?? '-' }}</strong>
                 </td>
             </tr>
         </table>

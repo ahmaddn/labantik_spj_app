@@ -90,4 +90,4 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::get('/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
 });
 
-Route::get('/laporan', [LaporanController::class, 'index'])->middleware('auth')->name('laporan');
+Route::match(['GET', 'POST'], '/laporan', [LaporanController::class, 'index'])->middleware('auth')->name('laporan');
