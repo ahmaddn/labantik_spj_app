@@ -26,40 +26,48 @@
                             <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
                                 @foreach (['harian' => 'Harian', 'bulanan' => 'Bulanan', 'tahunan' => 'Tahunan'] as $key => $label)
                                     <li class="nav-item">
-                                        <a class="nav-link {{ $kategori == $key ? 'active' : '' }}"
-                                            href="{{ route('laporan', ['kategori' => $key, 'tanggal' => now()->format($key === 'tahunan' ? 'Y' : 'Y-m-d')]) }}">
-                                            {{ $label }}
-                                        </a>
+                                        <form action="{{ route('laporan') }}" method="POST"
+                                            id="formKategori{{ $key }}">
+                                            @csrf
+                                            <input type="hidden" name="kategori" value="{{ $key }}">
+                                            <input type="hidden" name="tanggal"
+                                                value="{{ now()->format($key === 'tahunan' ? 'Y' : 'Y-m-d') }}">
+                                            <button type="submit"
+                                                class="nav-link fs-5 {{ $kategori == $key ? 'active' : '' }}">
+                                                {{ $label }}
+                                            </button>
+                                        </form>
                                     </li>
                                 @endforeach
 
                             </ul>
-                            <form action="{{ route('laporan') }}" method="get">
+                            <form action="{{ route('laporan') }}" method="POST" id="formLaporan">
+                                @csrf
                                 <input type="hidden" name="kategori" value="{{ $kategori }}">
 
                                 @if ($kategori === 'harian' || $kategori === 'bulanan')
                                     <div class="mt-3 mb-3">
                                         <label for="tanggal">Tanggal:</label>
                                         <input type="date" name="tanggal" class="form-control form-control-sm w-25"
-                                            value="{{ request('tanggal') ?? now()->toDateString() }}"
-                                            onchange="window.location.href='{{ route('laporan') }}?kategori={{ $kategori }}&tanggal=' + this.value">
+                                            value="{{ $tanggal }}"
+                                            onchange="document.getElementById('formLaporan').submit()">
                                     </div>
                                 @elseif ($kategori === 'tahunan')
                                     <div class="mt-3 mb-3">
                                         <label for="tanggal">Tahun:</label>
                                         <select name="tanggal" class="form-control form-control-sm w-25"
-                                            onchange="window.location.href='{{ route('laporan') }}?kategori={{ $kategori }}&tanggal=' + this.value">
+                                            onchange="document.getElementById('formLaporan').submit()">
                                             @foreach ($list_tahun as $tahun)
                                                 <option value="{{ $tahun }}"
-                                                    {{ request('tanggal') == $tahun ? 'selected' : '' }}>
+                                                    {{ $tahun == $tanggal ? 'selected' : '' }}>
                                                     {{ $tahun }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 @endif
-
                             </form>
+
 
                             <div class="table-responsive">
                                 <table class="table table-center">
