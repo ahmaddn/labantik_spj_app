@@ -95,7 +95,6 @@
 
         .page {
             height: 100%;
-            background-image: url("{{ asset('assets/img/bg.jpg') }}");
             align-items: center;
             padding: 0 30px 30px 30px;
             justify-content: center;
