@@ -32,8 +32,7 @@
                                             <input type="hidden" name="kategori" value="{{ $key }}">
                                             <input type="hidden" name="tanggal"
                                                 value="{{ now()->format($key === 'tahunan' ? 'Y' : 'Y-m-d') }}">
-                                            <button type="submit"
-                                                class="nav-link fs-5 {{ $kategori == $key ? 'active' : '' }}">
+                                            <button type="submit" class="nav-link {{ $kategori == $key ? 'active' : '' }}">
                                                 {{ $label }}
                                             </button>
                                         </form>
