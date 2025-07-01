@@ -65,6 +65,7 @@
                                 @error('post_code')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
+
                             </div>
 
                             {{-- Bank --}}
