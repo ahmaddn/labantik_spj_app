@@ -18,132 +18,122 @@
             </div>
         </div>
         <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Form Pesanan</h5>
-            </div>
             <div class="card-body">
-
                 @if ($errors->any())
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        <ul>
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <ul class="mb-0">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
-                        <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
 
-                <form action="{{ route('eksternal.pesanan.update', $pesanan->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    @php
-                        $existingCount = count($barang);
-                        $targetCount = $pesanan->type_num;
-                    @endphp
-                    @foreach ($barang as $i => $item)
-                        <div class="row mb-3 pb-3 border-bottom form-item">
-                            <input type="hidden" name="items[{{ $i }}][id]" value="{{ $item->id }}">
-                            <div class="col-md-6 mb-2">
-                                <label>Nama Barang {{ $i + 1 }}</label>
-                                <input type="text" name="items[{{ $i }}][name]" class="form-control"
-                                    value="{{ old("items.$i.name", $item->name) }}">
-                                @error("items.$i.name")
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <label>Harga Barang {{ $i + 1 }}</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">Rp.</span>
-                                    <input type="number" name="items[{{ $i }}][price]"
-                                        class="form-control harga" value="{{ old("items.$i.price", $item->price) }}">
+                <div id="basic-pills-wizard" class="twitter-bs-wizard wizard">
+                    <ul class="twitter-bs-wizard-nav nav nav-pills nav-justified">
+                        @php
+                            $totalSteps = $pesanan->type_num;
+                            $existingCount = count($barang);
+                            if ($existingCount > $totalSteps) {
+                                $totalSteps = $existingCount;
+                            }
+                        @endphp
+
+                        @for ($i = 0; $i < $totalSteps; $i++)
+                            <li class="nav-item">
+                                <a class="nav-link {{ $i === 0 ? 'active' : '' }}" href="#step{{ $i }}"
+                                    data-toggle="tab">
+                                    <span class="step-icon">{{ $i + 1 }}</span>
+                                </a>
+                            </li>
+                        @endfor
+                    </ul>
+
+                    <form action="{{ route('eksternal.pesanan.update', $pesanan->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="tab-content twitter-bs-wizard-tab-content mt-4">
+                            @for ($i = 0; $i < $totalSteps; $i++)
+                                @php $item = $barang[$i] ?? null; @endphp
+                                <div class="tab-pane fade {{ $i === 0 ? 'show active' : '' }}" id="step{{ $i }}">
+                                    <div class="row mb-3 pb-3 border-bottom form-item">
+                                        @if ($item)
+                                            <input type="hidden" name="items[{{ $i }}][id]"
+                                                value="{{ $item->id }}">
+                                        @endif
+
+                                        <div class="col-md-6 mb-2">
+                                            <label>Nama Barang</label>
+                                            <input type="text" name="items[{{ $i }}][name]"
+                                                class="form-control" value="{{ old("items.$i.name", $item->name ?? '') }}">
+                                            @error("items.$i.name")
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label>Harga Barang</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">Rp.</span>
+                                                <input type="number" name="items[{{ $i }}][price]"
+                                                    class="form-control harga"
+                                                    value="{{ old("items.$i.price", $item->price ?? '') }}">
+                                            </div>
+                                            @error("items.$i.price")
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label>Jumlah Barang</label>
+                                            <input type="number" name="items[{{ $i }}][amount]"
+                                                class="form-control jumlah"
+                                                value="{{ old("items.$i.amount", $item->amount ?? '') }}">
+                                            @error("items.$i.amount")
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label>Satuan Barang</label>
+                                            <input type="text" name="items[{{ $i }}][unit]"
+                                                class="form-control" value="{{ old("items.$i.unit", $item->unit ?? '') }}">
+                                            @error("items.$i.unit")
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label>Total Barang</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">Rp.</span>
+                                                <input type="text" name="items[{{ $i }}][total]"
+                                                    class="form-control total" readonly inputmode="numeric"
+                                                    value="{{ old("items.$i.total", $item->total ?? '') }}">
+                                            </div>
+                                            @error("items.$i.total")
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <ul class="pager wizard twitter-bs-wizard-pager-link mt-3">
+                                        @if ($i > 0)
+                                            <li class="previous me-2"><a href="javascript:;"
+                                                    class="btn btn-secondary">Sebelumnya</a></li>
+                                        @endif
+                                        @if ($i < $totalSteps - 1)
+                                            <a href="{{ route('eksternal.pesanan.edit') }}"
+                                                class="btn btn-secondary">Kembali</a>
+                                            <li class="next float-end"><a href="javascript:;"
+                                                    class="btn btn-primary">Selanjutnya</a></li>
+                                        @else
+                                            <li class="float-end"><button type="submit" class="btn btn-success">Perbarui
+                                                    Pesanan</button></li>
+                                        @endif
+                                    </ul>
                                 </div>
-                                @error("items.$i.price")
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <label>Jumlah Barang {{ $i + 1 }}</label>
-                                <input type="number" name="items[{{ $i }}][amount]" class="form-control jumlah"
-                                    value="{{ old("items.$i.amount", $item->amount) }}">
-                                @error("items.$i.amount")
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <label>Satuan Barang {{ $i + 1 }}</label>
-                                <input type="text" name="items[{{ $i }}][unit]" class="form-control"
-                                    value="{{ old("items.$i.unit", $item->unit) }}">
-                                @error("items.$i.unit")
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <label>Total Barang {{ $i + 1 }}</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">Rp.</span>
-                                    <input type="text" name="items[{{ $i }}][total]"
-                                        class="form-control total" readonly inputmode="numeric"
-                                        value="{{ old("items.$i.total", $item->total) }}">
-                                </div>
-                            </div>
+                            @endfor
                         </div>
-                    @endforeach
-                    @for ($j = $existingCount; $j < $targetCount; $j++)
-                        <div class="row mb-3 pb-3 border-bottom form-item">
-                            <div class="col-md-6 mb-2">
-                                <label>Nama Barang {{ $j + 1 }}</label>
-                                <input type="text" name="items[{{ $j }}][name]" class="form-control"
-                                    value="{{ old("items.$j.name") }}">
-                                @error("items.$j.name")
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <label>Harga Barang {{ $j + 1 }}</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">Rp.</span>
-                                    <input type="number" name="items[{{ $j }}][price]"
-                                        class="form-control harga" value="{{ old("items.$j.price") }}">
-                                </div>
-                                @error("items.$j.price")
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <label>Jumlah Barang {{ $j + 1 }}</label>
-                                <input type="number" name="items[{{ $j }}][amount]" class="form-control jumlah"
-                                    value="{{ old("items.$j.amount") }}">
-                                @error("items.$j.amount")
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <label>Satuan Barang {{ $j + 1 }}</label>
-                                <input type="text" name="items[{{ $j }}][unit]" class="form-control"
-                                    value="{{ old("items.$j.unit") }}">
-                                @error("items.$j.unit")
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <label>Total Barang {{ $j + 1 }}</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">Rp.</span>
-                                    <input type="text" name="items[{{ $j }}][total]"
-                                        class="form-control total" readonly inputmode="numeric"
-                                        value="{{ old("items.$j.total") }}">
-                                </div>
-                            </div>
-                        </div>
-                    @endfor
-                    <div class="mt-3">
-                        <a href="{{ route('eksternal.pesanan.edit', $pesanan->id) }}"
-                            class="btn btn-secondary">Kembali</a>
-                        <button type="submit" class="btn btn-success">Perbarui Pesanan</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
