@@ -25,6 +25,8 @@ class EksternalSeeder extends Seeder
             'npwp' => 123456789012345,
             'address' => 'Jl. Teknologi No. 1',
             'bank' => 'BRI',
+            'post_code' => 9876543210,
+
             'account' => 9876543210,
             'delegation_name' => 'Najmy',
             'delegate_position' => 'Direktur'
