@@ -26,8 +26,6 @@ class EksternalSeeder extends Seeder
             'address' => 'Jl. Teknologi No. 1',
             'post_code' => '402122',
             'bank' => 'BRI',
-            'post_code' => 9876543210,
-
             'account' => 9876543210,
             'delegation_name' => 'Najmy',
             'delegate_position' => 'Direktur'

@@ -53,6 +53,7 @@
                                             <li><a href="#0" data-date="26/06/2025">26 Jun</a>
                                             <li><a href="#0" data-date="27/06/2025">27 Jun</a>
                                             <li><a href="#0" data-date="28/06/2025">28 Jun</a>
+                                            <li><a href="#0" data-date="02/07/2025">02 Jul</a>
                                             </li>
                                         </ol>
                                         <span class="filling-line" aria-hidden="true"></span>
@@ -301,6 +302,16 @@
                                         </p>
                                         <p class="m-t-10">
                                             1. Menambahkan menu laporan dan fungsinya. <br>
+                                        </p>
+                                    </li>
+                                    <li data-date="02/07/2025">
+                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
+                                        <p class="m-t-40"><strong>
+                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
+                                        </p>
+                                        <p class="m-t-10">
+                                            1. Memperbaiki tampilan halaman edit barang. <br>
+                                            1. Memperbaiki tampilan print.
                                         </p>
                                     </li>
                                 </ol>
