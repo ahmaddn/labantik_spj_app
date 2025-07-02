@@ -311,7 +311,7 @@
                                         </p>
                                         <p class="m-t-10">
                                             1. Memperbaiki tampilan halaman edit barang. <br>
-                                            1. Memperbaiki tampilan print.
+                                            2. Memperbaiki tampilan print.
                                         </p>
                                     </li>
                                 </ol>
