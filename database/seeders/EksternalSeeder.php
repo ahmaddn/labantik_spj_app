@@ -24,6 +24,7 @@ class EksternalSeeder extends Seeder
             'company' => 'CV Techria Indonesia',
             'npwp' => 123456789012345,
             'address' => 'Jl. Teknologi No. 1',
+            'post_code' => '402122',
             'bank' => 'BRI',
             'account' => 9876543210,
             'delegation_name' => 'Najmy',

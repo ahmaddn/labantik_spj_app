@@ -19,6 +19,13 @@
             <div class="card-header">
                 <h5 class="card-title">Form Edit Pesanan</h5>
             </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
             <div class="card-body">
 
                 <form action="{{ route('eksternal.pesanan.editBarang') }}" method="post">
@@ -90,9 +97,6 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                        </div>
-
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Kegiatan</label>
                                 <select name="kegiatanID" class="form-control"
@@ -111,6 +115,9 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
+                        </div>
+
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Penyedia</label>
                                 <select name="penyediaID" class="form-control"
@@ -157,6 +164,28 @@
                                 <input type="number" name="type_num" class="form-control"
                                     value="{{ $pesanan->type_num }}">
                                 @error('type_num')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Pajak</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp.</span>
+                                    <input type="number" name="tax" class="form-control"
+                                        value="{{ old('tax', $pesanan->tax) }}">
+                                </div>
+                                @error('tax')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Ongkos Kirim</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp.</span>
+                                    <input type="number" name="shipping_cost" class="form-control"
+                                        value="{{ old('shipping_cost', $pesanan->shipping_cost) }}">
+                                </div>
+                                @error('shipping_cost')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
