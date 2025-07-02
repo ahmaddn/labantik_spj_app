@@ -1025,7 +1025,7 @@
                 break-inside: avoid;
                 -webkit-page-break-inside: avoid;
                 display: block;
-                margin-top: 100px;
+                margin-top: 5px;
             }
 
             /* Tabel boleh dipecah */
