@@ -63,7 +63,7 @@
                                                 <td class="px-4 py-2">
                                                     {{ \Carbon\Carbon::parse($row->deadline)->translatedFormat('d F Y') }}
                                                 </td>
-                                                <td class="px-4 py-2">{{ $row->info }}</td>
+                                                <td class="px-4 py-2">{{ $row->info ?? '-' }}</td>
                                                 <td class="px-4 py-2">
                                                     <a href="{{ route('eksternal.kegiatan.edit', $row->id) }}"
                                                         class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
