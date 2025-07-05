@@ -13,6 +13,7 @@ class PDFWatermarkController extends Controller
     public function index()
     {
         return view('watermark');
+
     }
 
     public function uploadPDF(Request $request)
@@ -79,6 +80,7 @@ class PDFWatermarkController extends Controller
                 'horizontal_position' => 'sometimes|in:left,center,right',
                 'opacity' => 'required|numeric|min:0|max:1',
                 'as_background' => 'sometimes|string|in:true,false',
+                'scale' => 'required|numeric|min:1|max:100',
                 'full_cover' => 'sometimes|string|in:true,false'
             ]);
 
@@ -109,7 +111,8 @@ class PDFWatermarkController extends Controller
                 $request->horizontal_position ?? 'right',
                 $request->opacity,
                 $asBackground,
-                $fullCover
+                $fullCover,
+                $scale = $request->scale ?? 100
             );
             return response()->json([
                 'success' => true,
@@ -159,7 +162,7 @@ class PDFWatermarkController extends Controller
             if ($returnCode === 0 && file_exists($outputPath) && filesize($outputPath) > 0) {
 
 
-               
+
             }
             if ($returnCode !== 0) {
                 throw new \Exception("Ghostscript error: $returnCode");
@@ -176,7 +179,8 @@ class PDFWatermarkController extends Controller
         return $pdfPath; // Fallback ke file asli jika konversi gagal
     }
 
-    private function addWatermarkToPDF($pdfPath, $watermarkPath, $vPos, $hPos, $opacity, $asBackground, $fullCover)
+    private function addWatermarkToPDF($pdfPath, $watermarkPath, $vPos, $hPos, $opacity, $asBackground, $fullCover,$scale
+)
     {
         try {
             $pdf = new Fpdi();
@@ -214,7 +218,9 @@ class PDFWatermarkController extends Controller
                             $imageInfo[0],
                             $imageInfo[1],
                             $vPos,
-                            $hPos
+                            $hPos,
+                                                    $scale // TAMBAHKAN PARAMETER SCALE
+
                         );
 
                         if ($asBackground) {
@@ -279,40 +285,40 @@ class PDFWatermarkController extends Controller
         return $returnCode === 0;
     }
 
-    private function calculateWatermarkPosition($pageWidth, $pageHeight, $imgWidth, $imgHeight, $vPos, $hPos)
-    {
-        // Mode Full Cover
-        if ($vPos === 'full' || $hPos === 'full') {
-            return [
-                'x' => 0,
-                'y' => 0,
-                'width' => $pageWidth,
-                'height' => $pageHeight
-            ];
-        }
+    private function calculateWatermarkPosition($pageWidth, $pageHeight, $imgWidth, $imgHeight, $vPos, $hPos, $scale)
+{
+    // Hitung ukuran berdasarkan skala (persentase dari lebar halaman)
+    $maxWidth = $pageWidth * ($scale / 100);
+    $maxHeight = $pageHeight * ($scale / 100);
 
-        // Hitung skala untuk mempertahankan aspect ratio
-        $scale = min($pageWidth / $imgWidth, $pageHeight / $imgHeight);
-        $width = $imgWidth * $scale;
-        $height = $imgHeight * $scale;
+    // Hitung rasio skala untuk mempertahankan aspect ratio
+    $scaleRatio = min($maxWidth / $imgWidth, $maxHeight / $imgHeight);
 
-        // Hitung posisi tanpa margin
-        $x = match ($hPos) {
-            'left' => 0,
-            'center' => ($pageWidth - $width) / 2,
-            'right' => $pageWidth - $width,
-            default => 0
-        };
+    $width = $imgWidth * $scaleRatio;
+    $height = $imgHeight * $scaleRatio;
 
-        $y = match ($vPos) {
-            'top' => 0,
-            'center' => ($pageHeight - $height) / 2,
-            'bottom' => $pageHeight - $height,
-            default => 0
-        };
+    // Hitung posisi berdasarkan pilihan user
+    $x = match($hPos) {
+        'left' => 0,
+        'center' => ($pageWidth - $width) / 2,
+        'right' => $pageWidth - $width,
+        default => 0
+    };
 
-        return compact('x', 'y', 'width', 'height');
-    }
+    $y = match($vPos) {
+        'top' => 0,
+        'center' => ($pageHeight - $height) / 2,
+        'bottom' => $pageHeight - $height,
+        default => 0
+    };
+
+    return [
+        'x' => $x,
+        'y' => $y,
+        'width' => $width,
+        'height' => $height
+    ];
+}
     private function generatePDFPreview($pdfPath)
     {
         try {

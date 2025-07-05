@@ -10,17 +10,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .preview-container {
-            border: 2px dashed #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            min-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f8f9fa;
-        }
-
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    min-height: 100px; /* Diperkecil */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    overflow: auto; /* Tambahkan scroll jika perlu */
+}
         .preview-container.has-content {
             border-color: #007bff;
             background-color: #fff;
@@ -111,21 +111,21 @@
         }
 
         /* PDF Viewer Styles */
-        #pdfViewer {
-            width: 100%;
-            height: 500px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            overflow: auto;
-            background-color: #f0f0f0;
-            display: none;
-        }
+       #pdfViewer {
+    width: 100%;
+    max-height: 80vh;
+    overflow: auto;
+    background-color: #f0f0f0;
+    display: none;
+}
 
         #pdfViewer canvas {
-            display: block;
-            margin: 0 auto;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
         /* Navigation Controls */
         .pdf-navigation {
@@ -558,44 +558,45 @@
         }
 
         function renderPage(pageNum) {
-            if (!currentPdf) return Promise.reject('PDF not loaded');
+    if (!currentPdf) return Promise.reject('PDF not loaded');
 
-            return currentPdf.getPage(pageNum).then(function(page) {
-                const pdfViewer = document.getElementById('pdfViewer');
-                const scale = 1.5;
-                const viewport = page.getViewport({
-                    scale: scale
-                });
+    return currentPdf.getPage(pageNum).then(function(page) {
+        const pdfViewer = document.getElementById('pdfViewer');
+        const scale = 1.5; // Skala tetap
+        const viewport = page.getViewport({ scale: scale });
 
-                // Siapkan canvas
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
+        // Siapkan canvas
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
 
-                // Kosongkan viewer
-                pdfViewer.innerHTML = '';
+        // Kosongkan viewer
+        pdfViewer.innerHTML = '';
 
-                // Render halaman PDF ke canvas
-                const renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
-                };
+        // Render halaman PDF ke canvas
+        const renderContext = {
+            canvasContext: context,
+            viewport: viewport
+        };
 
-                return page.render(renderContext).promise.then(function() {
-                    // Tambahkan canvas ke viewer
-                    pdfViewer.appendChild(canvas);
+        return page.render(renderContext).promise.then(function() {
+            // Tambahkan canvas ke viewer
+            pdfViewer.appendChild(canvas);
 
-                    // Update info halaman
-                    document.getElementById('currentPage').textContent = pageNum;
-                    currentPage = pageNum;
+            // Update info halaman
+            document.getElementById('currentPage').textContent = pageNum;
+            currentPage = pageNum;
 
-                    // Update status tombol navigasi
-                    document.getElementById('prevPage').disabled = (pageNum <= 1);
-                    document.getElementById('nextPage').disabled = (pageNum >= totalPages);
-                });
-            });
-        }
+            // Update status tombol navigasi
+            document.getElementById('prevPage').disabled = (pageNum <= 1);
+            document.getElementById('nextPage').disabled = (pageNum >= totalPages);
+
+            // SESUAIKAN UKURAN CONTAINER
+            pdfViewer.style.height = viewport.height + 'px';
+        });
+    });
+}
 
         function goToPrevPage() {
             if (currentPage > 1) {
