@@ -11,6 +11,8 @@ use App\Http\Controllers\eksternal\KegiatanController;
 use App\Http\Controllers\eksternal\PesananController;
 use App\Http\Controllers\internal\PenyediaController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PdfController;
+use App\Http\Controllers\PDFWatermarkController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -90,4 +92,19 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::get('/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
 });
 
+Route::get('/edit-pdf', [PdfController::class, 'form']);
+Route::post('/apply', [PdfController::class, 'apply']);
+
 Route::match(['GET', 'POST'], '/laporan', [LaporanController::class, 'index'])->middleware('auth')->name('laporan');
+
+
+// routes/web.php
+
+
+Route::get('/watermark', [PDFWatermarkController::class, 'index']);
+Route::post('/upload-pdf', [PDFWatermarkController::class, 'uploadPDF']);
+Route::post('/upload-watermark', [PDFWatermarkController::class, 'uploadWatermark']);
+Route::post('/apply-watermark', [PDFWatermarkController::class, 'applyWatermark']);
+Route::get('/download/{filename}', [PDFWatermarkController::class, 'download']);
+// resources/views/pdf/watermark.blade.php
+// Copy the HTML content from the second artifact and save it as watermark.blade.php
