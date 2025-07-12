@@ -101,7 +101,7 @@ Route::match(['GET', 'POST'], '/riwayat', [LaporanController::class, 'index'])->
 // routes/web.php
 
 
-Route::get('/watermark', [PDFWatermarkController::class, 'index']);
+Route::get('/watermark', [PDFWatermarkController::class, 'index'])->middleware('auth')->name('watermark');
 Route::post('/upload-pdf', [PDFWatermarkController::class, 'uploadPDF']);
 Route::post('/upload-watermark', [PDFWatermarkController::class, 'uploadWatermark']);
 Route::post('/apply-watermark', [PDFWatermarkController::class, 'applyWatermark']);

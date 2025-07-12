@@ -39,6 +39,12 @@
                     </a>
 
                 </li>
+                <li class="{{ Route::is('watermark') ? 'active' : '' }}">
+                    <a href="{{ route('watermark') }}" class="{{ Route::is('watermark') ? 'active' : '' }}">
+                        <i class="fas fa-file-alt"></i> <span> Desain PDF</span>
+                    </a>
+
+                </li>
 
             </ul>
         </div>

@@ -81,7 +81,8 @@ class PDFWatermarkController extends Controller
                 'opacity' => 'required|numeric|min:0|max:1',
                 'as_background' => 'sometimes|string|in:true,false',
                 'scale' => 'required|numeric|min:1|max:100',
-                'full_cover' => 'sometimes|string|in:true,false'
+                'full_cover' => 'sometimes|string|in:true,false',
+                'pages' => 'nullable|string' // New: allow pages field
             ]);
 
             $pdfPath = storage_path('app/public/' . $request->pdf_path);
@@ -95,7 +96,12 @@ class PDFWatermarkController extends Controller
                 throw new \Exception('Watermark file tidak ditemukan');
             }
 
-            // Konversi PDF ke format yang lebih kompatibel
+            // Parse pages field (e.g., "1,2,4-6")
+            $pages = null;
+            if ($request->filled('pages')) {
+                $pages = $this->parsePagesString($request->input('pages'));
+            }
+
             $convertedPdfPath = $this->convertPDF($pdfPath);
             if (!$convertedPdfPath) {
                 throw new \Exception('Gagal mengkonversi PDF');
@@ -112,26 +118,13 @@ class PDFWatermarkController extends Controller
                 $request->opacity,
                 $asBackground,
                 $fullCover,
-                $scale = $request->scale ?? 100
+                $scale = $request->scale ?? 100,
+                $pages // Pass pages array
             );
             return response()->json([
                 'success' => true,
                 'watermarked_pdf' => $outputPath,
                 'preview_path' => $outputPath // Pastikan menggunakan path yang sama
-            ]);
-
-            // Hapus file hasil konversi
-            if ($convertedPdfPath != $pdfPath) {
-                @unlink($convertedPdfPath);
-            }
-
-            // Generate new preview
-            $previewPath = $this->generatePDFPreview($outputPath);
-
-            return response()->json([
-                'success' => true,
-                'watermarked_pdf' => $outputPath,
-                'preview_path' => $previewPath
             ]);
         } catch (\Exception $e) {
             Log::error('Apply Watermark Error: ' . $e->getMessage());
@@ -140,6 +133,33 @@ class PDFWatermarkController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+    /**
+     * Parse a pages string like "1,2,4-6" into an array of integers.
+     */
+    private function parsePagesString($pagesStr)
+    {
+        $pages = [];
+        $parts = preg_split('/,/', $pagesStr);
+        foreach ($parts as $part) {
+            $part = trim($part);
+            if (preg_match('/^(\d+)-(\d+)$/', $part, $m)) {
+                $start = (int)$m[1];
+                $end = (int)$m[2];
+                if ($start <= $end) {
+                    for ($i = $start; $i <= $end; $i++) {
+                        $pages[] = $i;
+                    }
+                }
+            } elseif (preg_match('/^\d+$/', $part)) {
+                $pages[] = (int)$part;
+            }
+        }
+        // Remove duplicates and sort
+        $pages = array_unique($pages);
+        sort($pages);
+        return $pages;
     }
 
     private function convertPDF($pdfPath)
@@ -179,97 +199,73 @@ class PDFWatermarkController extends Controller
         return $pdfPath; // Fallback ke file asli jika konversi gagal
     }
 
-    private function addWatermarkToPDF($pdfPath, $watermarkPath, $vPos, $hPos, $opacity, $asBackground, $fullCover,$scale
-)
+    private function addWatermarkToPDF($pdfPath, $watermarkPath, $vPos, $hPos, $opacity, $asBackground, $fullCover, $scale, $pages = null)
     {
         try {
             $pdf = new Fpdi();
-
-            // Set PDF parser options
-            $pdf->setSourceFile($pdfPath);
             $pageCount = $pdf->setSourceFile($pdfPath);
-
-            // Get watermark image info
             $imageInfo = getimagesize($watermarkPath);
             if (!$imageInfo) {
                 throw new \Exception('Tidak dapat membaca informasi watermark image');
             }
-
             for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
                 try {
                     $templateId = $pdf->importPage($pageNo);
                     $size = $pdf->getTemplateSize($templateId);
-
                     $pdf->AddPage($size['orientation'], [$size['width'], $size['height']]);
-
-                    // Full Cover Watermark
-                    if ($fullCover) {
-                        $pdf->SetAlpha($opacity);
-                        $pdf->Image($watermarkPath, 0, 0, $size['width'], $size['height']);
-                        $pdf->SetAlpha(1);
-                        $pdf->useTemplate($templateId);
-                    }
-                    // Normal Watermark
-                    else {
-                        // Calculate watermark position
-                        $positions = $this->calculateWatermarkPosition(
-                            $size['width'],
-                            $size['height'],
-                            $imageInfo[0],
-                            $imageInfo[1],
-                            $vPos,
-                            $hPos,
-                                                    $scale // TAMBAHKAN PARAMETER SCALE
-
-                        );
-
-                        if ($asBackground) {
-                            // Add watermark first (as background)
+                    $shouldWatermark = !$pages || in_array($pageNo, $pages);
+                    if ($shouldWatermark) {
+                        if ($fullCover) {
                             $pdf->SetAlpha($opacity);
-                            $pdf->Image($watermarkPath, $positions['x'], $positions['y'], $positions['width'], $positions['height']);
+                            $pdf->Image($watermarkPath, 0, 0, $size['width'], $size['height']);
                             $pdf->SetAlpha(1);
-                            // Then add original PDF content
                             $pdf->useTemplate($templateId);
                         } else {
-                            // Add original PDF content first
-                            $pdf->useTemplate($templateId);
-                            // Then add watermark on top
-                            $pdf->SetAlpha($opacity);
-                            $pdf->Image($watermarkPath, $positions['x'], $positions['y'], $positions['width'], $positions['height']);
-                            $pdf->SetAlpha(1);
+                            $positions = $this->calculateWatermarkPosition(
+                                $size['width'],
+                                $size['height'],
+                                $imageInfo[0],
+                                $imageInfo[1],
+                                $vPos,
+                                $hPos,
+                                $scale
+                            );
+                            if ($asBackground) {
+                                $pdf->SetAlpha($opacity);
+                                $pdf->Image($watermarkPath, $positions['x'], $positions['y'], $positions['width'], $positions['height']);
+                                $pdf->SetAlpha(1);
+                                $pdf->useTemplate($templateId);
+                            } else {
+                                $pdf->useTemplate($templateId);
+                                $pdf->SetAlpha($opacity);
+                                $pdf->Image($watermarkPath, $positions['x'], $positions['y'], $positions['width'], $positions['height']);
+                                $pdf->SetAlpha(1);
+                            }
                         }
+                    } else {
+                        // Just copy the page without watermark
+                        $pdf->useTemplate($templateId);
                     }
                 } catch (\Exception $pageError) {
                     Log::error("Error processing page $pageNo: " . $pageError->getMessage());
                     continue;
                 }
             }
-
             $outputFilename = 'watermarked_' . time() . '.pdf';
             $outputPath = 'temp/watermarked/' . $outputFilename;
             $fullOutputPath = storage_path('app/public/' . $outputPath);
-
-            // Create directory if not exists
             if (!file_exists(dirname($fullOutputPath))) {
                 mkdir(dirname($fullOutputPath), 0755, true);
             }
-
             $pdf->Output($fullOutputPath, 'F');
-
-            // Simpan ke file sementara dulu
             $tempOutputPath = tempnam(sys_get_temp_dir(), 'watermarked_') . '.pdf';
             $pdf->Output($tempOutputPath, 'F');
-
-            // Validasi file output
             if (!file_exists($tempOutputPath) || filesize($tempOutputPath) === 0) {
                 throw new \Exception('Output PDF tidak valid');
             }
-
-            // Pindahkan ke storage publik
             $outputFilename = 'watermarked_' . time() . '.pdf';
             $outputPath = 'temp/watermarked/' . $outputFilename;
             $fullOutputPath = storage_path('app/public/' . $outputPath);
-
             rename($tempOutputPath, $fullOutputPath);
             return $outputPath;
         } catch (\Exception $e) {
