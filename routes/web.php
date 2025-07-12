@@ -95,7 +95,7 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
 Route::get('/edit-pdf', [PdfController::class, 'form']);
 Route::post('/apply', [PdfController::class, 'apply']);
 
-Route::match(['GET', 'POST'], '/laporan', [LaporanController::class, 'index'])->middleware('auth')->name('laporan');
+Route::match(['GET', 'POST'], '/riwayat', [LaporanController::class, 'index'])->middleware('auth')->name('riwayat');
 
 
 // routes/web.php
