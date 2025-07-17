@@ -51,7 +51,7 @@
                         <p class="text-muted mb-0">Administrator</p>
                     </div>
                 </div>
-                <a class="dropdown-item" href="#">My Profile</a>
+                <a class="dropdown-item" href="{{ route('profile') }}">My Profile</a>
                 <form action="{{ route('logout') }}" method="post">
                     @csrf
                     <button class="dropdown-item" type="submit">Logout</button>
