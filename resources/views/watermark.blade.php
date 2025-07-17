@@ -14,6 +14,7 @@
             border-radius: 8px;
             padding: 20px;
             text-align: center;
+            
             min-height: 100px;
             /* Diperkecil */
             display: flex;
