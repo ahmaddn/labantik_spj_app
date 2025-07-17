@@ -120,8 +120,8 @@
                                                     class="btn btn-secondary">Sebelumnya</a></li>
                                         @endif
                                         @if ($i < $totalSteps - 1)
-                                            <a href="{{ route('eksternal.pesanan.edit') }}"
-                                                class="btn btn-secondary">Kembali</a>
+                                            <a href="{{ route('eksternal.pesanan.edit', $pesanan->id) }}"
+                                                class="btn btn-secondary me-2">Kembali</a>
                                             <li class="next float-end"><a href="javascript:;"
                                                     class="btn btn-primary">Selanjutnya</a></li>
                                         @else
