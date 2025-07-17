@@ -10,17 +10,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .preview-container {
-    border: 2px dashed #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    min-height: 100px; /* Diperkecil */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f8f9fa;
-    overflow: auto; /* Tambahkan scroll jika perlu */
-}
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            min-height: 100px;
+            /* Diperkecil */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            overflow: auto;
+            /* Tambahkan scroll jika perlu */
+        }
+
         .preview-container.has-content {
             border-color: #007bff;
             background-color: #fff;
@@ -111,21 +114,21 @@
         }
 
         /* PDF Viewer Styles */
-       #pdfViewer {
-    width: 100%;
-    max-height: 80vh;
-    overflow: auto;
-    background-color: #f0f0f0;
-    display: none;
-}
+        #pdfViewer {
+            width: 100%;
+            max-height: 80vh;
+            overflow: auto;
+            background-color: #f0f0f0;
+            display: none;
+        }
 
         #pdfViewer canvas {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
         /* Navigation Controls */
         .pdf-navigation {
@@ -147,167 +150,140 @@
 <body>
     @extends('layouts.app')
 
-@section('content')
-<div class="content container-fluid">
-    <div class="page-header">
-        <div class="row">
-            <div class="col">
-                <h3 class="page-title">Watermark PDF</h3>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Watermark</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card h-100">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0"><i class="fas fa-file-pdf"></i> PDF Preview</h5>
-                    <div class="page-info" id="pageInfo" style="display: none;">
-                        <span id="currentPage">1</span> / <span id="totalPages">1</span>
+    @section('content')
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="page-title">Watermark PDF</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Watermark</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="card-body position-relative">
-                    <div class="pdf-navigation" id="pdfNavigation" style="display: none;">
-                        <button class="btn btn-sm btn-outline-primary" id="prevPage">
-                            <i class="fas fa-chevron-left"></i> Previous
-                        </button>
-                        <button class="btn btn-sm btn-outline-primary" id="nextPage">
-                            Next <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-
-                    <div id="pdfPreview" class="preview-container">
-                        <div class="text-center" id="pdfPlaceholder">
-                            <i class="fas fa-file-pdf fa-4x text-muted mb-3"></i>
-                            <p class="text-muted">Upload PDF untuk melihat preview</p>
-                        </div>
-                    </div>
-                    <div id="pdfViewer"></div>
-                    <div id="previewProcessing" class="processing-overlay" style="display: none;">
-                        <div class="text-center">
-                            <div class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0"><i class="fas fa-file-pdf"></i> PDF Preview</h5>
+                            <div class="page-info" id="pageInfo" style="display: none;">
+                                <span id="currentPage">1</span> / <span id="totalPages">1</span>
                             </div>
-                            <p class="mt-2 mb-0">Memproses PDF...</p>
+                        </div>
+                        <div class="card-body position-relative">
+                            <div class="pdf-navigation" id="pdfNavigation" style="display: none;">
+                                <button class="btn btn-sm btn-outline-primary" id="prevPage">
+                                    <i class="fas fa-chevron-left"></i> Previous
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary" id="nextPage">
+                                    Next <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+
+                            <div id="pdfPreview" class="preview-container">
+                                <div class="text-center" id="pdfPlaceholder">
+                                    <i class="fas fa-file-pdf fa-4x text-muted mb-3"></i>
+                                    <p class="text-muted">Upload PDF untuk melihat preview</p>
+                                </div>
+                            </div>
+                            <div id="pdfViewer"></div>
+                            <div id="previewProcessing" class="processing-overlay" style="display: none;">
+                                <div class="text-center">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <p class="mt-2 mb-0">Memproses PDF...</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-4">
+                    <div class="settings-card mb-4">
+                        <h5><i class="fas fa-upload"></i> Upload PDF</h5>
+                        <div class="upload-zone" id="pdfUploadZone">
+                            <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
+                            <p>Drag & drop PDF file atau klik untuk browse</p>
+                            <input type="file" id="pdfFile" accept=".pdf" style="display: none;">
+                            <div id="pdfUploadStatus"></div>
+                        </div>
+                        <div id="pdfInfo" class="file-info" style="display: none;"></div>
+                    </div>
+
+                    <div class="settings-card mb-4">
+                        <h5><i class="fas fa-image"></i> Watermark</h5>
+                        <div class="upload-zone" id="watermarkUploadZone">
+                            <i class="fas fa-image fa-2x mb-2"></i>
+                            <p>Upload gambar watermark (PNG/JPG)</p>
+                            <input type="file" id="watermarkFile" accept=".png,.jpg,.jpeg" style="display: none;">
+                            <div id="watermarkUploadStatus"></div>
+                        </div>
+                        <div id="watermarkInfo" class="file-info" style="display: none;"></div>
+                    </div>
+
+                    <div class="settings-card mb-4">
+                        <h5><i class="fas fa-cog"></i> Settings</h5>
+
+                        <div class="mb-3">
+                            <label class="form-label">Mode Tampilan</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="mode" id="foreground"
+                                    value="foreground" checked>
+                                <label class="form-check-label" for="foreground">
+                                    Foreground (Di Atas Konten)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="mode" id="background"
+                                    value="background">
+                                <label class="form-check-label" for="background">
+                                    Background (Di Belakang Konten)
+                                </label>
+                            </div>
+                        </div>
+
+
+
+                        <div class="mb-3">
+                            <label for="opacity" class="form-label">Opacity: <span id="opacityValue">0.5</span></label>
+                            <input type="range" class="form-range" id="opacity" min="0.1" max="1"
+                                step="0.1" value="0.5">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="scale" class="form-label">Scale: <span id="scaleValue">30</span>%</label>
+                            <input type="range" class="form-range" id="scale" min="1" max="100"
+                                value="30">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="watermarkPages" class="form-label">Halaman yang diberi watermark <small>(misal:
+                                    1,2,4-6)</small></label>
+                            <input type="text" class="form-control" id="watermarkPages" placeholder="Contoh: 1,2,4-6"
+                                autocomplete="off">
+                            <div class="form-text">Pisahkan dengan koma untuk beberapa halaman, gunakan tanda minus untuk
+                                rentang.</div>
+                        </div>
+
+                        <button id="applyWatermark" class="btn btn-success w-100" disabled>
+                            <i class="fas fa-magic"></i> <span id="applyBtnText">Apply Watermark</span>
+                        </button>
+                        <div id="watermarkStatus" class="mt-2"></div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h5><i class="fas fa-download"></i> Download</h5>
+                        <button id="downloadBtn" class="btn btn-primary w-100" disabled>
+                            <i class="fas fa-download"></i> Download PDF
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="col-md-4">
-            <div class="settings-card mb-4">
-                <h5><i class="fas fa-upload"></i> Upload PDF</h5>
-                <div class="upload-zone" id="pdfUploadZone">
-                    <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
-                    <p>Drag & drop PDF file atau klik untuk browse</p>
-                    <input type="file" id="pdfFile" accept=".pdf" style="display: none;">
-                    <div id="pdfUploadStatus"></div>
-                </div>
-                <div id="pdfInfo" class="file-info" style="display: none;"></div>
-            </div>
-
-            <div class="settings-card mb-4">
-                <h5><i class="fas fa-image"></i> Watermark</h5>
-                <div class="upload-zone" id="watermarkUploadZone">
-                    <i class="fas fa-image fa-2x mb-2"></i>
-                    <p>Upload gambar watermark (PNG/JPG)</p>
-                    <input type="file" id="watermarkFile" accept=".png,.jpg,.jpeg" style="display: none;">
-                    <div id="watermarkUploadStatus"></div>
-                </div>
-                <div id="watermarkInfo" class="file-info" style="display: none;"></div>
-            </div>
-
-            <div class="settings-card mb-4">
-                <h5><i class="fas fa-cog"></i> Settings</h5>
-
-                <div class="mb-3">
-                    <label class="form-label">Mode Tampilan</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="mode" id="foreground"
-                            value="foreground" checked>
-                        <label class="form-check-label" for="foreground">
-                            Foreground (Di Atas Konten)
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="mode" id="background"
-                            value="background">
-                        <label class="form-check-label" for="background">
-                            Background (Di Belakang Konten)
-                        </label>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Posisi Vertical</label>
-                    <div class="btn-group w-100" role="group">
-                        <input type="radio" class="btn-check" name="vertical" id="top" value="top"
-                            checked>
-                        <label class="btn btn-outline-primary" for="top">Top</label>
-
-                        <input type="radio" class="btn-check" name="vertical" id="vcenter" value="center">
-                        <label class="btn btn-outline-primary" for="vcenter">Center</label>
-
-                        <input type="radio" class="btn-check" name="vertical" id="bottom" value="bottom">
-                        <label class="btn btn-outline-primary" for="bottom">Bottom</label>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Posisi Horizontal</label>
-                    <div class="btn-group w-100" role="group">
-                        <input type="radio" class="btn-check" name="horizontal" id="left" value="left"
-                            checked>
-                        <label class="btn btn-outline-primary" for="left">Left</label>
-
-                        <input type="radio" class="btn-check" name="horizontal" id="hcenter"
-                            value="center">
-                        <label class="btn btn-outline-primary" for="hcenter">Center</label>
-
-                        <input type="radio" class="btn-check" name="horizontal" id="right"
-                            value="right">
-                        <label class="btn btn-outline-primary" for="right">Right</label>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="opacity" class="form-label">Opacity: <span id="opacityValue">0.5</span></label>
-                    <input type="range" class="form-range" id="opacity" min="0.1" max="1"
-                        step="0.1" value="0.5">
-                </div>
-
-                <div class="mb-3">
-                    <label for="scale" class="form-label">Scale: <span id="scaleValue">30</span>%</label>
-                    <input type="range" class="form-range" id="scale" min="1" max="100"
-                        value="30">
-                </div>
-
-                <div class="mb-3">
-                    <label for="watermarkPages" class="form-label">Halaman yang diberi watermark <small>(misal: 1,2,4-6)</small></label>
-                    <input type="text" class="form-control" id="watermarkPages" placeholder="Contoh: 1,2,4-6" autocomplete="off">
-                    <div class="form-text">Pisahkan dengan koma untuk beberapa halaman, gunakan tanda minus untuk rentang.</div>
-                </div>
-
-                <button id="applyWatermark" class="btn btn-success w-100" disabled>
-                    <i class="fas fa-magic"></i> <span id="applyBtnText">Apply Watermark</span>
-                </button>
-                <div id="watermarkStatus" class="mt-2"></div>
-            </div>
-
-            <div class="settings-card">
-                <h5><i class="fas fa-download"></i> Download</h5>
-                <button id="downloadBtn" class="btn btn-primary w-100" disabled>
-                    <i class="fas fa-download"></i> Download PDF
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+    @endsection
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Tambahkan PDF.js -->
@@ -367,12 +343,10 @@
             document.getElementById('nextPage').addEventListener('click', goToNextPage);
 
             // Auto-apply watermark when settings change
-            document.querySelectorAll(
-                'input[name="mode"], input[name="vertical"], input[name="horizontal"], #opacity, #scale').forEach(
-                input => {
-                    input.addEventListener('change', autoApplyWatermark);
-                });
-        }
+            document.querySelectorAll('input[name="mode"], #opacity, #scale').forEach(input => {
+                input.addEventListener('change', autoApplyWatermark);
+            });
+        }   
 
         function handleDragOver(e) {
             e.preventDefault();
@@ -579,45 +553,47 @@
         }
 
         function renderPage(pageNum) {
-    if (!currentPdf) return Promise.reject('PDF not loaded');
+            if (!currentPdf) return Promise.reject('PDF not loaded');
 
-    return currentPdf.getPage(pageNum).then(function(page) {
-        const pdfViewer = document.getElementById('pdfViewer');
-        const scale = 1.5; // Skala tetap
-        const viewport = page.getViewport({ scale: scale });
+            return currentPdf.getPage(pageNum).then(function(page) {
+                const pdfViewer = document.getElementById('pdfViewer');
+                const scale = 1.5; // Skala tetap
+                const viewport = page.getViewport({
+                    scale: scale
+                });
 
-        // Siapkan canvas
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
+                // Siapkan canvas
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
 
-        // Kosongkan viewer
-        pdfViewer.innerHTML = '';
+                // Kosongkan viewer
+                pdfViewer.innerHTML = '';
 
-        // Render halaman PDF ke canvas
-        const renderContext = {
-            canvasContext: context,
-            viewport: viewport
-        };
+                // Render halaman PDF ke canvas
+                const renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
 
-        return page.render(renderContext).promise.then(function() {
-            // Tambahkan canvas ke viewer
-            pdfViewer.appendChild(canvas);
+                return page.render(renderContext).promise.then(function() {
+                    // Tambahkan canvas ke viewer
+                    pdfViewer.appendChild(canvas);
 
-            // Update info halaman
-            document.getElementById('currentPage').textContent = pageNum;
-            currentPage = pageNum;
+                    // Update info halaman
+                    document.getElementById('currentPage').textContent = pageNum;
+                    currentPage = pageNum;
 
-            // Update status tombol navigasi
-            document.getElementById('prevPage').disabled = (pageNum <= 1);
-            document.getElementById('nextPage').disabled = (pageNum >= totalPages);
+                    // Update status tombol navigasi
+                    document.getElementById('prevPage').disabled = (pageNum <= 1);
+                    document.getElementById('nextPage').disabled = (pageNum >= totalPages);
 
-            // SESUAIKAN UKURAN CONTAINER
-            pdfViewer.style.height = viewport.height + 'px';
-        });
-    });
-}
+                    // SESUAIKAN UKURAN CONTAINER
+                    pdfViewer.style.height = viewport.height + 'px';
+                });
+            });
+        }
 
         function goToPrevPage() {
             if (currentPage > 1) {
@@ -691,11 +667,10 @@
             formData.append('watermark_path', currentWatermarkPath);
             formData.append('opacity', opacity);
             formData.append('scale', scale);
-            formData.append('vertical_position', document.querySelector('input[name="vertical"]:checked').value);
-            formData.append('horizontal_position', document.querySelector('input[name="horizontal"]:checked').value);
             formData.append('as_background', document.querySelector('input[name="mode"]:checked').value === 'background');
 
-            const pagesValue = document.getElementById('watermarkPages') ? document.getElementById('watermarkPages').value.trim() : '';
+            const pagesValue = document.getElementById('watermarkPages') ? document.getElementById('watermarkPages').value
+                .trim() : '';
             if (pagesValue) {
                 formData.append('pages', pagesValue);
             }

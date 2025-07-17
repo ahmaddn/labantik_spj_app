@@ -13,7 +13,6 @@ class PDFWatermarkController extends Controller
     public function index()
     {
         return view('watermark');
-
     }
 
     public function uploadPDF(Request $request)
@@ -76,13 +75,11 @@ class PDFWatermarkController extends Controller
             $request->validate([
                 'pdf_path' => 'required|string',
                 'watermark_path' => 'required|string',
-                'vertical_position' => 'sometimes|in:top,center,bottom',
-                'horizontal_position' => 'sometimes|in:left,center,right',
                 'opacity' => 'required|numeric|min:0|max:1',
                 'as_background' => 'sometimes|string|in:true,false',
                 'scale' => 'required|numeric|min:1|max:100',
                 'full_cover' => 'sometimes|string|in:true,false',
-                'pages' => 'nullable|string' // New: allow pages field
+                'pages' => 'nullable|string'
             ]);
 
             $pdfPath = storage_path('app/public/' . $request->pdf_path);
@@ -113,8 +110,8 @@ class PDFWatermarkController extends Controller
             $outputPath = $this->addWatermarkToPDF(
                 $convertedPdfPath,
                 $watermarkPath,
-                $request->vertical_position ?? 'top',
-                $request->horizontal_position ?? 'right',
+                'center',
+                'center',
                 $request->opacity,
                 $asBackground,
                 $fullCover,
@@ -180,9 +177,6 @@ class PDFWatermarkController extends Controller
             exec($command, $output, $returnCode);
 
             if ($returnCode === 0 && file_exists($outputPath) && filesize($outputPath) > 0) {
-
-
-
             }
             if ($returnCode !== 0) {
                 throw new \Exception("Ghostscript error: $returnCode");
@@ -190,8 +184,8 @@ class PDFWatermarkController extends Controller
 
             if (!file_exists($outputPath) || filesize($outputPath) === 0) {
                 throw new \Exception('File hasil konversi tidak valid');
-             }
-         return $outputPath;
+            }
+            return $outputPath;
         } catch (\Exception $e) {
             Log::error('PDF Conversion Error: ' . $e->getMessage());
         }
@@ -282,39 +276,39 @@ class PDFWatermarkController extends Controller
     }
 
     private function calculateWatermarkPosition($pageWidth, $pageHeight, $imgWidth, $imgHeight, $vPos, $hPos, $scale)
-{
-    // Hitung ukuran berdasarkan skala (persentase dari lebar halaman)
-    $maxWidth = $pageWidth * ($scale / 100);
-    $maxHeight = $pageHeight * ($scale / 100);
+    {
+        // Hitung ukuran berdasarkan skala (persentase dari lebar halaman)
+        $maxWidth = $pageWidth * ($scale / 100);
+        $maxHeight = $pageHeight * ($scale / 100);
 
-    // Hitung rasio skala untuk mempertahankan aspect ratio
-    $scaleRatio = min($maxWidth / $imgWidth, $maxHeight / $imgHeight);
+        // Hitung rasio skala untuk mempertahankan aspect ratio
+        $scaleRatio = min($maxWidth / $imgWidth, $maxHeight / $imgHeight);
 
-    $width = $imgWidth * $scaleRatio;
-    $height = $imgHeight * $scaleRatio;
+        $width = $imgWidth * $scaleRatio;
+        $height = $imgHeight * $scaleRatio;
 
-    // Hitung posisi berdasarkan pilihan user
-    $x = match($hPos) {
-        'left' => 0,
-        'center' => ($pageWidth - $width) / 2,
-        'right' => $pageWidth - $width,
-        default => 0
-    };
+        // Hitung posisi berdasarkan pilihan user
+        $x = match ($hPos) {
+            'left' => 0,
+            'center' => ($pageWidth - $width) / 2,
+            'right' => $pageWidth - $width,
+            default => 0
+        };
 
-    $y = match($vPos) {
-        'top' => 0,
-        'center' => ($pageHeight - $height) / 2,
-        'bottom' => $pageHeight - $height,
-        default => 0
-    };
+        $y = match ($vPos) {
+            'top' => 0,
+            'center' => ($pageHeight - $height) / 2,
+            'bottom' => $pageHeight - $height,
+            default => 0
+        };
 
-    return [
-        'x' => $x,
-        'y' => $y,
-        'width' => $width,
-        'height' => $height
-    ];
-}
+        return [
+            'x' => $x,
+            'y' => $y,
+            'width' => $width,
+            'height' => $height
+        ];
+    }
     private function generatePDFPreview($pdfPath)
     {
         try {

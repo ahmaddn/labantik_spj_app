@@ -410,9 +410,11 @@
                 </tr>
 
             </table>
-            <tr>
-                <td style="width: 200px">Barang yang dipesan sebagai berikut :</td>
-            </tr>
+            <table style="width: 100%; border: none;" class="no-border">
+                <tr>
+                    <td style="width: 200px">Barang yang dipesan sebagai berikut :</td>
+                </tr>
+            </table>
             <table class="tulisan" style="border: none;">
                 <tr>
                     <td style="padding-top:0; padding-bottom:0;">1. Tanggal barang diterima</td>
@@ -824,7 +826,7 @@
                     <tr>
                         <td>
                             <div style="display: flex; justify-content: center;">
-                                <div style="text-align: left; vertical-align: bottom;">
+                                <div style="text-align: left; vertical-align: bottom;"><br><br><br>
                                     <strong style="text-decoration:underline;">{{ $kepsek->name ?? '-' }}</strong><br>
                                     NIP. {{ $kepsek->nip ?? '-' }}
                                 </div>
@@ -990,34 +992,33 @@
     <style>
         @media print {
             @page {
-                size: A4 portrait;
-                padding-top: 20mm;
-                padding-left: 15mm;
-                padding-right: 15mm;
-                padding-bottom: 15mm;
-
-
+                size: 210mm 330mm;
+                /* F4 size */
+                padding: 20mm 15mm 15mm 15mm;
             }
 
-            /* kalau kamu pakai wrapper .konten-utama */
+            body {
+                font-family: 'DejaVu Sans', 'Arial', sans-serif;
+                font-size: 12pt;
+                line-height: 1.2;
+            }
+
             .konten-utama {
-                /* tambahan ruang di dalam halaman (setiap halaman) */
                 padding-top: 0mm !important;
+                padding-left: 0mm !important;
+                padding-right: 0mm !important;
             }
 
-            /* biarkan page-break-inside: avoid berfungsi */
             .page-break-inside-avoid {
                 page-break-inside: avoid !important;
             }
 
-            /* Pastikan after-table-content utuh di halaman pertama */
             .avoid-break {
                 page-break-inside: avoid;
                 break-inside: avoid;
                 -webkit-page-break-inside: avoid;
                 display: block;
                 margin-top: 5px;
-
             }
 
             .after-table-content.avoid-break {
@@ -1028,7 +1029,6 @@
                 margin-top: 5px;
             }
 
-            /* Tabel boleh dipecah */
             table.data-table {
                 page-break-inside: auto;
                 break-inside: auto;
@@ -1040,14 +1040,6 @@
                 break-inside: auto;
             }
 
-            /* Tabel berrita acara dan faktur boleh ter-split */
-            table.data-table,
-            table.invoice-table {
-                page-break-inside: auto;
-                break-inside: auto;
-            }
-
-            /* Paksakan break setelah halaman Berita Acara */
             .page.berita-acara {
                 page-break-after: always;
                 break-after: page;
@@ -1058,13 +1050,11 @@
                 break-after: page;
             }
 
-            /* Faktur otomatis mulai di halaman baru */
             .page.faktur {
                 page-break-before: always;
                 break-before: page;
             }
 
-            /* Tidak ada blank page di akhir */
             .page:last-of-type {
                 page-break-after: auto;
                 break-after: auto;
@@ -1072,13 +1062,14 @@
         }
     </style>
 
-
     <script>
         window.onload = function() {
             window.print();
         }
         window.onafterprint = () => window.close();
-    </script>
+    </script>   
+
+
 
 </body>
 
