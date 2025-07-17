@@ -26,7 +26,7 @@
                             <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
                                 @foreach (['harian' => 'Harian', 'bulanan' => 'Bulanan', 'tahunan' => 'Tahunan'] as $key => $label)
                                     <li class="nav-item">
-                                        <form action="{{ route('laporan') }}" method="POST"
+                                        <form action="{{ route('riwayat') }}" method="POST"
                                             id="formKategori{{ $key }}">
                                             @csrf
                                             <input type="hidden" name="kategori" value="{{ $key }}">
@@ -40,7 +40,7 @@
                                 @endforeach
 
                             </ul>
-                            <form action="{{ route('laporan') }}" method="POST" id="formLaporan">
+                            <form action="{{ route('riwayat') }}" method="POST" id="formLaporan">
                                 @csrf
                                 <input type="hidden" name="kategori" value="{{ $kategori }}">
 

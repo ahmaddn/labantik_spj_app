@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\Auth\LoginUserController;
@@ -92,10 +93,13 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::get('/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
 });
 
-Route::get('/edit-pdf', [PdfController::class, 'form']);
-Route::post('/apply', [PdfController::class, 'apply']);
+
 
 Route::match(['GET', 'POST'], '/riwayat', [LaporanController::class, 'index'])->middleware('auth')->name('riwayat');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+});
 
 
 // routes/web.php
