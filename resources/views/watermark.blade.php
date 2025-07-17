@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +14,7 @@
             border-radius: 8px;
             padding: 20px;
             text-align: center;
-            
+
             min-height: 100px;
             /* Diperkecil */
             display: flex;
@@ -348,7 +347,7 @@
             document.querySelectorAll('input[name="mode"], #opacity, #scale').forEach(input => {
                 input.addEventListener('change', autoApplyWatermark);
             });
-        }   
+        }
 
         function handleDragOver(e) {
             e.preventDefault();
@@ -743,5 +742,3 @@
 </body>
 
 </html>
-=======
->>>>>>> 4bb1752ea88d59b452969d8f21b486585e5655e8
