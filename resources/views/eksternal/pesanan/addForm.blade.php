@@ -81,12 +81,28 @@
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <label>Satuan Barang</label>
-                                            <input type="text" name="items[{{ $i }}][unit]"
-                                                class="form-control" value="{{ old("items.$i.unit") }}">
+                                            <select name="items[{{ $i }}][unit]" class="form-control">
+                                                <option value="">-- Pilih Satuan --</option>
+                                                <option value="unit"
+                                                    {{ old("items.$i.unit") == 'unit' ? 'selected' : '' }}>Unit</option>
+                                                <option value="paket"
+                                                    {{ old("items.$i.unit") == 'paket' ? 'selected' : '' }}>Paket</option>
+                                                <option value="set"
+                                                    {{ old("items.$i.unit") == 'set' ? 'selected' : '' }}>Set</option>
+                                                <option value="pcs"
+                                                    {{ old("items.$i.unit") == 'pcs' ? 'selected' : '' }}>Pcs</option>
+                                                <option value="box"
+                                                    {{ old("items.$i.unit") == 'box' ? 'selected' : '' }}>Box</option>
+                                                <option value="kg"
+                                                    {{ old("items.$i.unit") == 'kg' ? 'selected' : '' }}>Kg</option>
+                                                <option value="liter"
+                                                    {{ old("items.$i.unit") == 'liter' ? 'selected' : '' }}>Liter</option>
+                                            </select>
                                             @error("items.$i.unit")
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
+
                                         <div class="col-md-6 mb-2">
                                             <label>Total Barang</label>
                                             <div class="input-group">

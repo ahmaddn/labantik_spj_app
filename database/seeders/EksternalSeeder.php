@@ -21,7 +21,7 @@ class EksternalSeeder extends Seeder
         // Seeder Penyedia
         Penyedia::create([
             'userID' => 1,
-            'company' => 'CV Techria Indonesia',
+            'company' => 'CV Techira Indonesia',
             'npwp' => 123456789012345,
             'address' => 'Jl. Teknologi No. 1',
             'post_code' => '402122',

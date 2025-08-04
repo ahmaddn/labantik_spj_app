@@ -31,6 +31,8 @@ class Pesanan extends Model
         'penerimaID',
         'barangID',
         'bendaharaID',
+        'order_date',
+        'prey',
         'paid',
         'status',
         'condition',

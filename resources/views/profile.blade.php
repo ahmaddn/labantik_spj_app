@@ -9,7 +9,7 @@
                     <h3 class="page-title">Profile</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Profile</li>
+                        <li class="breadcrumb-item gfactive">Profile</li>
                     </ul>
                 </div>
             </div>

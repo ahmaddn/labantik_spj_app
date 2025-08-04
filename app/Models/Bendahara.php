@@ -16,9 +16,8 @@ class Bendahara extends Model
 
     protected $fillable = [
         'name',
-        'jenis',
+        'type',
         'nip',
-        'school',
         'userID'
     ];
 }

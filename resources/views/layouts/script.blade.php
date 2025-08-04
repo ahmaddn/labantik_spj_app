@@ -23,3 +23,21 @@
         });
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const select = document.getElementById('jenis-bendahara')
+        const other = document.getElementById('other')
+
+        function toggleInput() {
+            if (select.value == 'Other') {
+                other.style.display = 'block'
+            } else {
+                other.style.display = 'none'
+            }
+        }
+
+        toggleInput()
+
+        select.addEventListener('change', toggleInput)
+    })
+</script>

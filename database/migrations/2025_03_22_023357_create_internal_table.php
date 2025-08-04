@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('bendahara', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->enum('type', ['BOS', 'BOPD']);
-            $table->bigInteger('nip');
+            $table->string('type');
+            $table->string('nip');
             $table->unsignedInteger('userID');
             $table->softDeletes();
 
@@ -26,7 +26,7 @@ return new class extends Migration
         Schema::create('kepsek', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->bigInteger('nip');
+            $table->string('nip');
             $table->string('school');
             $table->string('address');
             $table->unsignedInteger('userID');
@@ -38,7 +38,7 @@ return new class extends Migration
         Schema::create('penerima', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->bigInteger('nip');
+            $table->string('nip');
             $table->string('position');
             $table->unsignedInteger('userID');
             $table->softDeletes();

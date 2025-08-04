@@ -29,14 +29,16 @@ class BendaharaController extends Controller
             $id = Auth::id();
 
             $request->validate([
-                'name' => 'required|unique:bendahara,name',
-                'jenis' => 'required|in:BOS,BODP,',
-                'nip' => 'required|digits:18|unique:bendahara,nip',
+                'name' => 'required|string',
+                'jenis' => 'required|string',
+                'other' => 'required_if:jenis,Other',
+                'nip' => 'required|regex:/^[A-Za-z0-9 \-]+$/|unique:bendahara,nip,' . $id,
             ]);
+            $jenis = $request->jenis === 'Other' ? $request->other : $request->jenis;
 
             Bendahara::create([
                 'name' => $request->input('name'),
-                'type' => $request->input('jenis'),
+                'type' => $jenis,
                 'nip' => $request->input('nip'),
                 'userID' => $id
 
@@ -73,16 +75,18 @@ class BendaharaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required' . $id,
-            'jenis' => 'required|in:BOS,BODP,',
-            'nip' => 'required|digits:18|unique:bendahara,nip,' . $id,
+            'name' => 'required|string',
+            'jenis' => 'required|string',
+            'other' => 'required_if:jenis,Other',
+            'nip' => 'required|regex:/^[A-Za-z0-9 \-]+$/|unique:bendahara,nip,' . $id,
         ]);
+        $jenis = $request->jenis === 'Other' ? $request->other : $request->jenis;
 
         $bendahara = Bendahara::findOrFail($id);
         $bendahara->update([
             'name' => $request->input('name'),
             'nip' => $request->input('nip'),
-            'type' => $request->input('jenis'),
+            'type' => $jenis,
         ]);
 
         return redirect()->route('internal.bendahara.index')
