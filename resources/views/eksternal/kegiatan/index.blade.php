@@ -48,7 +48,7 @@
                                             <th class="px-4 py-2">Nama Kegiatan</th>
                                             <th class="px-4 py-2">Tanggal Order</th>
                                             <th class="px-4 py-2">Batas Akhir Pembayaran</th>
-                                            <th class="px-4 py-2">Info</th>
+                                            <th class="px-4 py-2">Catatan</th>
                                             <th class="px-4 py-2">Action</th>
                                         </tr>
                                     </thead>

@@ -101,6 +101,36 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-6 mb-2">
+                                            <label>Satuan Barang</label>
+                                            <select name="items[{{ $i }}][unit]" class="form-control">
+                                                <option value="">-- Pilih Satuan --</option>
+                                                <option value="unit"
+                                                    {{ old("items.$i.unit", $item->unit) == 'unit' ? 'selected' : '' }}>
+                                                    Unit</option>
+                                                <option value="paket"
+                                                    {{ old("items.$i.unit", $item->unitss) == 'paket' ? 'selected' : '' }}>
+                                                    Paket</option>
+                                                <option value="set"
+                                                    {{ old("items.$i.unit", $item->unit) == 'set' ? 'selected' : '' }}>Set
+                                                </option>
+                                                <option value="pcs"
+                                                    {{ old("items.$i.unit", $item->unit) == 'pcs' ? 'selected' : '' }}>pcs
+                                                </option>
+                                                <option value="box"
+                                                    {{ $item->unit && old("items.$i.unit", $item->unit) == 'box' ? 'selected' : '' }}>
+                                                    box</option>
+                                                <option value="kg"
+                                                    {{ old("items.$i.unit", $item->unit) == 'kg' ? 'selected' : '' }}>kg
+                                                </option>
+                                                <option value="liter"
+                                                    {{ old("items.$i.unit", $item->unit) == 'liter' ? 'selected' : '' }}>
+                                                    liter</option>
+                                            </select>
+                                            @error("items.$i.unit")
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-2">
                                             <label>Total Barang</label>
                                             <div class="input-group">
                                                 <span class="input-group-text">Rp.</span>

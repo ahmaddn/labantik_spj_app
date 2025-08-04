@@ -47,7 +47,7 @@
                             {{-- NPWP --}}
                             <div class="form-group">
                                 <label>NPWP</label>
-                                <input type="number" class="form-control" name="npwp"
+                                <input type="text" class="form-control" name="npwp"
                                     value="{{ old('npwp', $penyedia->npwp) }}" required>
                             </div>
 

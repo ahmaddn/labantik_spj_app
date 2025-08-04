@@ -58,7 +58,7 @@
 
                             {{-- Info --}}
                             <div class="form-group">
-                                <label>Info</label>
+                                <label>Catatan</label>
                                 <textarea class="form-control" name="info" rows="3">{{ old('info') }}</textarea>
                                 @error('info')
                                     <small class="text-danger">{{ $message }}</small>

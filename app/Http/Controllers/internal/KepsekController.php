@@ -30,7 +30,7 @@ class KepsekController extends Controller
             $id = Auth::id();
             $request->validate([
                 'name' => 'required|unique:kepsek,name',
-                'nip' => 'required|unique:kepsek,nip|digits:18',
+                'nip' => 'required|unique:kepsek,nip|regex:/^[A-Za-z0-9 \-]+$/',
                 'school' => 'required',
                 'address' => 'required|string',
             ]);
@@ -82,7 +82,7 @@ class KepsekController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'nip' => 'required|digits:18',
+            'nip' => 'required|regex:/^[A-Za-z0-9 \-]+$/',
             'school' => 'required|numeric',
             'address' => 'required',
         ]);

@@ -39,7 +39,7 @@
                             {{-- NPWP --}}
                             <div class="form-group">
                                 <label>NPWP</label>
-                                <input type="number" class="form-control" name="npwp" value="{{ old('npwp') }}">
+                                <input type="text" class="form-control" name="npwp" value="{{ old('npwp') }}">
                                 @error('npwp')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror

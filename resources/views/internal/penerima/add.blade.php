@@ -39,7 +39,7 @@
                             {{-- NIP --}}
                             <div class="form-group">
                                 <label>NIP</label>
-                                <input type="number" class="form-control" name="nip" value="{{ old('nip') }}">
+                                <input type="text" class="form-control" name="nip" value="{{ old('nip') }}">
                                 @error('nip')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror

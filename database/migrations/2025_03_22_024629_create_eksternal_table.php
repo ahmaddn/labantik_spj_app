@@ -28,7 +28,7 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('userID');
             $table->string('company');
-            $table->bigInteger('npwp');
+            $table->string('npwp');
             $table->string('address');
             $table->string('post_code');
             $table->string('bank');
@@ -54,6 +54,8 @@ return new class extends Migration
             $table->unsignedInteger('penyediaID');
             $table->unsignedInteger('penerimaID');
             $table->unsignedInteger('bendaharaID');
+            $table->date('order_date');
+            $table->date('prey');
             $table->date('paid');
             $table->date('billing')->nullable();
             $table->date('accepted');

@@ -42,13 +42,25 @@
                             {{-- Jenis Bendahara --}}
                             <div class="form-group">
                                 <label>Jenis Bendahara</label>
-                                <select class="form-control" name="jenis">
+                                <select class="form-control" name="jenis" id="jenis-bendahara">
                                     <option value="BOS" {{ ($pesanan->type ?? '') === 'BOS' ? 'selected' : '' }}>BOS
                                     </option>
-                                    <option value="BODP" {{ ($pesanan->type ?? '') === 'BODP' ? 'selected' : '' }}>BODP
+                                    <option value="BOPD" {{ ($pesanan->type ?? '') === 'BOPD' ? 'selected' : '' }}>BODP
                                     </option>
+                                    <option value="Other"
+                                        {{ old('jenis', $bendahara->type) != 'BOS' && old('jenis', $bendahara->jenis) != 'BOPD' ? 'selected' : '' }}>
+                                        Lainnya...</option>
                                 </select>
                                 @error('jenis')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            <div class="form-group" id="other" style="display: none;">
+                                <label>Jenis Bendahara Lainnya</label>
+                                <input type="text" class="form-control" name="other"
+                                    value="{{ old('other', $bendahara->type) }}">
+                                @error('other')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>

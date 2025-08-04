@@ -34,7 +34,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Nomor Invoice</label>
-                                <input type="number" name="invoice_num" class="form-control"
+                                <input type="text" name="invoice_num" class="form-control"
                                     value="{{ $pesanan->invoice_num }}">
                                 @error('invoice_num')
                                     <small class="text-danger">{{ $message }}</small>
@@ -42,7 +42,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Nomor Pesanan</label>
-                                <input type="number" name="order_num" class="form-control"
+                                <input type="text" name="order_num" class="form-control"
                                     value="{{ $pesanan->order_num }}">
                                 @error('order_num')
                                     <small class="text-danger">{{ $message }}</small>
@@ -50,14 +50,14 @@
                             </div>
                             <div class="form-group">
                                 <label>Nomor Nota</label>
-                                <input type="number" name="note_num" class="form-control" value="{{ $pesanan->note_num }}">
+                                <input type="text" name="note_num" class="form-control" value="{{ $pesanan->note_num }}">
                                 @error('note_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label>Nomor Berita Acara Serah Terima</label>
-                                <input type="number" name="bast_num" class="form-control" value="{{ $pesanan->bast_num }}">
+                                <input type="text" name="bast_num" class="form-control" value="{{ $pesanan->bast_num }}">
                                 @error('bast_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -115,9 +115,6 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                        </div>
-
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Penyedia</label>
                                 <select name="penyediaID" class="form-control"
@@ -133,6 +130,17 @@
                                     @endforeach
                                 </select>
                                 @error('penyediaID')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Tanggal Pesanan</label>
+                                <input type="date" name="order_date" class="form-control" min="2025-01-01"
+                                    value="{{ $pesanan->order_date }}">
+                                @error('order_date')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
@@ -156,6 +164,14 @@
                                 <input type="date" name="accepted" class="form-control" min="2025-01-01"
                                     value="{{ $pesanan->accepted }}">
                                 @error('accepted')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Titimangsa</label>
+                                <input type="date" name="prey" class="form-control" min="2025-01-01"
+                                    value="{{ $pesanan->prey }}">
+                                @error('prey')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>

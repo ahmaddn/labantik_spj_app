@@ -38,11 +38,20 @@
                             {{-- Nama Bendahara --}}
                             <div class="form-group">
                                 <label>Jenis Bendahara</label>
-                                <select class="form-control" name="jenis">
+                                <select class="form-control" name="jenis" id="jenis-bendahara">
                                     <option value="BOS">BOS</option>
-                                    <option value="BODP">BODP</option>
+                                    <option value="BOPD">BOPD</option>
+                                    <option value="Other">Lainnya...</option>
                                 </select>
                                 @error('jenis')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            <div class="form-group" id="other" style="display: none;">
+                                <label>Jenis Bendahara Lainnya</label>
+                                <input type="text" class="form-control" name="other" value="{{ old('other') }}">
+                                @error('other')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
@@ -50,7 +59,7 @@
                             {{-- NIP --}}
                             <div class="form-group">
                                 <label>NIP</label>
-                                <input type="number" class="form-control" name="nip" value="{{ old('nip') }}">
+                                <input type="text" class="form-control" name="nip" value="{{ old('nip') }}">
                                 @error('nip')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
