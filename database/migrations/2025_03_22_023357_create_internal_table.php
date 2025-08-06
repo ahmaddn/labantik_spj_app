@@ -16,7 +16,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('type');
-            $table->string('nip');
+            $table->string('nip')->nullable();
             $table->unsignedInteger('userID');
             $table->softDeletes();
 
@@ -26,7 +26,7 @@ return new class extends Migration
         Schema::create('kepsek', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('nip');
+            $table->string('nip')->nullable();
             $table->string('school');
             $table->string('address');
             $table->unsignedInteger('userID');
@@ -38,7 +38,7 @@ return new class extends Migration
         Schema::create('penerima', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('nip');
+            $table->string('nip')->nullable();
             $table->string('position');
             $table->unsignedInteger('userID');
             $table->softDeletes();

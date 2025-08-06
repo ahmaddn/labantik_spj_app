@@ -28,7 +28,7 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('userID');
             $table->string('company');
-            $table->string('npwp');
+            $table->string('npwp')->nullable();
             $table->string('address');
             $table->string('post_code');
             $table->string('bank');
