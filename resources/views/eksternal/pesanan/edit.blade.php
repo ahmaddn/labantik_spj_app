@@ -33,18 +33,18 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Nomor Invoice</label>
-                                <input type="text" name="invoice_num" class="form-control"
-                                    value="{{ $pesanan->invoice_num }}">
-                                @error('invoice_num')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
                                 <label>Nomor Pesanan</label>
                                 <input type="text" name="order_num" class="form-control"
                                     value="{{ $pesanan->order_num }}">
                                 @error('order_num')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Nomor Invoice</label>
+                                <input type="text" name="invoice_num" class="form-control"
+                                    value="{{ $pesanan->invoice_num }}">
+                                @error('invoice_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>

@@ -48,7 +48,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group" id="other" style="display: none;">
+                            <div class="form-group" id="other-bendahara" style="display: none;">
                                 <label>Jenis Bendahara Lainnya</label>
                                 <input type="text" class="form-control" name="other" value="{{ old('other') }}">
                                 @error('other')

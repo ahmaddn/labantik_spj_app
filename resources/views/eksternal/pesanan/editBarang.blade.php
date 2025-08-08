@@ -94,39 +94,42 @@
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <label>Satuan Barang</label>
-                                            <input type="text" name="items[{{ $i }}][unit]"
-                                                class="form-control" value="{{ old("items.$i.unit", $item->unit ?? '') }}">
-                                            @error("items.$i.unit")
-                                                <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-6 mb-2">
-                                            <label>Satuan Barang</label>
-                                            <select name="items[{{ $i }}][unit]" class="form-control">
+                                            @php
+                                                $units = ['unit', 'paket', 'set', 'pcs', 'box', 'kg', 'liter'];
+                                                $oldUnit = old("items.$i.unit", $item->unit ?? '');
+                                                $isOtherSelected = !in_array($oldUnit, $units) && !empty($oldUnit);
+                                            @endphp
+                                            <select name="items[{{ $i }}][unit]" class="form-control"
+                                                id="satuan-barang">
                                                 <option value="">-- Pilih Satuan --</option>
                                                 <option value="unit"
-                                                    {{ old("items.$i.unit", $item->unit) == 'unit' ? 'selected' : '' }}>
+                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'unit' ? 'selected' : '' }}>
                                                     Unit</option>
                                                 <option value="paket"
-                                                    {{ old("items.$i.unit", $item->unitss) == 'paket' ? 'selected' : '' }}>
+                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'paket' ? 'selected' : '' }}>
                                                     Paket</option>
                                                 <option value="set"
-                                                    {{ old("items.$i.unit", $item->unit) == 'set' ? 'selected' : '' }}>Set
+                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'set' ? 'selected' : '' }}>
+                                                    Set
                                                 </option>
                                                 <option value="pcs"
-                                                    {{ old("items.$i.unit", $item->unit) == 'pcs' ? 'selected' : '' }}>pcs
+                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'pcs' ? 'selected' : '' }}>
+                                                    Pcs
                                                 </option>
                                                 <option value="box"
-                                                    {{ $item->unit && old("items.$i.unit", $item->unit) == 'box' ? 'selected' : '' }}>
-                                                    box</option>
+                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'box' ? 'selected' : '' }}>
+                                                    Box</option>
                                                 <option value="kg"
-                                                    {{ old("items.$i.unit", $item->unit) == 'kg' ? 'selected' : '' }}>kg
+                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'kg' ? 'selected' : '' }}>
+                                                    Kg
                                                 </option>
                                                 <option value="liter"
-                                                    {{ old("items.$i.unit", $item->unit) == 'liter' ? 'selected' : '' }}>
-                                                    liter</option>
+                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'liter' ? 'selected' : '' }}>
+                                                    Liter</option>
+                                                <option value="Other" {{ $isOtherSelected ? 'selected' : '' }}>Lainnya...
+                                                </option>
                                             </select>
-                                            @error("items.$i.unit")
+                                            @error('items.$i.unit')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -142,16 +145,22 @@
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
+                                        <div class="col-md-6 mb-2" id="other-satuan" style="display: none;">
+                                            <label>Satuan Lainnya</label>
+                                            <input type="text" class="form-control" name="other"
+                                                value="{{ old("items.$i.unit", $item->unit ?? '') }}">
+                                            @error('other')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     <ul class="pager wizard twitter-bs-wizard-pager-link mt-3">
                                         @if ($i > 0)
                                             <li class="previous me-2"><a href="javascript:;"
-                                                    class="btn btn-secondary">Sebelumnya</a></li>
+                                                    class="btn btn-primary">Sebelumnya</a></li>
                                         @endif
                                         @if ($i < $totalSteps - 1)
-                                            <a href="{{ route('eksternal.pesanan.edit', $pesanan->id) }}"
-                                                class="btn btn-secondary me-2">Kembali</a>
                                             <li class="next float-end"><a href="javascript:;"
                                                     class="btn btn-primary">Selanjutnya</a></li>
                                         @else

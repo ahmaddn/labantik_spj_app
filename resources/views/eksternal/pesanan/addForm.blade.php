@@ -81,24 +81,36 @@
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <label>Satuan Barang</label>
-                                            <select name="items[{{ $i }}][unit]" class="form-control">
+                                            <select name="items[{{ $i }}][unit]" class="form-control"
+                                                id="satuan-barang">
                                                 <option value="">-- Pilih Satuan --</option>
-                                                <option value="unit"
+                                                <option value="Unit"
                                                     {{ old("items.$i.unit") == 'unit' ? 'selected' : '' }}>Unit</option>
-                                                <option value="paket"
+                                                <option value="Paket"
                                                     {{ old("items.$i.unit") == 'paket' ? 'selected' : '' }}>Paket</option>
-                                                <option value="set"
+                                                <option value="Set"
                                                     {{ old("items.$i.unit") == 'set' ? 'selected' : '' }}>Set</option>
-                                                <option value="pcs"
+                                                <option value="Pcs"
                                                     {{ old("items.$i.unit") == 'pcs' ? 'selected' : '' }}>Pcs</option>
-                                                <option value="box"
+                                                <option value="Box"
                                                     {{ old("items.$i.unit") == 'box' ? 'selected' : '' }}>Box</option>
-                                                <option value="kg"
+                                                <option value="Kg"
                                                     {{ old("items.$i.unit") == 'kg' ? 'selected' : '' }}>Kg</option>
-                                                <option value="liter"
+                                                <option value="Liter"
                                                     {{ old("items.$i.unit") == 'liter' ? 'selected' : '' }}>Liter</option>
+                                                <option value="Other">Lainnya...</option>
+
                                             </select>
                                             @error("items.$i.unit")
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group" id="other-satuan" style="display: none;">
+                                            <label>Satuan Lainnya</label>
+                                            <input type="text" class="form-control" name="other"
+                                                value="{{ old('other') }}">
+                                            @error('other')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
