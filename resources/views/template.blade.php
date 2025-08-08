@@ -1115,12 +1115,7 @@
         }
     </style>
 
-    <script>
-        window.onload = function() {
-            window.print();
-        }
-        window.onafterprint = () => window.close();
-    </script>
+   
 
 
 
