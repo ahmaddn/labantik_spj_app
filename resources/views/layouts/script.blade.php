@@ -25,22 +25,32 @@
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const select = document.getElementById('jenis-bendahara')
-        const other = document.getElementById('other')
+        // Fungsi toggle input untuk select dan target input tertentu
+        function setupToggle(selectId, otherId) {
+            const select = document.getElementById(selectId);
+            const other = document.getElementById(otherId);
 
-        function toggleInput() {
-            if (select.value == 'Other') {
-                other.style.display = 'block'
-            } else {
-                other.style.display = 'none'
+            if (!select || !other) return; // Jika elemen tidak ada, stop
+
+            function toggleInput() {
+                if (select.value === 'Other') {
+                    other.style.display = 'block';
+                } else {
+                    other.style.display = 'none';
+                }
             }
+
+            toggleInput(); // cek saat page load
+
+            select.addEventListener('change', toggleInput);
         }
 
-        toggleInput()
-
-        select.addEventListener('change', toggleInput)
-    })
+        // Panggil fungsi untuk masing-masing pasangan select & input
+        setupToggle('jenis-bendahara', 'other-bendahara');
+        setupToggle('satuan-barang', 'other-satuan');
+    });
 </script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
 <script>
     // Set the worker path

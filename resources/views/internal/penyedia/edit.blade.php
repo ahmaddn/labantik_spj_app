@@ -79,7 +79,7 @@
 
                             {{-- Jumlah Rekening --}}
                             <div class="form-group">
-                                <label>Jumlah Rekening</label>
+                                <label>No. Rekening</label>
                                 <input type="number" class="form-control" name="account"
                                     value="{{ old('account', $penyedia->account) }}" required>
                             </div>

@@ -32,30 +32,33 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Nomor Invoice</label>
-                                <input type="text" name="invoice_num" class="form-control"
-                                    value="{{ old('invoice_num') }}">
-                                @error('invoice_num')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
                                 <label>Nomor Pesanan</label>
-                                <input type="text" name="order_num" class="form-control" value="{{ old('order_num') }}">
+                                <input type="text" name="order_num" class="form-control"
+                                    value="{{ str_pad((int) old('order_num', $lastOrderNum) + 1, 3, '0', STR_PAD_LEFT) }}">
                                 @error('order_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label>Nomor Invoice</label>
+                                <input type="text" name="invoice_num" class="form-control"
+                                    value="{{ str_pad((int) old('invoice_num', $lastInvoiceNum) + 1, 3, '0', STR_PAD_LEFT) }}">
+                                @error('invoice_num')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label>Nomor Nota</label>
-                                <input type="text" name="note_num" class="form-control" value="{{ old('note_num') }}">
+                                <input type="text" name="note_num" class="form-control"
+                                    value="{{ str_pad((int) old('note_num', $lastNoteNum) + 1, 3, '0', STR_PAD_LEFT) }}">
                                 @error('note_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label>Nomor Berita Acara Serah Terima</label>
-                                <input type="text" name="bast_num" class="form-control" value="{{ old('bast_num') }}">
+                                <input type="text" name="bast_num" class="form-control"
+                                    value="{{ str_pad((int) old('bast_num', $lastBastNum) + 1, 3, '0', STR_PAD_LEFT) }}">
                                 @error('bast_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror

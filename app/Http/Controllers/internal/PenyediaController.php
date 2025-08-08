@@ -33,7 +33,7 @@ class PenyediaController extends Controller
                 'delegation_name' => 'required|string|max:255',
                 'delegate_position' => 'required|string|max:100',
                 'bank' => 'required|string',
-                'account' => 'required|min_digits:10|max_digits:16',
+                'account' => 'required|min_digits:5|max_digits:16',
             ]);
 
             Penyedia::create([
@@ -80,7 +80,7 @@ class PenyediaController extends Controller
             'delegation_name' => 'required|string|max:255',
             'delegate_position' => 'required|string|max:100',
             'bank' => 'required|string',
-            'account' => 'required|min_digits:10|max_digits:16',
+            'account' => 'required|min_digits:5|max_digits:16',
         ]);
 
         $penyedia = Penyedia::findOrFail($id);

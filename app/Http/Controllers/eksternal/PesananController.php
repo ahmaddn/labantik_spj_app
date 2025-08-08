@@ -25,12 +25,22 @@ class PesananController extends Controller
 
     public function addSession()
     {
+        $lastInvoiceNum = Pesanan::where('userID', Auth::id())->max(DB::raw('CAST(invoice_num AS UNSIGNED)'));
+        $lastOrderNum = Pesanan::where('userID', Auth::id())->max(DB::raw('CAST(order_num AS UNSIGNED)'));
+        $lastNoteNum = Pesanan::where('userID', Auth::id())->max(DB::raw('CAST(note_num AS UNSIGNED)'));
+        $lastBastNum = Pesanan::where('userID', Auth::id())->max(DB::raw('CAST(bast_num AS UNSIGNED)'));
+
+        $lastInvoiceNum = $lastInvoiceNum ??= 0;
+        $lastOrderNum = $lastOrderNum ??= 0;
+        $lastNoteNum = $lastNoteNum ??= 0;
+        $lastBastNum = $lastBastNum ??= 0;
+
         $id = Auth::id();
         $kegiatan = Kegiatan::where('userID', $id)->get();
         $penyedia = Penyedia::where('userID', $id)->get();
         $penerima = Penerima::where('userID', $id)->get();
         $bendahara = Bendahara::where('userID', $id)->get();
-        return view('eksternal.pesanan.add', compact('kegiatan', 'penyedia', 'penerima', 'bendahara'));
+        return view('eksternal.pesanan.add', compact('kegiatan', 'penyedia', 'penerima', 'bendahara', 'lastInvoiceNum', 'lastOrderNum', 'lastNoteNum', 'lastBastNum'));
     }
 
     public function addForm()

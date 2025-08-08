@@ -41,6 +41,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="alert alert-warning mt-3">
+                    <h5>On Maintenance!</h5>
+                </div>
                 <div class="profile-menu">
                     <ul class="nav nav-tabs nav-tabs-solid">
                         <li class="nav-item">
