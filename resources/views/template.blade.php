@@ -33,6 +33,11 @@
             word-break: break-word;
         }
 
+        .break-cell {
+            word-break: break-word;
+            white-space: normal;
+        }
+
 
         table,
         th,
@@ -120,13 +125,15 @@
             </td>
             <td width="90%" style="text-align: center; vertical-align: middle;">
                 <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
-                    DINAS PENDIDIKAN<br>
                     <span style="font-size: 29px;">CABANG DINAS PENDIDIKAN WILAYAH IX</span><br>
                     <span style="font-size: 21px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
-                <span style="font-size: 14px;">Jalan Sekolah Nomor 20 Telpon ☎ (0233) 319238<br>
+                <div style="font-size: 13px; line-height: 1.3; font-weight: normal;">
+                    Jalan Sekolah Nomor 20 Telpon (0233) 319238<br>
                     FAX ✉ (0233) 319238 Website 🌐 www.smkn1talaga.sch.id – Email 📧 <a
                         href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
-                    Desa Talagakulon Kec. Talaga Kab. Majalengka 45463</span>
+                    Kampus 1: Jl. Sekolah Nomor 20, Desa Talagakulon Kec. Talaga Kab. Majalengka 45463<br>
+                    Kampus 2: Jl. Talaga Bantarujeg, Mekarraharja, Kec. Talaga, Kabupaten Majalengka, Jawa Barat 45463
+                </div>
             </td>
         </tr>
 
@@ -233,7 +240,7 @@
 
         <div class="" style="margin-top: 100px;
         margin-left: 60%;">
-            Majalengka, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>
+            Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}<br>
             Pelaksana,<br><br><br><br>
             <strong style="text-decoration: underline;">{{ $kepsek->name ?? 'Nama Kepala Sekolah' }}</strong><br>
             NIP. {{ $kepsek->nip ?? '-' }}
@@ -250,13 +257,14 @@
                 </td>
                 <td style="text-align: center; vertical-align: middle; in">
                     <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
-                        DINAS PENDIDIKAN<br>
                         <span style="font-size: 29px;">CABANG DINAS PENDIDIKAN WILAYAH IX</span><br>
                         <span style="font-size: 21px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
-                    <span style="font-size: 14px;">Jalan Sekolah Nomor 20 Telpon ☎ (0233) 319238<br>
+                    <div style="font-size: 13px; line-height: 1.3; font-weight: normal;">
+                        Jalan Sekolah Nomor 20 Telpon (0233) 319238<br>
                         FAX ✉ (0233) 319238 Website 🌐 www.smkn1talaga.sch.id – Email 📧 <a
                             href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
-                        Desa Talagakulon Kec. Talaga Kab. Majalengka 45463</span>
+                        Desa Talagakulon Kec. Talaga Kab. Majalengka 45463
+                    </div>
                 </td>
             </tr>
 
@@ -449,8 +457,8 @@
             <div style="page-break-inside: avoid;">
                 <table class="no-border "style="width: 100%; border: none;">
                     <td colspan="2" style="text-align: right;">
-                        <div style="text-align:right; width: 605px; padding-bottom: 0; padding-top:0;">Majalengka,
-                            {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</div>
+                        <div style="text-align:right; width: 712px; padding-bottom: 0; padding-top:0;">Majalengka,
+                            {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}</div>
                     </td>
                     <tr>
                         <td colspan="2" style="vertical-align:top; padding-top: 0; padding-bottom: 0;">
@@ -530,7 +538,7 @@
                 </div>
             </div>
             <div style="text-align:left; min-width:300px; padding-left:42%;">
-                Majalengka, {{ \Carbon\Carbon::parse($pesanan->created_at)->translatedFormat('d F Y') }}<br>
+                Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}<br>
                 {{ $pesanan->penyedia->company ?? '-' }}<br><br><br><br><br><br>
                 <span
                     style="font-weight:bold; text-decoration:underline;">{{ $pesanan->penyedia->delegation_name ?? '-' }}</span>
@@ -539,10 +547,10 @@
         <div
             style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:40px; flex-direction:column;">
             <div style="display:flex; justify-content:space-between; width:100%; margin-bottom:10px;">
-                <span style="font-size:18px;">Lunas dibayar :
+                <span style="font-size:15px;">Lunas dibayar :
                     {{ \Carbon\Carbon::parse($pesanan->paid)->translatedFormat('d F Y') }}</span>
-                <span style="font-size:18px;  margin-right: 100px;">Tanggal Pemesanan :
-                    {{ \Carbon\Carbon::parse($pesanan->created_at)->translatedFormat('d F Y') }}</span>
+                <span style="font-size:15px; margin-right:37px;">Tanggal Pemesanan :
+                    {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}</span>
             </div>
             <div style="display:flex; justify-content:space-between; width:100%;">
                 <div style="width:65%; text-align:left;">
@@ -567,8 +575,7 @@
     </div>
     <div class="page-break"></div>
     <div class="page with-bg nota">
-
-        <h3 class="text-center" style="margin-bottom:0;">NOTA</h3>
+        <h3 class="text-center">NOTA</h3>
         <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
             <span style="display:inline-block;">Nomor :
                 {{ $pesanan->note_num ?? '-' }}/{{ $pesanan->penyedia->company ?? '-' }}/Nota/IV/{{ date('Y') }}</span>
@@ -645,14 +652,14 @@
             <table style="width: 100%; border: none; border-collapse: collapse; margin-top: 20px;" class="no-border">
                 <!-- Baris tanggal -->
                 <tr>
-                    <td colspan="2" style="text-align: right; padding-right: 20px;">
-                        Majalengka, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}
+                    <td colspan="2" style="text-align: right; ">
+                        Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}<br>
                     </td>
                 </tr>
 
                 <!-- Baris jabatan -->
                 <tr>
-                    <td style="text-align: left; padding-top: 20px; width: 70%;">
+                    <td style="text-align: left; padding-top: 20px; width: 439px;">
                         Bendahara {{ $pesanan->bendahara->type ?? '-' }}
                     </td>
                     <td style="text-align: left; padding-top: 20px; ">
@@ -681,7 +688,7 @@
     </div>
     <!-- HALAMAN 1: BERITA ACARA SERAH TERIMA -->
     <div class="page berita-acara">
-        <h3 class="text-center" style="margin-bottom:0;">BERITA ACARA SERAH TERIMA</h3>
+        <h3 class="text-center">BERITA ACARA SERAH TERIMA</h3>
         <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
             <span style="display:inline-block;">Nomor : {{ $pesanan->bast_num ?? '-' }}
                 /{{ $pesanan->penyedia->company ?? '-' }}/BA/IV/{{ date('Y') }}</span>
@@ -750,11 +757,12 @@
         </table>
 
         <!-- Rincian barang -->
-        <p style="margin-bottom:10px;">PIHAK PERTAMA menyerahkan hasil pekerjaan {{ $pesanan->kegiatan->name }}
+        <p style="margin-bottom:10px; text-align:justify; line-height: 30px;">PIHAK PERTAMA menyerahkan hasil pekerjaan
+            {{ $pesanan->kegiatan->name }}
             kepada PIHAK KEDUA, dan PIHAK KEDUA telah menerima pekerjaan {{ $pesanan->kegiatan->name }} tersebut dalam
             jumlah lengkap dengan kondisi sesuai rincian sebagai
             berikut:</p>
-        <table class="data-table" style="width:100%; font-size:19px; border-collapse:collapse; margin-bottom:20px;">
+        <table class="data-table" style="width:100%; font-size:19px; border-collapse:collapse; margin-bottom:2px;">
             <thead>
                 <tr style="background:#f5f5f5;">
                     <th style="border:1px solid #000; padding:4px 8px;">No</th>
@@ -786,12 +794,13 @@
 
         <!-- Penutup Berita Acara -->
         <div class="after-table-content avoid-break">
-            <p style="margin-bottom:10px;">Berita Acara Serah Terima ini berfungsi sebagai Bukti Serah Terima hasil
+            <p style="margin-bottom:10px; text-align: justify; line-height: 30px;">Berita Acara Serah Terima ini
+                berfungsi sebagai Bukti Serah Terima hasil
                 pekerjaan kepada PIHAK KEDUA, untuk selanjutnya dipergunakan sebagaimana mestinya. Berita Acara
                 Serah
                 Terima ini dibuat dengan sebenarnya dan ditandatangani oleh kedua belah pihak.</p>
 
-            <table class="no-border" style="margin-top:80px; width:100%; border: none;">
+            <table class="no-border" style="margin-top:20px; width:100%; border: none;">
                 <tr>
                     <td style="text-align:left; width:70%;">
                         PIHAK PERTAMA
@@ -815,7 +824,7 @@
                     </td>
                 </tr>
             </table>
-            <div style="display: flex; justify-content: center; margin-top: 60px;">
+            <div style="display: flex; justify-content: center;">
                 <table class="no-border" style="width: 50%; border: none;">
                     <tr>
                         <td style="text-align: center;">
@@ -874,20 +883,65 @@
             </tr>
         </table>
         <table style="width:100%; border:none; font-size:18px; margin-bottom:10px;" class="no-border">
-            <tr>
-                <td style="width:50%; vertical-align:top;">
-                    <strong>Ditagihkan Kepada</strong><br>
-                    Nama Lengkap : {{ $kepsek->name ?? 'UDIN WAHYUDIN, S.IP., M.Si' }}<br>
-                    Nama Perusahaan : SMK Negeri 1 Talaga<br>
-                    Alamat Lengkap : {{ $kepsek->address ?? '-' }}<br>
-                    Kode POS : 45463<br>
-                </td>
-                <td style="width:50%; vertical-align:top;">
-                    <strong>Ditagihkan Oleh</strong><br>
-                    Nama Lengkap : {{ $pesanan->penyedia->delegation_name ?? '' }}<br>
-                    Alamat : {{ $pesanan->penyedia->address ?? '' }}<br>
-                    Kode POS : 45466
-                </td>
+            <thead>
+                <tr>
+                    <th style="width:50%; vertical-align:top; padding:0; text-align:left; border: none;">Ditagihkan
+                        kepada</th>
+                    <th
+                        style="width:50%; vertical-align:top; padding:0; text-align:left; padding-left:15px; border: none;">
+                        Ditagihkan Oleh</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="vertical-align:top; padding:0;">
+                        <table style="width:100%; border:none; font-size:18px; margin-bottom:10px;" class="no-border">
+                            <tr>
+                                <td style="padding:0;">Nama Lengkap</td>
+                                <td style="padding:0;">:&nbsp;</td>
+                                <td style="padding:0;" class="break-cell">{{ $kepsek->name }}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0;">Nama Perusahaan</td>
+                                <td style="padding:0;">:</td>
+                                <td style="padding:0;" class="break-cell">SMK Negeri 1 Talaga</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0;">Alamat Lengkap</td>
+                                <td style="padding:0;">:</td>
+                                <td style="padding:0;" class="break-cell">{{ $kepsek->address ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0;">Kode POS</td>
+                                <td style="padding:0;">:</td>
+                                <td style="padding:0;" class="break-cell">45463</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="vertical-align:top; padding:0;">
+                        <table style="width:100%; border:none; font-size:18px; margin-bottom:10px; margin-left: 15px;"
+                            class="no-border">
+                            <tr>
+                                <td style="padding:0;">Nama Lengkap</td>
+                                <td style="padding:0;">:&nbsp;</td>
+                                <td style="padding:0;" class="break-cell">
+                                    {{ $pesanan->penyedia->delegation_name ?? '' }}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0;">Alamat</td>
+                                <td style="padding:0;">: </td>
+                                <td style="padding:0;" class="break-cell">{{ $pesanan->penyedia->address ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0;">Kode POS</td>
+                                <td style="padding:0;">: </td>
+                                <td style="padding:0;" class="break-cell">45466</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
             </tr>
         </table>
         <table
@@ -994,7 +1048,7 @@
             @page {
                 size: 210mm 330mm;
                 /* F4 size */
-                padding: 20mm 15mm 15mm 15mm;
+                padding: 10mm 10mm 10mm 10mm;
             }
 
             body {
@@ -1067,7 +1121,7 @@
             window.print();
         }
         window.onafterprint = () => window.close();
-    </script>   
+    </script>
 
 
 

@@ -27,7 +27,7 @@ class PenyediaController extends Controller
             $id = Auth::id();
             $request->validate([
                 'company' => 'required|string|max:255',
-                'npwp' => 'required|regex:/^[A-Za-z0-9 \-]+$/',
+                'npwp' => 'nullable|regex:/^[A-Za-z0-9 \-]+$/',
                 'address' => 'required|string|max:255',
                 'post_code' => 'required|numeric',
                 'delegation_name' => 'required|string|max:255',
@@ -74,7 +74,7 @@ class PenyediaController extends Controller
     {
         $request->validate([
             'company' => 'required|string|max:255',
-            'npwp' => 'required|string|regex:/^[A-Za-z0-9 \-]+$/',
+            'npwp' => 'nullable|string|regex:/^[A-Za-z0-9 \-]+$/',
             'address' => 'required|string|max:255',
             'post_code' => 'required|numeric',
             'delegation_name' => 'required|string|max:255',

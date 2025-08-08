@@ -32,7 +32,7 @@ class BendaharaController extends Controller
                 'name' => 'required|string',
                 'jenis' => 'required|string',
                 'other' => 'required_if:jenis,Other',
-                'nip' => 'required|regex:/^[A-Za-z0-9 \-]+$/|unique:bendahara,nip,' . $id,
+                'nip' => 'nullable|regex:/^[A-Za-z0-9 \-]+$/|unique:bendahara,nip,' . $id,
             ]);
             $jenis = $request->jenis === 'Other' ? $request->other : $request->jenis;
 
@@ -78,7 +78,7 @@ class BendaharaController extends Controller
             'name' => 'required|string',
             'jenis' => 'required|string',
             'other' => 'required_if:jenis,Other',
-            'nip' => 'required|regex:/^[A-Za-z0-9 \-]+$/|unique:bendahara,nip,' . $id,
+            'nip' => 'nullable|regex:/^[A-Za-z0-9 \-]+$/|unique:bendahara,nip,' . $id,
         ]);
         $jenis = $request->jenis === 'Other' ? $request->other : $request->jenis;
 

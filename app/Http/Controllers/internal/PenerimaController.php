@@ -30,7 +30,7 @@ class PenerimaController extends Controller
             $id = Auth::id();
             $request->validate([
                 'name' => 'required|unique:penerima,name',
-                'nip' => 'required|regex:/^[A-Za-z0-9 \-]+$/|unique:penerima,nip',
+                'nip' => 'nullable|regex:/^[A-Za-z0-9 \-]+$/|unique:penerima,nip',
                 'position' => 'required|string',
             ]);
 
@@ -72,7 +72,7 @@ class PenerimaController extends Controller
     {
         $request->validate([
             'name' => 'required|',
-            'nip' => 'required|regex:/^[A-Za-z0-9 \-]+$/|unique:penerima,nip,' . $id,
+            'nip' => 'nullable|regex:/^[A-Za-z0-9 \-]+$/|unique:penerima,nip,' . $id,
             'position' => 'required|string',
         ]);
 
