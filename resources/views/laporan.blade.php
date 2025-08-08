@@ -6,10 +6,10 @@
         <div class="page-header">
             <div class="row">
                 <div class="col">
-                    <h3 class="page-title">Laporan</h3>
+                    <h3 class="page-title">Riwayat</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Laporan</li>
+                        <li class="breadcrumb-item active">Riwayat</li>
                     </ul>
                 </div>
             </div>
@@ -20,7 +20,7 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title mb-2">Laporan Pesanan</h5>
+                            <h5 class="card-title mb-2">Riwayat Pesanan</h5>
                         </div>
                         <div class="card-body">
                             <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
