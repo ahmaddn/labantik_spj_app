@@ -9,6 +9,12 @@
         body {
             font-family: 'Calibri', 'Arial', sans-serif;
             font-size: 19px;
+            line-height: 1.15;
+        }
+
+        /* Area tanda tangan dikecualikan dari line-height 1.15 */
+        .ttd-area, .ttd-area * {
+            line-height: normal !important;
         }
 
 
@@ -241,7 +247,7 @@
         <div class="" style="margin-top: 100px;
         margin-left: 60%;">
             Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}<br>
-            Pelaksana,<br><br><br><br>
+            Pelaksana,<br><br><br><br><br>
             <strong style="text-decoration: underline;">{{ $kepsek->name ?? 'Nama Kepala Sekolah' }}</strong><br>
             NIP. {{ $kepsek->nip ?? '-' }}
         </div>
@@ -456,38 +462,36 @@
             <br>
             <div style="page-break-inside: avoid;">
                 <table class="no-border "style="width: 100%; border: none;">
-                    <td colspan="2" style="text-align: right;">
-                        <div style="text-align:right; width: 712px; padding-bottom: 0; padding-top:0;">Majalengka,
-                            {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}</div>
-                    </td>
                     <tr>
-                        <td colspan="2" style="vertical-align:top; padding-top: 0; padding-bottom: 0;">
-                            <div style="display:flex; justify-content:space-between; width:100%;">
-
-                                <div style="text-align:left; width: 70%;">
-                                    Untuk dan atas nama<br>
-                                    {{ $pesanan->penyedia->company }}
-                                </div>
-                                <div style="text-align:left; width: 45%;">
-
-                                    Untuk dan atas nama<br>
-                                    Kepala SMKN 1 Talaga
-                                </div>
-                            </div>
+                        <td style="width: 60%"></td>
+                        <td style="vertical-align:top; padding-top: 0; padding-bottom: 0;">
+                            Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="vertical-align:top; padding-top:40px;">
-                            <div style="display:flex; justify-content:space-between; width:100%;">
-                                <div style="text-align:left; width: 70%;">
-                                    <strong><u>{{ $pesanan->penyedia->delegation_name }}</u></strong><br>
-                                    {{ $pesanan->penyedia->delegate_position }}
-                                </div>
-                                <div style="text-align:left; width:45%;">
-                                    <strong><u>{{ $kepsek->name }}</u></strong><br>
-                                    NIP. {{ $kepsek->nip }}
-                                </div>
-                            </div>
+                        <td style="vertical-align:top; padding-top: 0; padding-bottom: 0;">
+                            Untuk dan atas nama<br>
+                            {{ $pesanan->penyedia->company }}
+                        </td>
+                        <td style="vertical-align:top; padding-top: 0; padding-bottom: 0;">
+                            Untuk dan atas nama<br>
+                            Kepala SMKN 1 Talaga
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:top; padding-top:40px;">
+                            <br>
+                            <br>
+                            <br>
+                            <strong><u>{{ $pesanan->penyedia->delegation_name }}</u></strong><br>
+                            {{ $pesanan->penyedia->delegate_position }}
+                        </td>
+                        <td style="vertical-align:top; padding-top:40px;">
+                            <br>
+                            <br>
+                            <br>
+                            <strong><u>{{ $kepsek->name }}</u></strong><br>
+                            NIP. {{ $kepsek->nip }}
                         </td>
                     </tr>
                 </table>
@@ -511,7 +515,7 @@
         <h3 class="text-center">KWITANSI</h3>
         <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
             <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }}
-                /{{ $pesanan->penyedia->company ?? '-' }}/Kwitansi/IV/{{ date('Y') }}</span>
+                </span>
         </div>
         <table style="width:100%; border:none; font-size:19px;" class="no-border">
             <tr>
@@ -539,46 +543,40 @@
             </div>
             <div style="text-align:left; min-width:300px; padding-left:42%;">
                 Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}<br>
-                {{ $pesanan->penyedia->company ?? '-' }}<br><br><br><br><br><br>
+                {{ $pesanan->penyedia->company ?? '-' }}<br><br><br><br><br><br><br><br>
                 <span
                     style="font-weight:bold; text-decoration:underline;">{{ $pesanan->penyedia->delegation_name ?? '-' }}</span>
             </div>
         </div>
-        <div
-            style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:40px; flex-direction:column;">
-            <div style="display:flex; justify-content:space-between; width:100%; margin-bottom:10px;">
-                <span style="font-size:15px;">Lunas dibayar :
-                    {{ \Carbon\Carbon::parse($pesanan->paid)->translatedFormat('d F Y') }}</span>
-                <span style="font-size:15px; margin-right:37px;">Tanggal Pemesanan :
-                    {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; width:100%;">
-                <div style="width:65%; text-align:left;">
-                    Setuju dibayar,<br>
-                    Kepala SMK Negeri 1 Talaga
-                </div>
-                <div style="width:50%; text-align:left; margin-left: 30px; margin-top: 25px;">
-                    Bendahara {{ $pesanan->bendahara->type ?? '-' }}
-                </div>
-            </div>
-            <div style="display:flex; justify-content:space-between; width:100%; margin-top:60px;">
-                <div style="width:65%; text-align:left;">
-                    <strong style="text-decoration:underline;">{{ $kepsek->name ?? '-' }}</strong><br>
-                    NIP. {{ $kepsek->nip ?? '-' }}
-                </div>
-                <div style="width:50%; text-align:left; margin-left: 30px;">
-                    <strong style="text-decoration:underline;">{{ $pesanan->bendahara->name ?? '-' }}</strong><br>
-                    NIP. {{ $pesanan->bendahara->nip ?? '-' }}
-                </div>
-            </div>
-        </div>
+    </div>
+<table cellpadding="5" style="border: none; width: 100%;">
+    <tr style="border: none;">
+        <td style="vertical-align: top; text-align: left; width: 50%; border: none;">
+            <small>Lunas dibayar : {{ \Carbon\Carbon::parse($pesanan->paid)->translatedFormat('d F Y') }}</small><br>
+            Setuju dibayar,<br>
+            Kepala SMK Negeri 1 Talaga<br>
+            <br><br><br><br><br>
+            <b><u>{{$kepsek->name}}</u></b><br>
+            NIP. {{ $kepsek->nip ?? '-' }}
+        </td>
+        <td style="vertical-align: top; text-align: left; width: 50%; border: none;">
+            <small>Tanggal Pemesanan : {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}</small><br>
+            <br>
+            Bendahara {{ $pesanan->bendahara->type ?? '-' }}<br>
+            <br><br><br><br><br>
+            <b><u>Bendahara {{ $pesanan->bendahara->type ?? '-' }}</u></b><br>
+            NIP. {{ $pesanan->bendahara->nip ?? '-' }}
+        </td>
+    </tr>
+</table>
+    </div>
     </div>
     <div class="page-break"></div>
     <div class="page with-bg nota">
         <h3 class="text-center">NOTA</h3>
         <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
             <span style="display:inline-block;">Nomor :
-                {{ $pesanan->note_num ?? '-' }}/{{ $pesanan->penyedia->company ?? '-' }}/Nota/IV/{{ date('Y') }}</span>
+                {{ $pesanan->note_num ?? '-' }}</span>
         </div>
         <!-- Header nota -->
         <table class="no-border" style="width:100%; font-size:19px; margin-bottom:10px; border: none;">
@@ -630,12 +628,7 @@
                         </td>
                     </tr>
                 @endforeach
-            </tbody>
-        </table>
-
-        <!-- After-table-content: total + tanda tangan -->
-        <div class="after-table-content avoid-break" style="margin-top:0;">
-            <table style="width:100%; font-size:19px; border-collapse:collapse; margin-bottom:20px;">
+                <!-- Total row langsung di bawah tabel barang, satu tabel dengan barang -->
                 <tr>
                     <td colspan="3" style="border:1px solid #000; padding:4px 8px; text-align:center; width: 70%;">
                         <strong>Total</strong>
@@ -647,22 +640,28 @@
                         </div>
                     </td>
                 </tr>
-            </table>
+            </tbody>
+        </table>
 
-            <table style="width: 100%; border: none; border-collapse: collapse; margin-top: 20px;" class="no-border">
+        <!-- After-table-content: hanya tanda tangan, dan diberi style agar page-break-inside: avoid -->
+        <div class="after-table-content avoid-break"
+            style="margin-top:0; page-break-inside: avoid; break-inside: avoid;">
+
+            <table style="width: 100%;  border-collapse: collapse; margin-top: 20px; border: none;" class="no-border" >
                 <!-- Baris tanggal -->
                 <tr>
-                    <td colspan="2" style="text-align: right; ">
+                    <td style=" width: 60%"></td>
+                    <td  style="text-align: left; ">
                         Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}<br>
                     </td>
                 </tr>
 
                 <!-- Baris jabatan -->
                 <tr>
-                    <td style="text-align: left; padding-top: 20px; width: 439px;">
+                    <td style="text-align: left; ;">
                         Bendahara {{ $pesanan->bendahara->type ?? '-' }}
                     </td>
-                    <td style="text-align: left; padding-top: 20px; ">
+                    <td style="text-align: left; ">
                         Hormat Kami,
                     </td>
                 </tr>
@@ -671,12 +670,16 @@
                 <tr>
                     <td style="text-align: left; padding-top: 50px;">
                         <strong style="text-decoration: underline;">
+                            <br>
+                            <br>
                             {{ $pesanan->bendahara->name ?? '-' }}
                         </strong><br>
                         NIP. {{ $pesanan->bendahara->nip ?? '-' }}
                     </td>
                     <td style="text-align: left; padding-top: 50px;">
                         <strong style="text-decoration: underline;">
+                            <br>
+                            <br>
                             {{ $pesanan->penyedia->delegation_name }}
                         </strong>
                     </td>
@@ -691,7 +694,7 @@
         <h3 class="text-center">BERITA ACARA SERAH TERIMA</h3>
         <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
             <span style="display:inline-block;">Nomor : {{ $pesanan->bast_num ?? '-' }}
-                /{{ $pesanan->penyedia->company ?? '-' }}/BA/IV/{{ date('Y') }}</span>
+                </span>
         </div>
 
         <!-- Data pihak pertama -->
@@ -810,7 +813,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="height:40px;"></td>
+                    <td style="height:64px;"></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -835,7 +838,7 @@
                     <tr>
                         <td>
                             <div style="display: flex; justify-content: center;">
-                                <div style="text-align: left; vertical-align: bottom;"><br><br><br>
+                                <div style="text-align: left; vertical-align: bottom;"><br><br><br><br>
                                     <strong style="text-decoration:underline;">{{ $kepsek->name ?? '-' }}</strong><br>
                                     NIP. {{ $kepsek->nip ?? '-' }}
                                 </div>
@@ -1045,11 +1048,7 @@
 
     <style>
         @media print {
-            @page {
-                size: 210mm 330mm;
-                /* F4 size */
-                padding: 10mm 10mm 10mm 10mm;
-            }
+            
 
             body {
                 font-family: 'DejaVu Sans', 'Arial', sans-serif;
