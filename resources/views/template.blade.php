@@ -134,12 +134,14 @@
                 <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
                     <span style="font-size: 29px;">CABANG DINAS PENDIDIKAN WILAYAH IX</span><br>
                     <span style="font-size: 21px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
-                <div style="font-size: 13px; line-height: 1.3; font-weight: normal;">
-                    Jalan Sekolah Nomor 20 Telpon (0233) 319238<br>
-                    FAX ✉ (0233) 319238 Website 🌐 www.smkn1talaga.sch.id – Email 📧 <a
+                <div style="font-size: 13px; line-height: 1.15; font-weight: normal; align-text: justify;">
+                    Bidang Keahlian: Teknologi dan Rekayasa, Teknologi Informasi komunikasi, Bisnis dan Manajemen<br>
+                    Kampus 1: Jalan Sekolah Nomor 20 Desa Talagakulon Kecamatan Talaga Kabupaten Majalengka <br>
+                    Kampus 2: Jalan Talaga Bantarujeg Desa Mekarraharja Kecamatan Talaga Kabupaten Majalengka<br>
+                    Telpon ☎(0233) 319238 FAX ✉ (0233) 319238 POS 45463 NPSN: 20213872<br>
+
+                    Website 🌐 <a href="www.smkn1talaga.sch.id">www.smkn1talaga.sch.id</a> – Email 📧 <a
                         href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
-                    Kampus 1: Jl. Sekolah Nomor 20, Desa Talagakulon Kec. Talaga Kab. Majalengka 45463<br>
-                    Kampus 2: Jl. Talaga Bantarujeg, Mekarraharja, Kec. Talaga, Kabupaten Majalengka, Jawa Barat 45463
                 </div>
             </td>
         </tr>
@@ -166,7 +168,7 @@
                 <td>Nama satuan Pendidikan<br>
                     Alamat Satuan Pendidikan<br>
                     Kategori Barang dan Jasa</td>
-                <td>: SMK Negeri 1 Talaga <br>
+                <td>: {{$kepsek->school}} <br>
                     : {{ $kepsek->address }}<br>
                     : {{ $pesanan->kegiatan->name ?? '-' }}</td>
             </tr>
@@ -207,7 +209,7 @@
                 <tr>
                     <td>4.</td>
                     <td>Lokasi serah terima</td>
-                    <td>SMKN 1 Talaga</td>
+                    <td>{{$kepsek->school}}</td>
                 </tr>
                 <tr>
                     <td>5.</td>
@@ -262,17 +264,20 @@
             ">
                     <img src="{{ asset('jabar.png') }}" width="100" style="margin-left:50px; display:block;" />
                 </td>
-                <td style="text-align: center; vertical-align: middle; in">
-                    <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
-                        <span style="font-size: 29px;">CABANG DINAS PENDIDIKAN WILAYAH IX</span><br>
-                        <span style="font-size: 21px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
-                    <div style="font-size: 13px; line-height: 1.3; font-weight: normal;">
-                        Jalan Sekolah Nomor 20 Telpon (0233) 319238<br>
-                        FAX ✉ (0233) 319238 Website 🌐 www.smkn1talaga.sch.id – Email 📧 <a
-                            href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
-                        Desa Talagakulon Kec. Talaga Kab. Majalengka 45463
-                    </div>
-                </td>
+                <td width="90%" style="text-align: center; vertical-align: middle;">
+                <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
+                    <span style="font-size: 29px;">CABANG DINAS PENDIDIKAN WILAYAH IX</span><br>
+                    <span style="font-size: 21px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
+                <div style="font-size: 13px; line-height: 1.15; font-weight: normal; align-text: justify;">
+                    Bidang Keahlian: Teknologi dan Rekayasa, Teknologi Informasi komunikasi, Bisnis dan Manajemen<br>
+                    Kampus 1: Jalan Sekolah Nomor 20 Desa Talagakulon Kecamatan Talaga Kabupaten Majalengka <br>
+                    Kampus 2: Jalan Talaga Bantarujeg Desa Mekarraharja Kecamatan Talaga Kabupaten Majalengka<br>
+                    Telpon ☎(0233) 319238 FAX ✉ (0233) 319238 POS 45463 NPSN: 20213872<br>
+
+                    Website 🌐 <a href="www.smkn1talaga.sch.id">www.smkn1talaga.sch.id</a> – Email 📧 <a
+                        href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
+                </div>
+            </td>
             </tr>
 
         </table>
@@ -287,13 +292,13 @@
 
     <div class="konten-utama">
         <div class="text-center">
-            <h4>SURAT PESANAN</h4>
-            <p>Nomor: {{ $pesanan->order_num }}</p>
+            <h4 style="margin-bottom: 3px ">SURAT PESANAN</h4>
+            <p style="margin-top: 7px">Nomor: {{ $pesanan->order_num }}</p>
         </div>
 
         <table class="tulisan" style="border: none;">
             <tr>
-                <td style="width: 220px; padding-top: 0; padding-bottom: 0;">Nama Pekerjaan</td>
+                <td style="width: 300px; padding-top: 0; padding-bottom: 0;">Nama Pekerjaan</td>
                 <td style="padding-top: 0; padding-bottom: 0;">:</td>
                 <td style="padding-top: 0; padding-bottom: 0;">{{ $pesanan->kegiatan->name }}</td>
             </tr>
@@ -311,10 +316,14 @@
             <strong>TAHUN ANGGARAN {{ \Carbon\Carbon::parse($pesanan->created_at)->format('Y') }}</strong>
         </div>
 
-        <p>Yang bertanda tangan di bawah ini :</p>
+        
         <table class="tulisan" style="border: none">
             <tr>
-                <td style="width: 250px; padding-top: 0; padding-bottom: 0;">Nama</td>
+                <td style="padding-top: 0;">Yang bertanda tangan di bawah ini</td>
+                <td style="padding-top: 0; padding-bottom: 0;">:</td>
+            </tr>
+            <tr>
+                <td style="width: 300px; padding-top: 0; padding-bottom: 0;">Nama</td>
                 <td style="padding-top: 0; padding-bottom: 0;">:</td>
                 <td style="padding-top: 0; padding-bottom: 0;">{{ $kepsek->name }}</td>
             </tr>
@@ -330,14 +339,18 @@
             </tr>
 
             <tr>
-                <td colspan="2">Selanjutnya disebut Pihak I</td>
+                <td style=" padding-bottom: 0;">Selanjutnya disebut Pihak I</td>
+                
             </tr>
-        </table>
+        
 
-        <p>Bersama ini memerintahkan :</p>
-        <table style="border: none" class="tulisan">
+        <tr>
+            <td style="padding-top: 0; padding-bottom: 0;">Bersama ini memerintahkan</td>
+            <td style="padding-top: 0; padding-bottom: 0;">:</td>
+        </tr>
+       
             <tr>
-                <td style="width: 250px; padding-top: 0; padding-bottom: 0;">Nama Penyedia</td>
+                <td style="width: 300px; padding-top: 0; padding-bottom: 0;">Nama Penyedia</td>
                 <td style="padding-top: 0; padding-bottom: 0;">:</td>
                 <td style="padding-top: 0; padding-bottom: 0;">{{ $pesanan->penyedia->company }}</td>
             </tr>
@@ -416,7 +429,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="page-break-inside-avoid">
+        
             <table class="tulisan" style="border: none;">
                 <tr>
                     <td style="padding-top: 0; padding-bottom: 0;"><strong>Terbilang</strong></td>
@@ -425,6 +438,7 @@
                 </tr>
 
             </table>
+            <div class="page-break-inside-avoid">
             <table style="width: 100%; border: none;" class="no-border">
                 <tr>
                     <td style="width: 200px">Barang yang dipesan sebagai berikut :</td>
@@ -476,7 +490,7 @@
                         </td>
                         <td style="vertical-align:top; padding-top: 0; padding-bottom: 0;">
                             Untuk dan atas nama<br>
-                            Kepala SMKN 1 Talaga
+                            Kepala {{$kepsek->school}}
                         </td>
                     </tr>
                     <tr>
@@ -556,18 +570,18 @@
                 <small>Lunas dibayar :
                     {{ \Carbon\Carbon::parse($pesanan->paid)->translatedFormat('d F Y') }}</small><br>
                 Setuju dibayar,<br>
-                Kepala SMK Negeri 1 Talaga<br>
+                Kepala {{$kepsek->school}}<br>
                 <br><br><br><br><br>
                 <b><u>{{ $kepsek->name }}</u></b><br>
                 NIP. {{ $kepsek->nip ?? '-' }}
             </td>
             <td style="vertical-align: top; text-align: left; width: 50%; border: none;">
-                <small>Tanggal Pemesanan :
-                    {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}</small><br>
+                Tanggal Pemesanan :
+                    {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}<br>
                 <br>
                 Bendahara {{ $pesanan->bendahara->type ?? '-' }}<br>
                 <br><br><br><br><br>
-                <b><u>Bendahara {{ $pesanan->bendahara->type ?? '-' }}</u></b><br>
+                <b><u> {{ $pesanan->bendahara->name ?? '-' }}</u></b><br>
                 NIP. {{ $pesanan->bendahara->nip ?? '-' }}
             </td>
         </tr>
@@ -586,7 +600,7 @@
             <tr>
                 <td style="width:80px;">Tn/Ny</td>
                 <td style="width:10px;">:</td>
-                <td>SMK Negeri 1 Talaga</td>
+                <td>{{$kepsek->school}}</td>
             </tr>
             <tr>
                 <td>Di</td>
@@ -709,56 +723,57 @@
             {{ strtolower(ucwords(terbilang(\Carbon\Carbon::parse($pesanan->created_at)->format('Y')))) }}<br>
             Yang bertanda tangan di bawah ini :
         </p>
+
         <table class="no-border" style="width:100%; font-size:19px; margin-bottom:10px; border:none;">
             <tr>
-                <td style="width:170px;">Nama</td>
-                <td style="width:10px;">:</td>
-                <td>{{ $pesanan->penyedia->delegation_name ?? '-' }}</td>
+            <td style="width:170px; padding-top:2px; padding-bottom:2px;">Nama</td>
+            <td style="width:10px; padding-top:2px; padding-bottom:2px;">:</td>
+            <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->delegation_name ?? '-' }}</td>
             </tr>
             <tr>
-                <td>Jabatan</td>
-                <td>:</td>
-                <td>{{ $pesanan->penyedia->delegate_position ?? '-' }}</td>
+            <td style="padding-top:2px; padding-bottom:2px;">Jabatan</td>
+            <td style="padding-top:2px; padding-bottom:2px;">:</td>
+            <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->delegate_position ?? '-' }}</td>
             </tr>
             <tr>
-                <td>Nama Perusahaan</td>
-                <td>:</td>
-                <td>{{ $pesanan->penyedia->company ?? '-' }}</td>
+            <td style="padding-top:2px; padding-bottom:2px;">Nama Perusahaan</td>
+            <td style="padding-top:2px; padding-bottom:2px;">:</td>
+            <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->company ?? '-' }}</td>
             </tr>
             <tr>
-                <td>Alamat</td>
-                <td>:</td>
-                <td>{{ $pesanan->penyedia->address ?? '-' }}</td>
+            <td style="padding-top:2px; padding-bottom:2px;">Alamat</td>
+            <td style="padding-top:2px; padding-bottom:2px;">:</td>
+            <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->address ?? '-' }}</td>
             </tr>
             <tr>
-                <td colspan="3">Sebagai pihak yang menyerahkan, selanjutnya disebut PIHAK PERTAMA</td>
+            <td colspan="3" style="padding-top:2px; padding-bottom:2px;">Sebagai pihak yang menyerahkan, selanjutnya disebut PIHAK PERTAMA</td>
             </tr>
         </table>
 
         <!-- Data pihak kedua -->
         <table class="no-border" style="width:100%; font-size:19px; margin-bottom:10px; border:none;">
             <tr>
-                <td style="width: 170px">Nama</td>
-                <td style="width:10px;">:</td>
-                <td>{{ $pesanan->penerima->name ?? '-' }}</td>
+            <td style="width:170px; padding-top:2px; padding-bottom:2px;">Nama</td>
+            <td style="width:10px; padding-top:2px; padding-bottom:2px;">:</td>
+            <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penerima->name ?? '-' }}</td>
             </tr>
             <tr>
-                <td>Jabatan</td>
-                <td>:</td>
-                <td>{{ $pesanan->penerima->position ?? '-' }}</td>
+            <td style="padding-top:2px; padding-bottom:2px;">Jabatan</td>
+            <td style="padding-top:2px; padding-bottom:2px;">:</td>
+            <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penerima->position ?? '-' }}</td>
             </tr>
             <tr>
-                <td>Nama Instansi</td>
-                <td>:</td>
-                <td>SMK Negeri 1 Talaga</td>
+            <td style="padding-top:2px; padding-bottom:2px;">Nama Instansi</td>
+            <td style="padding-top:2px; padding-bottom:2px;">:</td>
+            <td style="padding-top:2px; padding-bottom:2px;">{{$kepsek->school}}</td>
             </tr>
             <tr>
-                <td>Alamat</td>
-                <td>:</td>
-                <td>{{ $kepsek->address ?? '-' }}</td>
+            <td style="padding-top:2px; padding-bottom:2px;">Alamat</td>
+            <td style="padding-top:2px; padding-bottom:2px;">:</td>
+            <td style="padding-top:2px; padding-bottom:2px;">{{ $kepsek->address ?? '-' }}</td>
             </tr>
             <tr>
-                <td colspan="3">Sebagai pihak yang menerima, selanjutnya disebut PIHAK KEDUA</td>
+            <td colspan="3" style="padding-top:2px; padding-bottom:2px;">Sebagai pihak yang menerima, selanjutnya disebut PIHAK KEDUA</td>
             </tr>
         </table>
 
@@ -811,7 +826,7 @@
                     <td style="text-align:left; width:70%;">
                         PIHAK PERTAMA
                     </td>
-                    <td style="text-align:left; width:30%;">
+                    <td style="text-align:left; width:20%;">
                         PIHAK KEDUA
                     </td>
                 </tr>
@@ -830,7 +845,7 @@
                     </td>
                 </tr>
             </table>
-            <div style="display: flex; justify-content: center; margin-top:-40px;">
+            <div style="display: flex; justify-content: center; margin-top:-70px;">
                 <table class="no-border" style="width: 50%; border: none;">
                     <tr>
                         <td style="text-align: center;">
@@ -841,7 +856,7 @@
                     <tr>
                         <td>
                             <div style="display: flex; justify-content: center;">
-                                <div style="text-align: left; vertical-align: bottom; margin-top: 40px;">
+                                <div style="text-align: left; vertical-align: bottom; margin-top: 70px;">
                                     <strong style="text-decoration:underline;">{{ $kepsek->name ?? '-' }}</strong><br>
                                     NIP. {{ $kepsek->nip ?? '-' }}
                                 </div>
@@ -911,7 +926,7 @@
                             <tr>
                                 <td style="padding:0;">Nama Perusahaan</td>
                                 <td style="padding:0;">:</td>
-                                <td style="padding:0;" class="break-cell">SMK Negeri 1 Talaga</td>
+                                <td style="padding:0;" class="break-cell">{{$kepsek->school}}</td>
                             </tr>
                             <tr>
                                 <td style="padding:0;">Alamat Lengkap</td>
