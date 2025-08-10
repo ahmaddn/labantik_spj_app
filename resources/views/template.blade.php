@@ -1059,6 +1059,7 @@
                 </td>
             </tr>
         </table>
+        
         <div style="width:100%; font-size:18px; margin-top:100px;">
             <em>*) Mohon lakukan pembayaran maksimal 15 hari setelah faktur dikirim</em>
         </div>
