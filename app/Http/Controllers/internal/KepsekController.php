@@ -31,7 +31,8 @@ class KepsekController extends Controller
             $request->validate([
                 'name' => 'required|unique:kepsek,name',
                 'nip' => 'nullable|unique:kepsek,nip|regex:/^[A-Za-z0-9 \-]+$/',
-                'school' => 'required',
+                'year' => 'required',
+                'school' => 'required|string',
                 'address' => 'required|string',
             ]);
 
@@ -39,6 +40,7 @@ class KepsekController extends Controller
             Kepsek::create([
                 'name' => $request->input('name'),
                 'nip' => $request->input('nip'),
+                'year' => $request->input('year'),
                 'school' => $request->input('school'),
                 'address' => $request->input('address'),
                 'userID' => $id

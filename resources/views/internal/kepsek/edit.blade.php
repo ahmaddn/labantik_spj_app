@@ -39,6 +39,16 @@
                                 </div>
                             @endif
 
+                            {{-- Tahun Ajaran --}}
+                            <div class="form-group">
+                                <label>Nama Sekolah</label>
+                                <input type="text" class="form-control" name="school"
+                                    value="{{ old('school', $kepsek->school) }}">
+                                @error('school')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
                             {{-- Nama Kepsek --}}
                             <div class="form-group">
                                 <label>Nama Kepsek</label>
@@ -62,9 +72,9 @@
                             {{-- Tahun Ajaran --}}
                             <div class="form-group">
                                 <label>Tahun Ajaran</label>
-                                <input type="text" class="form-control" name="school" min="1900" max="2100"
-                                    value="{{ old('school', $kepsek->school) }}">
-                                @error('school')
+                                <input type="text" class="form-control" name="year" min="2025" max="2100"
+                                    value="{{ old('year', $kepsek->year) }}">
+                                @error('year')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>

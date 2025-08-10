@@ -27,6 +27,15 @@
                         <form action="{{ route('internal.kepsek.AddKepsek') }}" method="POST">
                             @csrf
 
+                            {{-- Nama Sekolah --}}
+                            <div class="form-group">
+                                <label>Nama Sekolah</label>
+                                <input type="text" class="form-control" name="school">
+                                @error('school')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
                             {{-- Nama Kepala Sekolah --}}
                             <div class="form-group">
                                 <label>Nama Kepsek</label>
@@ -45,11 +54,12 @@
                                 @enderror
                             </div>
 
+
                             {{-- Tahun Ajaran --}}
                             <div class="form-group">
                                 <label>Tahun Ajaran</label>
-                                <input type="text" class="form-control" name="school" min="2025" max="2100">
-                                @error('school')
+                                <input type="text" class="form-control" name="year" min="2025" max="2100">
+                                @error('year')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
