@@ -27,6 +27,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('nip')->nullable();
+            $table->string('year');
             $table->string('school');
             $table->string('address');
             $table->unsignedInteger('userID');

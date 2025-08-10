@@ -13,7 +13,8 @@
         }
 
         /* Area tanda tangan dikecualikan dari line-height 1.15 */
-        .ttd-area, .ttd-area * {
+        .ttd-area,
+        .ttd-area * {
             line-height: normal !important;
         }
 
@@ -515,7 +516,7 @@
         <h3 class="text-center">KWITANSI</h3>
         <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
             <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }}
-                </span>
+            </span>
         </div>
         <table style="width:100%; border:none; font-size:19px;" class="no-border">
             <tr>
@@ -549,26 +550,28 @@
             </div>
         </div>
     </div>
-<table cellpadding="5" style="border: none; width: 100%;">
-    <tr style="border: none;">
-        <td style="vertical-align: top; text-align: left; width: 50%; border: none;">
-            <small>Lunas dibayar : {{ \Carbon\Carbon::parse($pesanan->paid)->translatedFormat('d F Y') }}</small><br>
-            Setuju dibayar,<br>
-            Kepala SMK Negeri 1 Talaga<br>
-            <br><br><br><br><br>
-            <b><u>{{$kepsek->name}}</u></b><br>
-            NIP. {{ $kepsek->nip ?? '-' }}
-        </td>
-        <td style="vertical-align: top; text-align: left; width: 50%; border: none;">
-            <small>Tanggal Pemesanan : {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}</small><br>
-            <br>
-            Bendahara {{ $pesanan->bendahara->type ?? '-' }}<br>
-            <br><br><br><br><br>
-            <b><u>Bendahara {{ $pesanan->bendahara->type ?? '-' }}</u></b><br>
-            NIP. {{ $pesanan->bendahara->nip ?? '-' }}
-        </td>
-    </tr>
-</table>
+    <table cellpadding="5" style="border: none; width: 100%;">
+        <tr style="border: none;">
+            <td style="vertical-align: top; text-align: left; width: 50%; border: none;">
+                <small>Lunas dibayar :
+                    {{ \Carbon\Carbon::parse($pesanan->paid)->translatedFormat('d F Y') }}</small><br>
+                Setuju dibayar,<br>
+                Kepala SMK Negeri 1 Talaga<br>
+                <br><br><br><br><br>
+                <b><u>{{ $kepsek->name }}</u></b><br>
+                NIP. {{ $kepsek->nip ?? '-' }}
+            </td>
+            <td style="vertical-align: top; text-align: left; width: 50%; border: none;">
+                <small>Tanggal Pemesanan :
+                    {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}</small><br>
+                <br>
+                Bendahara {{ $pesanan->bendahara->type ?? '-' }}<br>
+                <br><br><br><br><br>
+                <b><u>Bendahara {{ $pesanan->bendahara->type ?? '-' }}</u></b><br>
+                NIP. {{ $pesanan->bendahara->nip ?? '-' }}
+            </td>
+        </tr>
+    </table>
     </div>
     </div>
     <div class="page-break"></div>
@@ -647,11 +650,11 @@
         <div class="after-table-content avoid-break"
             style="margin-top:0; page-break-inside: avoid; break-inside: avoid;">
 
-            <table style="width: 100%;  border-collapse: collapse; margin-top: 20px; border: none;" class="no-border" >
+            <table style="width: 100%;  border-collapse: collapse; margin-top: 20px; border: none;" class="no-border">
                 <!-- Baris tanggal -->
                 <tr>
                     <td style=" width: 60%"></td>
-                    <td  style="text-align: left; ">
+                    <td style="text-align: left; ">
                         Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}<br>
                     </td>
                 </tr>
@@ -694,7 +697,7 @@
         <h3 class="text-center">BERITA ACARA SERAH TERIMA</h3>
         <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
             <span style="display:inline-block;">Nomor : {{ $pesanan->bast_num ?? '-' }}
-                </span>
+            </span>
         </div>
 
         <!-- Data pihak pertama -->
@@ -760,7 +763,7 @@
         </table>
 
         <!-- Rincian barang -->
-        <p style="margin-bottom:10px; text-align:justify; line-height: 30px;">PIHAK PERTAMA menyerahkan hasil pekerjaan
+        <p style="margin-bottom:10px; text-align:justify;">PIHAK PERTAMA menyerahkan hasil pekerjaan
             {{ $pesanan->kegiatan->name }}
             kepada PIHAK KEDUA, dan PIHAK KEDUA telah menerima pekerjaan {{ $pesanan->kegiatan->name }} tersebut dalam
             jumlah lengkap dengan kondisi sesuai rincian sebagai
@@ -797,7 +800,7 @@
 
         <!-- Penutup Berita Acara -->
         <div class="after-table-content avoid-break">
-            <p style="margin-bottom:10px; text-align: justify; line-height: 30px;">Berita Acara Serah Terima ini
+            <p style="margin-bottom:10px; text-align: justify;">Berita Acara Serah Terima ini
                 berfungsi sebagai Bukti Serah Terima hasil
                 pekerjaan kepada PIHAK KEDUA, untuk selanjutnya dipergunakan sebagaimana mestinya. Berita Acara
                 Serah
@@ -827,7 +830,7 @@
                     </td>
                 </tr>
             </table>
-            <div style="display: flex; justify-content: center;">
+            <div style="display: flex; justify-content: center; margin-top:-40px;">
                 <table class="no-border" style="width: 50%; border: none;">
                     <tr>
                         <td style="text-align: center;">
@@ -838,7 +841,7 @@
                     <tr>
                         <td>
                             <div style="display: flex; justify-content: center;">
-                                <div style="text-align: left; vertical-align: bottom;"><br><br><br><br>
+                                <div style="text-align: left; vertical-align: bottom; margin-top: 40px;">
                                     <strong style="text-decoration:underline;">{{ $kepsek->name ?? '-' }}</strong><br>
                                     NIP. {{ $kepsek->nip ?? '-' }}
                                 </div>
@@ -847,6 +850,7 @@
                     </tr>
                 </table>
             </div>
+
         </div>
     </div>
 
@@ -1048,7 +1052,7 @@
 
     <style>
         @media print {
-            
+
 
             body {
                 font-family: 'DejaVu Sans', 'Arial', sans-serif;
@@ -1115,7 +1119,7 @@
         }
     </style>
 
-   
+
 
 
 

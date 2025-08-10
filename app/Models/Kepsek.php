@@ -16,6 +16,7 @@ class Kepsek extends Model
         'name',
         'nip',
         'school',
+        'year',
         'address',
         'userID'
     ];

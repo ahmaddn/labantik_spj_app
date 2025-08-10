@@ -22,7 +22,8 @@ class InternalSeeder extends Seeder
         Kepsek::create([
             'name' => 'Kepala Sekolah',
             'nip' => 1987654321,
-            'school' => 2025,
+            'school' => 'SMKN 1 Talaga',
+            'year' => 2025,
             'address' => 'Jl. Sekolah No. 20',
             'userID' => 1
         ]);
