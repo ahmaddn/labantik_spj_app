@@ -823,10 +823,10 @@
 
             <table class="no-border" style="margin-top:20px; width:100%; border: none;">
                 <tr>
-                    <td style="text-align:left; width:70%;">
+                    <td style="text-align:left; width:65%;">
                         PIHAK PERTAMA
                     </td>
-                    <td style="text-align:left; width:20%;">
+                    <td style="text-align:left; width:35%;">
                         PIHAK KEDUA
                     </td>
                 </tr>
