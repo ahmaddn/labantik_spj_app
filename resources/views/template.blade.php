@@ -251,7 +251,8 @@
         margin-left: 60%;">
             Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}<br>
             Pelaksana,<br><br><br><br><br>
-            <strong style="text-decoration: underline;">{{ $kepsek->name ?? 'Nama Kepala Sekolah' }}</strong><br>
+            <strong
+                style="text-decoration: underline;">{{ $pesanan->kepsek->name ?? 'Nama Kepala Sekolah' }}</strong><br>
             NIP. {{ $kepsek->nip ?? '-' }}
         </div>
     </div>
@@ -326,7 +327,7 @@
             <tr>
                 <td style="width: 300px; padding-top: 0; padding-bottom: 0;">Nama</td>
                 <td style="padding-top: 0; padding-bottom: 0;">:</td>
-                <td style="padding-top: 0; padding-bottom: 0;">{{ $kepsek->name }}</td>
+                <td style="padding-top: 0; padding-bottom: 0;">{{ $pesanan->kepsek->name }}</td>
             </tr>
             <tr>
                 <td style="padding-top: 0; padding-bottom: 0;">Jabatan</td>
@@ -506,7 +507,7 @@
                             <br>
                             <br>
                             <br>
-                            <strong><u>{{ $kepsek->name }}</u></strong><br>
+                            <strong><u>{{ $pesanan->kepsek->name }}</u></strong><br>
                             NIP. {{ $kepsek->nip }}
                         </td>
                     </tr>
@@ -573,7 +574,7 @@
                 Setuju dibayar,<br>
                 Kepala {{ $kepsek->school }}<br>
                 <br><br><br><br><br>
-                <b><u>{{ $kepsek->name }}</u></b><br>
+                <b><u>{{ $pesanan->kepsek->name }}</u></b><br>
                 NIP. {{ $kepsek->nip ?? '-' }}
             </td>
             <td style="vertical-align: top; text-align: left; width: 50%; border: none;">
@@ -861,7 +862,8 @@
                         <td>
                             <div style="display: flex; justify-content: center;">
                                 <div style="text-align: left; vertical-align: bottom; margin-top: 70px;">
-                                    <strong style="text-decoration:underline;">{{ $kepsek->name ?? '-' }}</strong><br>
+                                    <strong
+                                        style="text-decoration:underline;">{{ $pesanan->kepsek->name ?? '-' }}</strong><br>
                                     NIP. {{ $kepsek->nip ?? '-' }}
                                 </div>
                             </div>
@@ -925,7 +927,7 @@
                             <tr>
                                 <td style="padding:0;">Nama Lengkap</td>
                                 <td style="padding:0;">:&nbsp;</td>
-                                <td style="padding:0;" class="break-cell">{{ $kepsek->name }}</td>
+                                <td style="padding:0;" class="break-cell">{{ $pesanan->kepsek->name }}</td>
                             </tr>
                             <tr>
                                 <td style="padding:0;">Nama Perusahaan</td>
