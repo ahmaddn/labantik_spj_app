@@ -29,6 +29,7 @@ class BendaharaController extends Controller
             $id = Auth::id();
 
             $request->validate([
+                'received_from' => 'required|string',
                 'name' => 'required|string',
                 'jenis' => 'required|string',
                 'other' => 'required_if:jenis,Other',
@@ -37,6 +38,7 @@ class BendaharaController extends Controller
             $jenis = $request->jenis === 'Other' ? $request->other : $request->jenis;
 
             Bendahara::create([
+                'received_from' => $request->input('received_from'),
                 'name' => $request->input('name'),
                 'type' => $jenis,
                 'nip' => $request->input('nip'),
@@ -75,6 +77,7 @@ class BendaharaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'received_from' => 'required|string',
             'name' => 'required|string',
             'jenis' => 'required|string',
             'other' => 'required_if:jenis,Other',
@@ -84,6 +87,7 @@ class BendaharaController extends Controller
 
         $bendahara = Bendahara::findOrFail($id);
         $bendahara->update([
+            'received_from' => $request->input('received_from'),
             'name' => $request->input('name'),
             'nip' => $request->input('nip'),
             'type' => $jenis,

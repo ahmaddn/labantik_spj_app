@@ -170,6 +170,8 @@ class PesananController extends Controller
             'accepted'          => "required|date|after_or_equal:$kegiatan->order",
             'billing'          => "nullable|date",
             'paid'          => "required|date|after_or_equal:$kegiatan->order",
+            'prey' => 'required|date',
+            'order_date' => 'required|date'
         ]);
         session(['data_editPesanan' => $validated]);
 

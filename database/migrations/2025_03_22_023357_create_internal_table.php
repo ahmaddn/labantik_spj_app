@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('bendahara', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('received_from');
             $table->string('name');
             $table->string('type');
             $table->string('nip')->nullable();

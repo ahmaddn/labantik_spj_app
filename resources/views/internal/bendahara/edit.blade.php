@@ -28,6 +28,16 @@
                             @csrf
                             @method('PUT')
 
+                            {{-- Nama Bendahara --}}
+                            <div class="form-group">
+                                <label>Pembayaran Telah Diterima Dari : </label>
+                                <input type="text" class="form-control" name="received_from"
+                                    value="{{ old('received_from', $bendahara->received_from) }}">
+                                @error('received_from')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
 
                             {{-- Nama Bendahara --}}
                             <div class="form-group">
@@ -43,9 +53,12 @@
                             <div class="form-group">
                                 <label>Jenis Bendahara</label>
                                 <select class="form-control" name="jenis" id="jenis-bendahara">
-                                    <option value="BOS" {{ ($pesanan->type ?? '') === 'BOS' ? 'selected' : '' }}>BOS
+                                    <option value="Bendahara BOS"
+                                        {{ ($pesanan->type ?? '') === 'Bendahara BOS' ? 'selected' : '' }}>
+                                        Bendahara BOS
                                     </option>
-                                    <option value="BOPD" {{ ($pesanan->type ?? '') === 'BOPD' ? 'selected' : '' }}>BODP
+                                    <option value="Bendahara BOPD"
+                                        {{ ($pesanan->type ?? '') === 'Bendahara BOPD' ? 'selected' : '' }}>Bendahara BODP
                                     </option>
                                     <option value="Other"
                                         {{ old('jenis', $bendahara->type) != 'BOS' && old('jenis', $bendahara->jenis) != 'BOPD' ? 'selected' : '' }}>

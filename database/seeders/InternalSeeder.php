@@ -13,14 +13,14 @@ class InternalSeeder extends Seeder
     {
         // Seeder Bendahara
         Bendahara::create([
-            'name' => 'Bendahara BOS',
-            'type' => 'BOS',
+            'name' => 'Tes Bendahara',
+            'type' => 'Bendahara BOS',
             'nip' => 1234567890,
             'userID' => 1
         ]);
         // Seeder Kepsek
         Kepsek::create([
-            'name' => 'Kepala Sekolah',
+            'name' => 'Tes Kepsek',
             'nip' => 1987654321,
             'school' => 'SMKN 1 Talaga',
             'year' => 2025,
