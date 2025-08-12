@@ -40,7 +40,8 @@ class PesananController extends Controller
         $penyedia = Penyedia::where('userID', $id)->get();
         $penerima = Penerima::where('userID', $id)->get();
         $bendahara = Bendahara::where('userID', $id)->get();
-        return view('eksternal.pesanan.add', compact('kegiatan', 'penyedia', 'penerima', 'bendahara', 'lastInvoiceNum', 'lastOrderNum', 'lastNoteNum', 'lastBastNum'));
+        $kepsek = Kepsek::where('userID', $id)->get();
+        return view('eksternal.pesanan.add', compact('kegiatan', 'penyedia', 'kepsek', 'penerima', 'bendahara', 'lastInvoiceNum', 'lastOrderNum', 'lastNoteNum', 'lastBastNum'));
     }
 
     public function addForm()
@@ -73,9 +74,12 @@ class PesananController extends Controller
             'penyediaID'    => 'required|exists:penyedia,id',
             'penerimaID'    => 'required|exists:penerima,id',
             'bendaharaID'   => 'required|exists:bendahara,id',
+            'kepsekID'   => 'required|exists:kepsek,id',
             'accepted'          => "required|date|after_or_equal:$kegiatan->order",
             'billing'          => "nullable|date",
             'paid'          => 'required|date|after_or_equal:2025-01-01',
+            'prey' => 'required|date',
+            'order_date' => 'required|date'
         ]);
 
         session(['data' => $request->except('_token')]);
@@ -143,12 +147,13 @@ class PesananController extends Controller
         $penyedia = Penyedia::where('userID', $userID)->get();
         $penerima = Penerima::where('userID', $userID)->get();
         $bendahara = Bendahara::where('userID', $userID)->get();
+        $kepsek = Kepsek::where('userID', $userID)->get();
 
         session([
             'edit_pesanan' => array_merge($pesanan->toArray(), ['type_num' => $pesanan->type_num]),
             'edit_barang' => $pesanan->barang,
         ]);
-        return view('eksternal.pesanan.edit', compact('pesanan', 'kegiatan', 'penyedia', 'penerima', 'bendahara'));
+        return view('eksternal.pesanan.edit', compact('pesanan', 'kegiatan', 'penyedia', 'penerima', 'bendahara', 'kepsek'));
     }
 
     public function editBarang(Request $request)
@@ -167,6 +172,7 @@ class PesananController extends Controller
             'penyediaID'    => 'required|exists:penyedia,id',
             'penerimaID'    => 'required|exists:penerima,id',
             'bendaharaID'   => 'required|exists:bendahara,id',
+            'kepsekID'   => 'required|exists:kepsek,id',
             'accepted'          => "required|date|after_or_equal:$kegiatan->order",
             'billing'          => "nullable|date",
             'paid'          => "required|date|after_or_equal:$kegiatan->order",

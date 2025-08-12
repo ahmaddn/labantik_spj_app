@@ -65,4 +65,9 @@ class Pesanan extends Model
     {
         return $this->belongsTo(Bendahara::class, 'bendaharaID', 'id');
     }
+
+    public function kepsek()
+    {
+        return $this->belongsTo(Kepsek::class, 'kepsekID', 'id');
+    }
 }

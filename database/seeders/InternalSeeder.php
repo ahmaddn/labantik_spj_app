@@ -13,6 +13,7 @@ class InternalSeeder extends Seeder
     {
         // Seeder Bendahara
         Bendahara::create([
+            'received_from' => 'Bendahara',
             'name' => 'Tes Bendahara',
             'type' => 'Bendahara BOS',
             'nip' => 1234567890,
