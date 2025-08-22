@@ -15,6 +15,7 @@ class Bendahara extends Model
 
 
     protected $fillable = [
+        'received_from',
         'name',
         'type',
         'nip',

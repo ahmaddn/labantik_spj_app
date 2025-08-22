@@ -29,18 +29,29 @@
 
                             {{-- Nama Bendahara --}}
                             <div class="form-group">
+                                <label>Pembayaran Telah Diterima Dari : </label>
+                                <input type="text" class="form-control" name="received_from"
+                                    value="{{ old('received_from') }}">
+                                @error('received_from')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            {{-- Nama Bendahara --}}
+                            <div class="form-group">
                                 <label>Nama Bendahara</label>
                                 <input type="text" class="form-control" name="name" value="{{ old('name') }}">
                                 @error('name')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            {{-- Nama Bendahara --}}
+
+                            {{-- Jenis Bendahara --}}
                             <div class="form-group">
                                 <label>Jenis Bendahara</label>
                                 <select class="form-control" name="jenis" id="jenis-bendahara">
-                                    <option value="BOS">BOS</option>
-                                    <option value="BOPD">BOPD</option>
+                                    <option value="Bendahara BOS">Bendahara BOS</option>
+                                    <option value="Bendahara BOPD">Bendahara BOPD</option>
                                     <option value="Other">Lainnya...</option>
                                 </select>
                                 @error('jenis')

@@ -31,6 +31,7 @@ class Pesanan extends Model
         'penerimaID',
         'barangID',
         'bendaharaID',
+        'kepsekID',
         'order_date',
         'prey',
         'paid',
@@ -63,5 +64,10 @@ class Pesanan extends Model
     public function bendahara()
     {
         return $this->belongsTo(Bendahara::class, 'bendaharaID', 'id');
+    }
+
+    public function kepsek()
+    {
+        return $this->belongsTo(Kepsek::class, 'kepsekID', 'id');
     }
 }

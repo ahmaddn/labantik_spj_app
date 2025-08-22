@@ -12,7 +12,6 @@
                         <li class="breadcrumb-item"><a href="{{ route('eksternal.pesanan.addSession') }}">Tambah Pesanan</a>
                         </li>
                         <li class="breadcrumb-item">Tambah Barang</li>
-
                     </ul>
                 </div>
             </div>
@@ -32,7 +31,6 @@
                 @endif
 
                 <div id="basic-pills-wizard" class="twitter-bs-wizard wizard">
-                    {{-- STEP NAVIGATION --}}
                     <ul class="twitter-bs-wizard-nav nav nav-pills nav-justified">
                         @for ($i = 0; $i < $type_num; $i++)
                             <li class="nav-item">
@@ -47,7 +45,6 @@
                     <form action="{{ route('eksternal.pesanan.store') }}" method="POST">
                         @csrf
 
-                        {{-- STEP CONTENT --}}
                         <div class="tab-content twitter-bs-wizard-tab-content mt-4">
                             @for ($i = 0; $i < $type_num; $i++)
                                 <div class="tab-pane fade {{ $i === 0 ? 'show active' : '' }}" id="step{{ $i }}">
@@ -79,38 +76,36 @@
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
+
                                         <div class="col-md-6 mb-2">
                                             <label>Satuan Barang</label>
-                                            <select name="items[{{ $i }}][unit]" class="form-control"
-                                                id="satuan-barang">
+                                            @php
+                                                $oldUnit = old("items.$i.unit");
+                                                $units = ['unit', 'paket', 'set', 'pcs', 'box', 'kg', 'liter'];
+                                                $isOtherSelected = !in_array($oldUnit, $units) && !empty($oldUnit);
+                                            @endphp
+                                            <select name="items[{{ $i }}][unit]"
+                                                class="form-control satuan-select" id="satuan-barang-{{ $i }}"
+                                                data-index="{{ $i }}">
                                                 <option value="">-- Pilih Satuan --</option>
-                                                <option value="Unit"
+                                                <option value="unit"
                                                     {{ old("items.$i.unit") == 'unit' ? 'selected' : '' }}>Unit</option>
-                                                <option value="Paket"
+                                                <option value="paket"
                                                     {{ old("items.$i.unit") == 'paket' ? 'selected' : '' }}>Paket</option>
-                                                <option value="Set"
+                                                <option value="set"
                                                     {{ old("items.$i.unit") == 'set' ? 'selected' : '' }}>Set</option>
-                                                <option value="Pcs"
+                                                <option value="pcs"
                                                     {{ old("items.$i.unit") == 'pcs' ? 'selected' : '' }}>Pcs</option>
-                                                <option value="Box"
+                                                <option value="box"
                                                     {{ old("items.$i.unit") == 'box' ? 'selected' : '' }}>Box</option>
-                                                <option value="Kg"
+                                                <option value="kg"
                                                     {{ old("items.$i.unit") == 'kg' ? 'selected' : '' }}>Kg</option>
-                                                <option value="Liter"
+                                                <option value="liter"
                                                     {{ old("items.$i.unit") == 'liter' ? 'selected' : '' }}>Liter</option>
-                                                <option value="Other">Lainnya...</option>
-
+                                                <option value="Other" {{ $isOtherSelected ? 'selected' : '' }}>Lainnya...
+                                                </option>
                                             </select>
                                             @error("items.$i.unit")
-                                                <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group" id="other-satuan" style="display: none;">
-                                            <label>Satuan Lainnya</label>
-                                            <input type="text" class="form-control" name="other"
-                                                value="{{ old('other') }}">
-                                            @error('other')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -127,9 +122,19 @@
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
+
+                                        <div class="col-md-6 mb-2 other-satuan" id="other-satuan-{{ $i }}"
+                                            style="display: {{ $isOtherSelected ? 'block' : 'none' }};">
+                                            <label>Satuan Lainnya</label>
+                                            <input type="text" class="form-control"
+                                                name="items[{{ $i }}][other_unit]"
+                                                value="{{ $isOtherSelected ? old("items.$i.unit") : '' }}">
+                                            @error('items.$i.other_unit')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
                                     </div>
 
-                                    {{-- NAVIGATION BUTTONS --}}
                                     <ul class="pager wizard twitter-bs-wizard-pager-link mt-3">
                                         @if ($i > 0)
                                             <li class="previous me-2"><a href="javascript:;"
@@ -150,6 +155,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 @endsection

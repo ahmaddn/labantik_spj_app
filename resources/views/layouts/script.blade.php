@@ -25,12 +25,48 @@
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Fungsi toggle input untuk select dan target input tertentu
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('satuan-select')) {
+                const select = e.target;
+                const index = select.getAttribute('data-index');
+                const otherDiv = document.getElementById('other-satuan-' + index);
+                const otherInput = otherDiv ? otherDiv.querySelector('input') : null;
+
+                if (otherDiv && otherInput) {
+                    if (select.value === 'Other') {
+                        otherDiv.style.display = 'block';
+                        otherInput.focus();
+
+                        const itemIndex = select.name.match(/\[(\d+)\]/)[1];
+                        otherInput.setAttribute('name', `items[${itemIndex}][unit]`);
+                    } else {
+                        otherDiv.style.display = 'none';
+                        otherInput.value = '';
+
+                        const itemIndex = select.name.match(/\[(\d+)\]/)[1];
+                        otherInput.setAttribute('name', `items[${itemIndex}][other_unit]`);
+                    }
+                }
+            }
+        });
+
+        document.querySelectorAll('.satuan-select').forEach(function(select) {
+            const index = select.getAttribute('data-index');
+            const otherDiv = document.getElementById('other-satuan-' + index);
+
+            if (otherDiv) {
+                if (select.value === 'Other') {
+                    otherDiv.style.display = 'block';
+                } else {
+                    otherDiv.style.display = 'none';
+                }
+            }
+        });
+
         function setupToggle(selectId, otherId) {
             const select = document.getElementById(selectId);
             const other = document.getElementById(otherId);
-
-            if (!select || !other) return; // Jika elemen tidak ada, stop
+            if (!select || !other) return;
 
             function toggleInput() {
                 if (select.value === 'Other') {
@@ -40,14 +76,12 @@
                 }
             }
 
-            toggleInput(); // cek saat page load
-
+            toggleInput();
             select.addEventListener('change', toggleInput);
         }
 
-        // Panggil fungsi untuk masing-masing pasangan select & input
+        // Panggil fungsi untuk elemen yang ada di halaman
         setupToggle('jenis-bendahara', 'other-bendahara');
-        setupToggle('satuan-barang', 'other-satuan');
     });
 </script>
 

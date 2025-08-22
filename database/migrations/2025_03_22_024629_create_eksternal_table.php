@@ -54,6 +54,7 @@ return new class extends Migration
             $table->unsignedInteger('penyediaID');
             $table->unsignedInteger('penerimaID');
             $table->unsignedInteger('bendaharaID');
+            $table->unsignedInteger('kepsekID');
             $table->date('order_date');
             $table->date('prey');
             $table->date('paid');
@@ -66,6 +67,7 @@ return new class extends Migration
             $table->foreign('penyediaID')->references('id')->on('penyedia');
             $table->foreign('penerimaID')->references('id')->on('penerima');
             $table->foreign('bendaharaID')->references('id')->on('bendahara');
+            $table->foreign('kepsekID')->references('id')->on('kepsek');
             $table->foreign('userID')->references('id')->on('users');
         });
 

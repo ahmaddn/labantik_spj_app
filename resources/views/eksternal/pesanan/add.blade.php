@@ -64,6 +64,23 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label>Kepala Sekolah</label>
+                                <select name="kepsekID" class="form-control" {{ $kepsek->isEmpty() ? 'disabled' : '' }}>
+                                    <option value="">
+                                        {{ $kepsek->isEmpty() ? '-- Tidak ada data --' : '-- Pilih Kepsek --' }}
+                                    </option>
+                                    @foreach ($kepsek as $item)
+                                        <option value="{{ $item->id }}"
+                                            {{ old('kepsekID') === $item->id ? 'selected' : '' }}>{{ $item->name }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+                                @error('kepsekID')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label>Bendahara</label>
                                 <select name="bendaharaID" class="form-control"
                                     {{ $bendahara->isEmpty() ? 'disabled' : '' }}>

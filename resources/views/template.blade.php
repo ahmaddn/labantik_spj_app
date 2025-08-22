@@ -168,7 +168,7 @@
                 <td>Nama satuan Pendidikan<br>
                     Alamat Satuan Pendidikan<br>
                     Kategori Barang dan Jasa</td>
-                <td>: {{$kepsek->school}} <br>
+                <td>: {{ $kepsek->school }} <br>
                     : {{ $kepsek->address }}<br>
                     : {{ $pesanan->kegiatan->name ?? '-' }}</td>
             </tr>
@@ -209,7 +209,7 @@
                 <tr>
                     <td>4.</td>
                     <td>Lokasi serah terima</td>
-                    <td>{{$kepsek->school}}</td>
+                    <td>{{ $kepsek->school }}</td>
                 </tr>
                 <tr>
                     <td>5.</td>
@@ -251,7 +251,8 @@
         margin-left: 60%;">
             Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}<br>
             Pelaksana,<br><br><br><br><br>
-            <strong style="text-decoration: underline;">{{ $kepsek->name ?? 'Nama Kepala Sekolah' }}</strong><br>
+            <strong
+                style="text-decoration: underline;">{{ $pesanan->kepsek->name ?? 'Nama Kepala Sekolah' }}</strong><br>
             NIP. {{ $kepsek->nip ?? '-' }}
         </div>
     </div>
@@ -265,19 +266,20 @@
                     <img src="{{ asset('jabar.png') }}" width="100" style="margin-left:50px; display:block;" />
                 </td>
                 <td width="90%" style="text-align: center; vertical-align: middle;">
-                <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
-                    <span style="font-size: 29px;">CABANG DINAS PENDIDIKAN WILAYAH IX</span><br>
-                    <span style="font-size: 21px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
-                <div style="font-size: 13px; line-height: 1.15; font-weight: normal; align-text: justify;">
-                    Bidang Keahlian: Teknologi dan Rekayasa, Teknologi Informasi komunikasi, Bisnis dan Manajemen<br>
-                    Kampus 1: Jalan Sekolah Nomor 20 Desa Talagakulon Kecamatan Talaga Kabupaten Majalengka <br>
-                    Kampus 2: Jalan Talaga Bantarujeg Desa Mekarraharja Kecamatan Talaga Kabupaten Majalengka<br>
-                    Telpon ☎(0233) 319238 FAX ✉ (0233) 319238 POS 45463 NPSN: 20213872<br>
+                    <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
+                        <span style="font-size: 29px;">CABANG DINAS PENDIDIKAN WILAYAH IX</span><br>
+                        <span style="font-size: 21px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
+                    <div style="font-size: 13px; line-height: 1.15; font-weight: normal; align-text: justify;">
+                        Bidang Keahlian: Teknologi dan Rekayasa, Teknologi Informasi komunikasi, Bisnis dan
+                        Manajemen<br>
+                        Kampus 1: Jalan Sekolah Nomor 20 Desa Talagakulon Kecamatan Talaga Kabupaten Majalengka <br>
+                        Kampus 2: Jalan Talaga Bantarujeg Desa Mekarraharja Kecamatan Talaga Kabupaten Majalengka<br>
+                        Telpon ☎(0233) 319238 FAX ✉ (0233) 319238 POS 45463 NPSN: 20213872<br>
 
-                    Website 🌐 <a href="www.smkn1talaga.sch.id">www.smkn1talaga.sch.id</a> – Email 📧 <a
-                        href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
-                </div>
-            </td>
+                        Website 🌐 <a href="www.smkn1talaga.sch.id">www.smkn1talaga.sch.id</a> – Email 📧 <a
+                            href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
+                    </div>
+                </td>
             </tr>
 
         </table>
@@ -316,7 +318,7 @@
             <strong>TAHUN ANGGARAN {{ \Carbon\Carbon::parse($pesanan->created_at)->format('Y') }}</strong>
         </div>
 
-        
+
         <table class="tulisan" style="border: none">
             <tr>
                 <td style="padding-top: 0;">Yang bertanda tangan di bawah ini</td>
@@ -325,7 +327,7 @@
             <tr>
                 <td style="width: 300px; padding-top: 0; padding-bottom: 0;">Nama</td>
                 <td style="padding-top: 0; padding-bottom: 0;">:</td>
-                <td style="padding-top: 0; padding-bottom: 0;">{{ $kepsek->name }}</td>
+                <td style="padding-top: 0; padding-bottom: 0;">{{ $pesanan->kepsek->name }}</td>
             </tr>
             <tr>
                 <td style="padding-top: 0; padding-bottom: 0;">Jabatan</td>
@@ -340,15 +342,15 @@
 
             <tr>
                 <td style=" padding-bottom: 0;">Selanjutnya disebut Pihak I</td>
-                
-            </tr>
-        
 
-        <tr>
-            <td style="padding-top: 0; padding-bottom: 0;">Bersama ini memerintahkan</td>
-            <td style="padding-top: 0; padding-bottom: 0;">:</td>
-        </tr>
-       
+            </tr>
+
+
+            <tr>
+                <td style="padding-top: 0; padding-bottom: 0;">Bersama ini memerintahkan</td>
+                <td style="padding-top: 0; padding-bottom: 0;">:</td>
+            </tr>
+
             <tr>
                 <td style="width: 300px; padding-top: 0; padding-bottom: 0;">Nama Penyedia</td>
                 <td style="padding-top: 0; padding-bottom: 0;">:</td>
@@ -429,16 +431,16 @@
                 </tr>
             </tbody>
         </table>
-        
-            <table class="tulisan" style="border: none;">
-                <tr>
-                    <td style="padding-top: 0; padding-bottom: 0;"><strong>Terbilang</strong></td>
-                    <td style="padding-top: 0; padding-bottom: 0;">:</td>
-                    <td style=" padding-top: 0; padding-bottom: 0;">{{ ucwords(terbilang($total)) }} Rupiah</td>
-                </tr>
 
-            </table>
-            <div class="page-break-inside-avoid">
+        <table class="tulisan" style="border: none;">
+            <tr>
+                <td style="padding-top: 0; padding-bottom: 0;"><strong>Terbilang</strong></td>
+                <td style="padding-top: 0; padding-bottom: 0;">:</td>
+                <td style=" padding-top: 0; padding-bottom: 0;">{{ ucwords(terbilang($total)) }} Rupiah</td>
+            </tr>
+
+        </table>
+        <div class="page-break-inside-avoid">
             <table style="width: 100%; border: none;" class="no-border">
                 <tr>
                     <td style="width: 200px">Barang yang dipesan sebagai berikut :</td>
@@ -490,7 +492,7 @@
                         </td>
                         <td style="vertical-align:top; padding-top: 0; padding-bottom: 0;">
                             Untuk dan atas nama<br>
-                            Kepala {{$kepsek->school}}
+                            Kepala {{ $kepsek->school }}
                         </td>
                     </tr>
                     <tr>
@@ -505,7 +507,7 @@
                             <br>
                             <br>
                             <br>
-                            <strong><u>{{ $kepsek->name }}</u></strong><br>
+                            <strong><u>{{ $pesanan->kepsek->name }}</u></strong><br>
                             NIP. {{ $kepsek->nip }}
                         </td>
                     </tr>
@@ -536,7 +538,7 @@
             <tr>
                 <td style="width:180px;">Telah diterima dari</td>
                 <td style="width:10px;">:</td>
-                <td>{{ $pesanan->penyedia->company ?? '-' }}</td>
+                <td>{{ $pesanan->bendahara->received_from ?? '-' }}</td>
             </tr>
             <tr>
                 <td>Uang Sejumlah</td>
@@ -567,17 +569,17 @@
     <table cellpadding="5" style="border: none; width: 100%;">
         <tr style="border: none;">
             <td style="vertical-align: top; text-align: left; width: 50%; border: none;">
-                <small>Lunas dibayar :
-                    {{ \Carbon\Carbon::parse($pesanan->paid)->translatedFormat('d F Y') }}</small><br>
+                Lunas dibayar :
+                {{ \Carbon\Carbon::parse($pesanan->paid)->translatedFormat('d F Y') }}<br>
                 Setuju dibayar,<br>
-                Kepala {{$kepsek->school}}<br>
+                Kepala {{ $kepsek->school }}<br>
                 <br><br><br><br><br>
-                <b><u>{{ $kepsek->name }}</u></b><br>
+                <b><u>{{ $pesanan->kepsek->name }}</u></b><br>
                 NIP. {{ $kepsek->nip ?? '-' }}
             </td>
             <td style="vertical-align: top; text-align: left; width: 50%; border: none;">
                 Tanggal Pemesanan :
-                    {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}<br>
+                {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}<br>
                 <br>
                 Bendahara {{ $pesanan->bendahara->type ?? '-' }}<br>
                 <br><br><br><br><br>
@@ -600,7 +602,7 @@
             <tr>
                 <td style="width:80px;">Tn/Ny</td>
                 <td style="width:10px;">:</td>
-                <td>{{$kepsek->school}}</td>
+                <td>{{ $kepsek->school }}</td>
             </tr>
             <tr>
                 <td>Di</td>
@@ -716,64 +718,67 @@
 
         <!-- Data pihak pertama -->
         <p style="margin-bottom:10px;">
-            Pada hari {{ strtolower(ucwords(\Carbon\Carbon::parse($pesanan->created_at)->isoFormat('dddd'))) }}
+            Pada hari {{ strtolower(ucwords(\Carbon\Carbon::parse($pesanan->accepted)->isoFormat('dddd'))) }}
             tanggal
-            {{ strtolower(ucwords(terbilang(\Carbon\Carbon::parse($pesanan->created_at)->format('d')))) }}
-            bulan {{ strtolower(ucwords(\Carbon\Carbon::parse($pesanan->created_at)->isoFormat('MMMM'))) }} tahun
-            {{ strtolower(ucwords(terbilang(\Carbon\Carbon::parse($pesanan->created_at)->format('Y')))) }}<br>
+            {{ strtolower(ucwords(terbilang(\Carbon\Carbon::parse($pesanan->accepted)->format('d')))) }}
+            bulan {{ strtolower(ucwords(\Carbon\Carbon::parse($pesanan->accepted)->isoFormat('MMMM'))) }} tahun
+            {{ strtolower(ucwords(terbilang(\Carbon\Carbon::parse($pesanan->accepted)->format('Y')))) }}<br>
             Yang bertanda tangan di bawah ini :
         </p>
 
         <table class="no-border" style="width:100%; font-size:19px; margin-bottom:10px; border:none;">
             <tr>
-            <td style="width:170px; padding-top:2px; padding-bottom:2px;">Nama</td>
-            <td style="width:10px; padding-top:2px; padding-bottom:2px;">:</td>
-            <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->delegation_name ?? '-' }}</td>
+                <td style="width:170px; padding-top:2px; padding-bottom:2px;">Nama</td>
+                <td style="width:10px; padding-top:2px; padding-bottom:2px;">:</td>
+                <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->delegation_name ?? '-' }}</td>
             </tr>
             <tr>
-            <td style="padding-top:2px; padding-bottom:2px;">Jabatan</td>
-            <td style="padding-top:2px; padding-bottom:2px;">:</td>
-            <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->delegate_position ?? '-' }}</td>
+                <td style="padding-top:2px; padding-bottom:2px;">Jabatan</td>
+                <td style="padding-top:2px; padding-bottom:2px;">:</td>
+                <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->delegate_position ?? '-' }}
+                </td>
             </tr>
             <tr>
-            <td style="padding-top:2px; padding-bottom:2px;">Nama Perusahaan</td>
-            <td style="padding-top:2px; padding-bottom:2px;">:</td>
-            <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->company ?? '-' }}</td>
+                <td style="padding-top:2px; padding-bottom:2px;">Nama Perusahaan</td>
+                <td style="padding-top:2px; padding-bottom:2px;">:</td>
+                <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->company ?? '-' }}</td>
             </tr>
             <tr>
-            <td style="padding-top:2px; padding-bottom:2px;">Alamat</td>
-            <td style="padding-top:2px; padding-bottom:2px;">:</td>
-            <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->address ?? '-' }}</td>
+                <td style="padding-top:2px; padding-bottom:2px;">Alamat</td>
+                <td style="padding-top:2px; padding-bottom:2px;">:</td>
+                <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->address ?? '-' }}</td>
             </tr>
             <tr>
-            <td colspan="3" style="padding-top:2px; padding-bottom:2px;">Sebagai pihak yang menyerahkan, selanjutnya disebut PIHAK PERTAMA</td>
+                <td colspan="3" style="padding-top:2px; padding-bottom:2px;">Sebagai pihak yang menyerahkan,
+                    selanjutnya disebut PIHAK PERTAMA</td>
             </tr>
         </table>
 
         <!-- Data pihak kedua -->
         <table class="no-border" style="width:100%; font-size:19px; margin-bottom:10px; border:none;">
             <tr>
-            <td style="width:170px; padding-top:2px; padding-bottom:2px;">Nama</td>
-            <td style="width:10px; padding-top:2px; padding-bottom:2px;">:</td>
-            <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penerima->name ?? '-' }}</td>
+                <td style="width:170px; padding-top:2px; padding-bottom:2px;">Nama</td>
+                <td style="width:10px; padding-top:2px; padding-bottom:2px;">:</td>
+                <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penerima->name ?? '-' }}</td>
             </tr>
             <tr>
-            <td style="padding-top:2px; padding-bottom:2px;">Jabatan</td>
-            <td style="padding-top:2px; padding-bottom:2px;">:</td>
-            <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penerima->position ?? '-' }}</td>
+                <td style="padding-top:2px; padding-bottom:2px;">Jabatan</td>
+                <td style="padding-top:2px; padding-bottom:2px;">:</td>
+                <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penerima->position ?? '-' }}</td>
             </tr>
             <tr>
-            <td style="padding-top:2px; padding-bottom:2px;">Nama Instansi</td>
-            <td style="padding-top:2px; padding-bottom:2px;">:</td>
-            <td style="padding-top:2px; padding-bottom:2px;">{{$kepsek->school}}</td>
+                <td style="padding-top:2px; padding-bottom:2px;">Nama Instansi</td>
+                <td style="padding-top:2px; padding-bottom:2px;">:</td>
+                <td style="padding-top:2px; padding-bottom:2px;">{{ $kepsek->school }}</td>
             </tr>
             <tr>
-            <td style="padding-top:2px; padding-bottom:2px;">Alamat</td>
-            <td style="padding-top:2px; padding-bottom:2px;">:</td>
-            <td style="padding-top:2px; padding-bottom:2px;">{{ $kepsek->address ?? '-' }}</td>
+                <td style="padding-top:2px; padding-bottom:2px;">Alamat</td>
+                <td style="padding-top:2px; padding-bottom:2px;">:</td>
+                <td style="padding-top:2px; padding-bottom:2px;">{{ $kepsek->address ?? '-' }}</td>
             </tr>
             <tr>
-            <td colspan="3" style="padding-top:2px; padding-bottom:2px;">Sebagai pihak yang menerima, selanjutnya disebut PIHAK KEDUA</td>
+                <td colspan="3" style="padding-top:2px; padding-bottom:2px;">Sebagai pihak yang menerima,
+                    selanjutnya disebut PIHAK KEDUA</td>
             </tr>
         </table>
 
@@ -857,7 +862,8 @@
                         <td>
                             <div style="display: flex; justify-content: center;">
                                 <div style="text-align: left; vertical-align: bottom; margin-top: 70px;">
-                                    <strong style="text-decoration:underline;">{{ $kepsek->name ?? '-' }}</strong><br>
+                                    <strong
+                                        style="text-decoration:underline;">{{ $pesanan->kepsek->name ?? '-' }}</strong><br>
                                     NIP. {{ $kepsek->nip ?? '-' }}
                                 </div>
                             </div>
@@ -921,12 +927,12 @@
                             <tr>
                                 <td style="padding:0;">Nama Lengkap</td>
                                 <td style="padding:0;">:&nbsp;</td>
-                                <td style="padding:0;" class="break-cell">{{ $kepsek->name }}</td>
+                                <td style="padding:0;" class="break-cell">{{ $pesanan->kepsek->name }}</td>
                             </tr>
                             <tr>
                                 <td style="padding:0;">Nama Perusahaan</td>
                                 <td style="padding:0;">:</td>
-                                <td style="padding:0;" class="break-cell">{{$kepsek->school}}</td>
+                                <td style="padding:0;" class="break-cell">{{ $kepsek->school }}</td>
                             </tr>
                             <tr>
                                 <td style="padding:0;">Alamat Lengkap</td>
@@ -1059,7 +1065,7 @@
                 </td>
             </tr>
         </table>
-        
+
         <div style="width:100%; font-size:18px; margin-top:100px;">
             <em>*) Mohon lakukan pembayaran maksimal 15 hari setelah faktur dikirim</em>
         </div>
