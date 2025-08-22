@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="content container-fluid">
-
         <div class="page-header">
             <div class="row">
                 <div class="col">
@@ -92,6 +91,7 @@
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
+
                                         <div class="col-md-6 mb-2">
                                             <label>Satuan Barang</label>
                                             @php
@@ -99,8 +99,9 @@
                                                 $oldUnit = old("items.$i.unit", $item->unit ?? '');
                                                 $isOtherSelected = !in_array($oldUnit, $units) && !empty($oldUnit);
                                             @endphp
-                                            <select name="items[{{ $i }}][unit]" class="form-control"
-                                                id="satuan-barang">
+                                            <select name="items[{{ $i }}][unit]"
+                                                class="form-control satuan-select" id="satuan-barang-{{ $i }}"
+                                                data-index="{{ $i }}">
                                                 <option value="">-- Pilih Satuan --</option>
                                                 <option value="unit"
                                                     {{ old("items.$i.unit", $item->unit ?? '') == 'unit' ? 'selected' : '' }}>
@@ -133,6 +134,7 @@
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
+
                                         <div class="col-md-6 mb-2">
                                             <label>Total Barang</label>
                                             <div class="input-group">
@@ -145,11 +147,14 @@
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
-                                        <div class="col-md-6 mb-2" id="other-satuan" style="display: none;">
+
+                                        <div class="col-md-6 mb-2 other-satuan" id="other-satuan-{{ $i }}"
+                                            style="display: {{ $isOtherSelected ? 'block' : 'none' }};">
                                             <label>Satuan Lainnya</label>
-                                            <input type="text" class="form-control" name="other"
-                                                value="{{ old("items.$i.unit", $item->unit ?? '') }}">
-                                            @error('other')
+                                            <input type="text" class="form-control"
+                                                name="items[{{ $i }}][other_unit]"
+                                                value="{{ $isOtherSelected ? old("items.$i.unit", $item->unit ?? '') : '' }}">
+                                            @error('items.$i.other_unit')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
