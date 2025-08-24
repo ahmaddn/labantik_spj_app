@@ -8,7 +8,28 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+<style>
+.inovices-card {
+  border: 2px solid #27ffbe; /* stroke hitam tebal */
+}
+.inovices-card.active {
+  background: #27ffbe; /* stroke hitam tebal */
+}
+.inovices-amountt.active{
+ font-weight: 600;
+    font-size: 24px;
+  color: white; /* warna teks putih */
+}
+.inovices-amountt {
+  color: #3d5ee1;
+  font-size: 24px;
+  font-weight: 600;
+  /* warna teks putih */
+}
 
+
+
+</style>
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-12">
@@ -22,8 +43,41 @@
                 </div>
             </div>
         </div>
+<div class="card" style="padding: 20px 20px 0px 20px; margin-bottom: 20px;">
+    <div class="row row-cols-1">
+        <div class="col">
+            <div class="card inovices-card active">
+                <div class="card-body">
+                    <div class="inovices-widget-header">
+                        <span class="fa fa-credit-card fa-2x"></span>
+                        <div class="inovices-dash-count">
+                            <div class="inovices-amountt active">Rp{{ number_format($totals, 0, ',', '.') }}</div>
+                        </div>
+                    </div>
+                    <p class="inovices-all">Semua Transaksi<span>{{ $pesanan->count() }}</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
+    <div class="row row-cols-3">
+        @foreach($kegiatanData as $kegiatan)
+        <div class="col">
+            <div class="card inovices-card">
+                <div class="card-body">
+                    <div class="inovices-widget-header">
+                        <span class="fa fa-credit-card fa-2x"></span>
+                        <div class="inovices-dash-count">
+                            <div class="inovices-amountt">Rp{{ number_format($kegiatan->total_per_kegiatan, 0, ',', '.') }}</div>
+                        </div>
+                    </div>
+                    <p class="inovices-all">{{ $kegiatan->kegiatan->name ?? 'Kegiatan Tidak Diketahui' }}<span>{{ $kegiatan->jumlah_pesanan }}</span></p>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -301,7 +355,7 @@
                                                 Berikut merupakan beberapa perubahan di tanggal ini:</strong>
                                         </p>
                                         <p class="m-t-10">
-                                            1. Menambahkan menu laporan dan fungsinya. <br>
+                                            1. Menambahkan menu riwayat dan fungsinya. <br>
                                         </p>
                                     </li>
                                     <li data-date="02/07/2025">

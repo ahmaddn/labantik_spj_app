@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterUserController;
@@ -11,9 +12,10 @@ use App\Http\Controllers\internal\PenerimaController;
 use App\Http\Controllers\eksternal\KegiatanController;
 use App\Http\Controllers\eksternal\PesananController;
 use App\Http\Controllers\internal\PenyediaController;
-use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PDFWatermarkController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RiwayatController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -30,13 +32,12 @@ Route::get('/login', [LoginUserController::class, 'showLoginForm'])->name('login
 Route::post('/login', [LoginUserController::class, 'login']);
 Route::post('/logout', [LoginUserController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
+
 Route::get('/template', function () {
     return view('template');
 })->middleware('auth')->name('template');
 
+// Internal
 Route::prefix('internal')->name('internal.')->middleware('auth')->group(function () {
     //Route Kepsek
     Route::resource('kepsek', KepsekController::class)->except(['show']);
@@ -73,6 +74,7 @@ Route::prefix('internal')->name('internal.')->middleware('auth')->group(function
     Route::delete('/penyedia/delete/{id}', [PenyediaController::class, 'deletePenyedia'])->name('penyedia.destroy');
 });
 
+// Eksternal
 Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(function () {
     Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
     Route::get('/add', [KegiatanController::class, 'add'])->name('kegiatan.add');
@@ -86,6 +88,7 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::get('/pesanan/addForm', [PesananController::class, 'addForm'])->name('pesanan.addForm');
     Route::post('/pesanan/session', [PesananController::class, 'session'])->name('pesanan.session');
     Route::post('/pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
+    Route::put('/pesanan/saveTotal/{id}', [PesananController::class, 'saveTotal'])->name('pesanan.saveTotal');
     Route::get('/pesanan/edit/{id}', [PesananController::class, 'edit'])->name('pesanan.edit');
     Route::post('/pesanan/edit/barang', [PesananController::class, 'editBarang'])->name('pesanan.editBarang');
     Route::put('/pesanan/update/{id}', [PesananController::class, 'update'])->name('pesanan.update');
@@ -93,17 +96,25 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::get('/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
 });
 
-
-
-Route::match(['GET', 'POST'], '/riwayat', [LaporanController::class, 'index'])->middleware('auth')->name('riwayat');
-
 Route::middleware(['auth'])->group(function () {
+    // Profile
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/dashboard', [PesananController::class, 'dashboard'])->name('dashboard');
+
+    // Pengeluaran
+    Route::get('/expenditure', [PengeluaranController::class, 'index'])->name('pengeluaran.index');
+    Route::get('/expenditure/create', [PengeluaranController::class, 'create'])->name('pengeluaran.create');
+    Route::post('/expenditure/store', [PengeluaranController::class, 'store'])->name('pengeluaran.store');
+    Route::get('/expenditure/edit/{id}', [PengeluaranController::class, 'edit'])->name('pengeluaran.edit');
+    Route::put('/expenditure/update/{id}', [PengeluaranController::class, 'update'])->name('pengeluaran.update');
+    Route::delete('/expenditure/delete/{id}', [PengeluaranController::class, 'destroy'])->name('pengeluaran.destroy');
+
+    // Report
+    Route::get('/report', [ReportController::class, 'index'])->name('report.index');
+    Route::get('/report/export-excel', [ReportController::class, 'exportExcel'])->name('report.export');
 });
 
-
-// routes/web.php
-
+Route::match(['GET', 'POST'], '/riwayat', [RiwayatController::class, 'index'])->middleware('auth')->name('riwayat');
 
 Route::get('/watermark', [PDFWatermarkController::class, 'index'])->middleware('auth')->name('watermark');
 Route::post('/upload-pdf', [PDFWatermarkController::class, 'uploadPDF']);

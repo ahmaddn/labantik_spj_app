@@ -22,6 +22,26 @@ class PesananController extends Controller
         $pesanan = Pesanan::with(['kegiatan', 'penyedia', 'penerima', 'barang'])->where('userID', $id)->get();
         return view('eksternal.pesanan.index', compact('pesanan'));
     }
+    public function dashboard()
+    {
+        $id = Auth::id();
+
+        $pesanan = Pesanan::with(['kegiatan', 'penyedia', 'penerima', 'barang'])
+            ->where('userID', $id)
+            ->get();
+
+        $totals = Pesanan::where('userID', $id)->sum('total');
+
+        // Ambil data kegiatan dengan total per kegiatan
+        $kegiatanData = Pesanan::with('kegiatan')
+            ->where('userID', $id)
+            ->select('kegiatanID', DB::raw('SUM(total) as total_per_kegiatan'), DB::raw('COUNT(*) as jumlah_pesanan'))
+            ->groupBy('kegiatanID')
+            ->get();
+
+        return view('dashboard', compact('pesanan', 'totals', 'kegiatanData'));
+    }
+
 
     public function addSession()
     {
@@ -68,7 +88,7 @@ class PesananController extends Controller
             'order_num'   => 'required|unique:pesanan',
             'note_num'   => 'required|unique:pesanan',
             'bast_num'   => 'required|unique:pesanan',
-            'tax'   => 'required',
+            'tax'   => 'required|numeric',
             'shipping_cost'   => 'required',
             'kegiatanID'    => 'required|exists:kegiatan,id',
             'penyediaID'    => 'required|exists:penyedia,id',
@@ -79,7 +99,8 @@ class PesananController extends Controller
             'billing'          => "nullable|date",
             'paid'          => 'required|date|after_or_equal:2025-01-01',
             'prey' => 'required|date',
-            'order_date' => 'required|date'
+            'order_date' => 'required|date',
+            'pic' => 'required|string'
         ]);
 
         session(['data' => $request->except('_token')]);
@@ -106,6 +127,14 @@ class PesananController extends Controller
         try {
             $id = Auth::id();
             $data['userID'] = $id;
+
+            // Simpan persentase pajak untuk perhitungan nanti
+            $taxPercentage = $data['tax'];
+
+            // Buat pesanan dengan total dan tax sementara = 0
+            $data['total'] = 0;
+            $data['tax'] = 0;
+
             $pesanan = Pesanan::create($data);
 
             foreach ($items as $item) {
@@ -119,6 +148,16 @@ class PesananController extends Controller
                     'total' => $item['total'],
                 ]);
             }
+
+            $totalBarang = Barang::where('pesananID', $pesanan->id)->sum('total');
+
+            $calculatedTax = ($totalBarang * $taxPercentage) / 100;
+
+            $pesanan->update([
+                'total' => $totalBarang,
+                'tax' => $calculatedTax
+            ]);
+
             DB::commit();
             session()->forget('step1_data');
             return redirect()->route('eksternal.pesanan.index')
@@ -128,6 +167,22 @@ class PesananController extends Controller
             return back()->withErrors(['error' => 'Gagal menyimpanan pesanan: ' . $e->getMessage()])->withInput();
         }
     }
+
+    public function saveTotal(Request $request, $id)
+    {
+        $request->validate([
+            'profit' => 'required|numeric'
+        ]);
+
+        $pesanan = Pesanan::findOrFail($id);
+        $pesanan->update([
+            'profit' => $request->profit
+        ]);
+
+        return redirect()->route('eksternal.pesanan.index')
+            ->with('success', 'Data Pesanan (Total) berhasil ditambahkan.');
+    }
+
 
     public function delete($id)
     {
@@ -149,10 +204,21 @@ class PesananController extends Controller
         $bendahara = Bendahara::where('userID', $userID)->get();
         $kepsek = Kepsek::where('userID', $userID)->get();
 
+        $totalBarang = $pesanan->barang->sum('total');
+        $taxPercentage = 0;
+
+        if ($totalBarang > 0 && $pesanan->tax > 0) {
+            $taxPercentage = ($pesanan->tax / $totalBarang) * 100;
+        }
+
         session([
-            'edit_pesanan' => array_merge($pesanan->toArray(), ['type_num' => $pesanan->type_num]),
+            'edit_pesanan' => array_merge($pesanan->toArray(), [
+                'type_num' => $pesanan->type_num,
+                'tax_percentage' => $taxPercentage // Simpan persentase pajak
+            ]),
             'edit_barang' => $pesanan->barang,
         ]);
+
         return view('eksternal.pesanan.edit', compact('pesanan', 'kegiatan', 'penyedia', 'penerima', 'bendahara', 'kepsek'));
     }
 
@@ -177,10 +243,11 @@ class PesananController extends Controller
             'billing'          => "nullable|date",
             'paid'          => "required|date|after_or_equal:$kegiatan->order",
             'prey' => 'required|date',
-            'order_date' => 'required|date'
+            'order_date' => 'required|date',
+            'pic' => 'required|date'
         ]);
-        session(['data_editPesanan' => $validated]);
 
+        session(['data_editPesanan' => $validated]);
 
         $pesanan = session('edit_pesanan');
         $pesanan = (object) array_merge((array) $pesanan, ['type_num' => $validated['type_num']]);
@@ -192,7 +259,6 @@ class PesananController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $editPesanan = session('data_editPesanan');
         if (!$editPesanan) {
             return back()->withErrors(['error' => 'Data pesanan tidak ditemukan di session.'])->withInput();
@@ -201,6 +267,12 @@ class PesananController extends Controller
 
         DB::transaction(function () use ($editPesanan, $items, $id) {
             $pesanan = Pesanan::with('barang')->findOrFail($id);
+
+            $taxPercentage = $editPesanan['tax'];
+
+            $editPesanan['total'] = 0;
+            $editPesanan['tax'] = 0;
+
             $pesanan->update($editPesanan);
 
             $existingIds = $pesanan->barang->pluck('id')->toArray();
@@ -208,7 +280,6 @@ class PesananController extends Controller
 
             foreach ($items as $item) {
                 if (isset($item['id'])) {
-
                     $barang = $pesanan->barang()->where('id', $item['id'])->first();
 
                     if ($barang) {
@@ -222,7 +293,8 @@ class PesananController extends Controller
                         $incomingIds[] = $item['id'];
                     }
                 } else {
-                    $pesanan->barang()->create([
+                    Barang::create([
+                        'pesananID' => $pesanan->id,
                         'userID' => $pesanan->userID,
                         'name' => $item['name'],
                         'price' => $item['price'],
@@ -235,6 +307,15 @@ class PesananController extends Controller
 
             $barangToDelete = array_diff($existingIds, $incomingIds);
             Barang::whereIn('id', $barangToDelete)->delete();
+
+            $totalBarang = Barang::where('pesananID', $pesanan->id)->sum('total');
+
+            $calculatedTax = ($totalBarang * $taxPercentage) / 100;
+
+            $pesanan->update([
+                'total' => $totalBarang,
+                'tax' => $calculatedTax
+            ]);
         });
 
         session()->forget(['edit_pesanan', 'edit_barang', 'data_editPesanan']);
@@ -242,14 +323,13 @@ class PesananController extends Controller
         return redirect()->route('eksternal.pesanan.index')
             ->with('success', 'Data Pesanan berhasil diperbarui.');
     }
-    // PesananController.php
+
     public function export($id)
     {
         $userID = Auth::id();
         $pesanan = Pesanan::with(['barang', 'penyedia', 'bendahara'])->findOrFail($id);
         // return response()->json($pesanan);
         $kepsek = Kepsek::where('userID', $userID)->first(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
-
 
         return view('template', compact('pesanan', 'kepsek'));
     }

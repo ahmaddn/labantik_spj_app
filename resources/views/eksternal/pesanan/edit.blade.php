@@ -203,9 +203,10 @@
                             <div class="form-group">
                                 <label>Pajak</label>
                                 <div class="input-group">
-                                    <span class="input-group-text">Rp.</span>
-                                    <input type="number" name="tax" class="form-control"
-                                        value="{{ old('tax', $pesanan->tax) }}">
+                                    <input type="number" name="tax" class="form-control" step="0.01"
+                                        min="0" max="100"
+                                        value="{{ old('tax', session('edit_pesanan.tax_percentage', 0)) }}">
+                                    <span class="input-group-text">%</span>
                                 </div>
                                 @error('tax')
                                     <small class="text-danger">{{ $message }}</small>
@@ -219,6 +220,14 @@
                                         value="{{ old('shipping_cost', $pesanan->shipping_cost) }}">
                                 </div>
                                 @error('shipping_cost')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Penanggung Jawab (PIC)</label>
+                                <input type="text" name="pic" class="form-control"
+                                    value="{{ old('pic', $pesanan->pic) }}">
+                                @error('pic')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
