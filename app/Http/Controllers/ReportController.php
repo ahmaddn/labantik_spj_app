@@ -70,7 +70,7 @@ class ReportController extends Controller
                 'date' => $p->order_date,
                 'type' => 'income',
                 'project_name' => $p->kegiatan->name ?? '',
-                'responsible_person' => $p->penerima->name ?? '',
+                'responsible_person' => $p->pic ?? '',
                 'nominal' => $p->total,
                 'expense' => 0,
                 'profit' => $p->profit,
