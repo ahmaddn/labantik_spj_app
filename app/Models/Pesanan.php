@@ -34,11 +34,14 @@ class Pesanan extends Model
         'kepsekID',
         'order_date',
         'prey',
+        'total',
+        'profit',
         'paid',
         'status',
         'condition',
         'accepted',
-        'billing'
+        'billing',
+        'pic'
     ];
 
 
@@ -70,4 +73,10 @@ class Pesanan extends Model
     {
         return $this->belongsTo(Kepsek::class, 'kepsekID', 'id');
     }
+
+    protected $casts = [
+        'total' => 'decimal:2',
+        'keuntungan' => 'decimal:2',
+        'created_at' => 'datetime',
+    ];
 }

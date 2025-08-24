@@ -48,8 +48,10 @@ return new class extends Migration
             $table->string('note_num');
             $table->string('bast_num');
             $table->integer('type_num');
-            $table->integer('tax');
-            $table->integer('shipping_cost');
+            $table->integer('tax')->nullable();
+            $table->integer('shipping_cost')->nullable();
+            $table->integer('profit')->nullable();
+            $table->integer('total')->nullable();
             $table->unsignedInteger('kegiatanID');
             $table->unsignedInteger('penyediaID');
             $table->unsignedInteger('penerimaID');
@@ -60,6 +62,7 @@ return new class extends Migration
             $table->date('paid');
             $table->date('billing')->nullable();
             $table->date('accepted');
+            $table->string('pic');
             $table->softDeletes();
             $table->timestamps();
 

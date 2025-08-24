@@ -67,6 +67,10 @@
 
                                                 <td>{{ \Carbon\Carbon::parse($item->paid)->translatedFormat('d F Y') }}</td>
                                                 <td class="px-4 py-2">
+                                                    <button type="button" class="btn btn-sm btn-outline-success"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#centermodal-{{ $item->id }}"><i
+                                                            class="fas fa-money-bill"></i></button>
                                                     <a href="{{ route('eksternal.pesanan.edit', $item->id) }}"
                                                         class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
                                                     <a href="{{ route('eksternal.pesanan.export', $item->id) }}"
@@ -85,6 +89,60 @@
 
                                                 </td>
                                             </tr>
+                                            <div class="modal fade" id="centermodal-{{ $item->id }}" tabindex="-1"
+                                                role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Pembayaran Pesanan</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <!-- Form dengan ID unik -->
+                                                        <form
+                                                            action="{{ route('eksternal.pesanan.saveTotal', $item->id) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <div class="modal-body">
+                                                                <div class="mb-3">
+                                                                    <label for="totalPesanan_{{ $item->id }}"
+                                                                        class="form-label">Total Pesanan</label>
+                                                                    <input type="number" class="form-control"
+                                                                        id="totalPesanan_{{ $item->id }}"
+                                                                        value="{{ $item->total }}" readonly>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="persenKeuntungan_{{ $item->id }}"
+                                                                        class="form-label">Persen Keuntungan (%)</label>
+                                                                    <input type="number"
+                                                                        class="form-control persen-keuntungan"
+                                                                        id="persenKeuntungan_{{ $item->id }}"
+                                                                        placeholder="Masukkan persen keuntungan"
+                                                                        step="0.01" min="0"
+                                                                        data-item-id="{{ $item->id }}">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="totalKeuntungan_{{ $item->id }}"
+                                                                        class="form-label">Total dengan Keuntungan</label>
+                                                                    <input type="number" class="form-control"
+                                                                        id="totalKeuntungan_{{ $item->id }}"
+                                                                        name="profit"
+                                                                        value="{{ old('profit', $item->profit ?? '') }}"
+                                                                        placeholder="Total akan dihitung otomatis"
+                                                                        min="0">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Tutup</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-success">Simpan</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endforeach
                                         @if ($pesanan->isEmpty())
                                             <tr>

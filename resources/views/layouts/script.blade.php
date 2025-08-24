@@ -2,11 +2,31 @@
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/js/feather.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/timeline/horizontal-timeline.js') }}"></script>
 <script src="{{ asset('assets/plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/twitter-bootstrap-wizard/prettify.js') }}"></script>
 <script src="{{ asset('assets/plugins/twitter-bootstrap-wizard/form-wizard.js') }}"></script>
 <script src="{{ asset('assets/js/script.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Event listener untuk semua input dengan class 'persen-keuntungan'
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('persen-keuntungan')) {
+                const itemId = e.target.getAttribute('data-item-id');
+                const totalPesanan = document.getElementById('totalPesanan_' + itemId);
+                const totalKeuntungan = document.getElementById('totalKeuntungan_' + itemId);
+
+                if (totalPesanan && totalKeuntungan) {
+                    const total = parseFloat(totalPesanan.value) || 0;
+                    const persen = parseFloat(e.target.value) || 0;
+                    totalKeuntungan.value = Math.round(total * persen / 100);
+                }
+            }
+        });
+    });
+</script>
 <script>
     document.addEventListener('input', function() {
         const rows = document.querySelectorAll('.row.mb-3.pb-3');

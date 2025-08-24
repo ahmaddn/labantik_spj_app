@@ -33,11 +33,21 @@
                                 class="{{ Route::is('eksternal.pesanan.index') ? 'active' : '' }}">Pesanan</a></li>
                     </ul>
                 </li>
+                <li class="{{ Route::is('pengeluaran.index') ? 'active' : '' }}">
+                    <a href="{{ route('pengeluaran.index') }}"
+                        class="{{ Route::is('pengeluaran.index') ? 'active' : '' }}">
+                        <i class="fas fa-money-bill"></i> <span>Pengeluaran</span>
+                    </a>
+                </li>
+                <li class="{{ Route::is('report.index') ? 'active' : '' }}">
+                    <a href="{{ route('report.index') }}" class="{{ Route::is('report.index') ? 'active' : '' }}">
+                        <i class="fas fa-file-excel"></i> <span> Laporan</span>
+                    </a>
+                </li>
                 <li class="{{ Route::is('riwayat') ? 'active' : '' }}">
                     <a href="{{ route('riwayat') }}" class="{{ Route::is('riwayat') ? 'active' : '' }}">
                         <i class="fas fa-clock"></i> <span> Riwayat</span>
                     </a>
-
                 </li>
                 <li class="{{ Route::is('watermark') ? 'active' : '' }}">
                     <a href="{{ route('watermark') }}" class="{{ Route::is('watermark') ? 'active' : '' }}">

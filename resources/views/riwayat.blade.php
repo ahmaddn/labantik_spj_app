@@ -73,11 +73,11 @@
                                     <thead>
                                         <tr class="bg-gray-200 text-gray-700">
                                             <th>No</th>
+                                            <th>Tanggal Pesanan</th>
+                                            <th>Tanggal Bayar</th>
                                             <th>Kegiatan</th>
                                             <th>Penyedia</th>
                                             <th>Penerima</th>
-                                            <th>Barang</th>
-                                            <th>Tanggal Bayar</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -85,11 +85,13 @@
                                         @forelse ($data as $key => $item)
                                             <tr class="border-b">
                                                 <td>{{ $key + 1 }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($item->order_date)->translatedFormat('d F Y') }}
+                                                </td>
+                                                <td>{{ \Carbon\Carbon::parse($item->paid)->translatedFormat('d F Y') }}
+                                                </td>
                                                 <td>{{ $item->kegiatan->name }}</td>
                                                 <td>{{ $item->penyedia->company }}</td>
                                                 <td>{{ $item->penerima->name }}</td>
-                                                <td>{{ $item->barang->pluck('name')->join(' | ') ?? '-' }}</td>
-                                                <td>{{ $item->paid }}</td>
                                                 <td> <a href="{{ route('eksternal.pesanan.export', $item->id) }}"
                                                         class="btn btn-sm btn-outline-primary" target="_blank">
                                                         <i class="fas fa-print"></i>
@@ -98,7 +100,7 @@
                                         @empty
                                             <tr>
                                                 <td colspan="7" class="text-center py-4 text-gray-500">Tidak ada
-                                                    data laporan.</td>
+                                                    data riwayat.</td>
                                             </tr>
                                         @endforelse
 

@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LaporanController extends Controller
+class RiwayatController extends Controller
 {
     public function index(Request $request)
     {
@@ -38,6 +38,6 @@ class LaporanController extends Controller
 
         $data = $query->get();
 
-        return view('laporan', compact('data', 'kategori', 'tanggal', 'list_tahun'));
+        return view('riwayat', compact('data', 'kategori', 'tanggal', 'list_tahun'));
     }
 }

@@ -12,6 +12,7 @@
         "laravel-lang/lang": "^15.22",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
+        "phpoffice/phpspreadsheet": "^5.0",
         "setasign/fpdf": "^1.8",
         "setasign/fpdi": "^2.6",
         "setasign/fpdi-tcpdf": "^2.3",
