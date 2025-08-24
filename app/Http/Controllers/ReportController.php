@@ -134,7 +134,7 @@ class ReportController extends Controller
             $sheet->setCellValue('A' . $row, $index + 1);
 
             // Format tanggal menggunakan Carbon dengan translatedFormat
-            $dateFormatted = \Carbon\Carbon::parse($transaction['date'])->translatedFormat('d F Y');
+            $dateFormatted = Carbon::parse($transaction['date'])->translatedFormat('d F Y');
             $sheet->setCellValue('B' . $row, $dateFormatted);
 
             $sheet->setCellValue('C' . $row, $transaction['project_name']);
@@ -168,9 +168,6 @@ class ReportController extends Controller
             // Beri jarak 2 baris kosong antara tabel utama dan tabel summary
             $summaryStartRow = $row + 2;
 
-            // Header untuk tabel summary
-            $sheet->setCellValue('A' . $summaryStartRow, 'RINGKASAN KEUANGAN');
-            $sheet->mergeCells('A' . $summaryStartRow . ':C' . $summaryStartRow);
             $sheet->getStyle('A' . $summaryStartRow)->getFont()->setBold(true)->setSize(12);
             $sheet->getStyle('A' . $summaryStartRow)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('A' . $summaryStartRow . ':C' . $summaryStartRow)->getFill()->setFillType(Fill::FILL_SOLID)
