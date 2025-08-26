@@ -88,7 +88,7 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::get('/pesanan/addForm', [PesananController::class, 'addForm'])->name('pesanan.addForm');
     Route::post('/pesanan/session', [PesananController::class, 'session'])->name('pesanan.session');
     Route::post('/pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
-    Route::put('/pesanan/saveTotal/{id}', [PesananController::class, 'saveTotal'])->name('pesanan.saveTotal');
+    Route::put('/pesanan/saveProfit/{id}', [PesananController::class, 'saveProfit'])->name('pesanan.saveProfit');
     Route::get('/pesanan/edit/{id}', [PesananController::class, 'edit'])->name('pesanan.edit');
     Route::post('/pesanan/edit/barang', [PesananController::class, 'editBarang'])->name('pesanan.editBarang');
     Route::put('/pesanan/update/{id}', [PesananController::class, 'update'])->name('pesanan.update');

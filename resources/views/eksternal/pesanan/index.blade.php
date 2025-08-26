@@ -184,7 +184,7 @@
                                                         </div>
                                                         <!-- Form dengan ID unik -->
                                                         <form
-                                                            action="{{ route('eksternal.pesanan.saveTotal', $item->id) }}"
+                                                            action="{{ route('eksternal.pesanan.saveProfit', $item->id) }}"
                                                             method="post">
                                                             @csrf
                                                             @method('PUT')

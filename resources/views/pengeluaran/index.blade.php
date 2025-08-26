@@ -60,7 +60,7 @@
                                                 <td>{{ \Carbon\Carbon::parse($data->date)->translatedFormat('d F Y') }}</td>
                                                 <td>{{ $data->type }}</td>
                                                 <td>{{ $data->qty }}</td>
-                                                <td>{{ $data->nominal }}</td>
+                                                <td>Rp. {{ number_format($data->nominal, 0, ',', '.') }}</td>
                                                 <td>{{ $data->pic }}</td>
                                                 <td><a href="{{ route('pengeluaran.edit', $data->id) }}"
                                                         class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>

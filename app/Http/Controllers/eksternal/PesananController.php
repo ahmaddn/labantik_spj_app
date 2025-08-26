@@ -89,7 +89,7 @@ class PesananController extends Controller
             return back()->withErrors(['error', 'Data Kegiatan Tidak Ditemukan!'])->withInput();
         }
         $request->validate([
-            'invoice_num'   => 'required|unique:pesanan',
+            'invoice_num'   => 'required|unique:pesanan|',
             'order_num'   => 'required|unique:pesanan',
             'note_num'   => 'required|unique:pesanan',
             'bast_num'   => 'required|unique:pesanan',
@@ -102,7 +102,7 @@ class PesananController extends Controller
             'kepsekID'   => 'required|exists:kepsek,id',
             'accepted'          => "required|date|after_or_equal:$kegiatan->order",
             'billing'          => "nullable|date",
-            'paid'          => 'required|date|after_or_equal:2025-01-01',
+            'paid'          => "required|date|before_or_equal:$kegiatan->deadline",
             'prey' => 'required|date',
             'order_date' => 'required|date',
             'pic' => 'required|string'
@@ -359,7 +359,7 @@ class PesananController extends Controller
         }
     }
 
-    public function saveTotal(Request $request, $id)
+    public function saveProfit(Request $request, $id)
     {
         $request->validate([
             'profit' => 'required|numeric'
@@ -371,7 +371,7 @@ class PesananController extends Controller
         ]);
 
         return redirect()->route('eksternal.pesanan.index')
-            ->with('success', 'Data Pesanan (Total) berhasil ditambahkan.');
+            ->with('success', 'Data Pesanan ( Keuntungan ) berhasil ditambahkan.');
     }
 
     public function delete($id)
