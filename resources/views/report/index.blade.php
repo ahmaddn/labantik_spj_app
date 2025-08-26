@@ -128,7 +128,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ date('d M Y', strtotime($data->order_date)) }}</td>
-                                            <td>{{ $data->kegiatan->name }}</td>
+                                            <td>{{ $data->kegiatan->name ?? '-' }}</td>
                                             <td>{{ $data->penerima->name ?? '-' }}</td>
                                             <td>{{ 'Rp ' . number_format($data->total, 0, ',', '.') }}</td>
                                             <td>{{ 'Rp ' . number_format($data->profit, 0, ',', '.') }}</td>

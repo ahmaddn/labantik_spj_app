@@ -92,6 +92,7 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::get('/pesanan/edit/{id}', [PesananController::class, 'edit'])->name('pesanan.edit');
     Route::post('/pesanan/edit/barang', [PesananController::class, 'editBarang'])->name('pesanan.editBarang');
     Route::put('/pesanan/update/{id}', [PesananController::class, 'update'])->name('pesanan.update');
+    Route::post('/pesanan/import', [PesananController::class, 'import'])->name('pesanan.import');
     Route::delete('/pesanan/delete/{id}', [PesananController::class, 'delete'])->name('pesanan.delete');
     Route::get('/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
 });
