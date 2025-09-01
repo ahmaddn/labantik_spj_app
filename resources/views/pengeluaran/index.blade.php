@@ -33,11 +33,17 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title mb-2">Daftar Pengeluaran</h5>
-                            <p class="card-text">
-                                Ini adalah daftar pengeluaran yang telah dicatat.
-                            </p>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title mb-2">Daftar Pengeluaran</h5>
+                                <p class="card-text mb-0">
+                                    Ini adalah daftar pengeluaran yang telah tercatat.
+                                </p>
+                            </div>
+                            <div>
+                                Pengeluaran: <span class="badge badge-soft-secondary">Rp.
+                                    {{ number_format($totalPengeluaran, 0, ',', '.') }}</span>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

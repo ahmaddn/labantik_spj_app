@@ -12,7 +12,8 @@ class PengeluaranController extends Controller
     public function index()
     {
         $pengeluaran = Expenditure::all();
-        return view('pengeluaran.index', compact('pengeluaran'));
+        $totalPengeluaran = $pengeluaran->sum('nominal');
+        return view('pengeluaran.index', compact('pengeluaran', 'totalPengeluaran'));
     }
 
     public function create()

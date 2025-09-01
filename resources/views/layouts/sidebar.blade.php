@@ -55,7 +55,12 @@
                     </a>
 
                 </li>
+                <li class="{{ Route::is('about') ? 'active' : '' }}">
+                    <a href="{{ route('about') }}" class="{{ Route::is('about') ? 'active' : '' }}">
+                        <i class="fas fa-user-tie"></i><span> About Developer</span>
+                    </a>
 
+                </li>
             </ul>
         </div>
     </div>

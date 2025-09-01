@@ -8,28 +8,31 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-<style>
-.inovices-card {
-  border: 2px solid #27ffbe; /* stroke hitam tebal */
-}
-.inovices-card.active {
-  background: #27ffbe; /* stroke hitam tebal */
-}
-.inovices-amountt.active{
- font-weight: 600;
-    font-size: 24px;
-  color: white; /* warna teks putih */
-}
-.inovices-amountt {
-  color: #3d5ee1;
-  font-size: 24px;
-  font-weight: 600;
-  /* warna teks putih */
-}
+        <style>
+            .inovices-card {
+                border: 2px solid #27ffbe;
+                /* stroke hitam tebal */
+            }
 
+            .inovices-card.active {
+                background: #27ffbe;
+                /* stroke hitam tebal */
+            }
 
+            .inovices-amountt.active {
+                font-weight: 600;
+                font-size: 24px;
+                color: white;
+                /* warna teks putih */
+            }
 
-</style>
+            .inovices-amountt {
+                color: #3d5ee1;
+                font-size: 24px;
+                font-weight: 600;
+                /* warna teks putih */
+            }
+        </style>
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-12">
@@ -43,41 +46,86 @@
                 </div>
             </div>
         </div>
-<div class="card" style="padding: 20px 20px 0px 20px; margin-bottom: 20px;">
-    <div class="row row-cols-1">
-        <div class="col">
-            <div class="card inovices-card active">
-                <div class="card-body">
-                    <div class="inovices-widget-header">
-                        <span class="fa fa-credit-card fa-2x"></span>
-                        <div class="inovices-dash-count">
-                            <div class="inovices-amountt active">Rp{{ number_format($totals, 0, ',', '.') }}</div>
+        <div class="card" style="padding: 20px 20px 0px 20px; margin-bottom: 20px;">
+            <div class="row row-cols-1">
+                <div class="col">
+                    <div class="card inovices-card active">
+                        <div class="card-body">
+                            <div class="inovices-widget-header">
+                                <span class="fa fa-credit-card fa-2x"></span>
+                                <div class="inovices-dash-count">
+                                    <div class="inovices-amountt active">Rp{{ number_format($totals, 0, ',', '.') }}</div>
+                                </div>
+                            </div>
+                            <p class="inovices-all">Semua Transaksi<span>{{ $pesanan->count() }}</span></p>
                         </div>
                     </div>
-                    <p class="inovices-all">Semua Transaksi<span>{{ $pesanan->count() }}</span></p>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="row row-cols-1">
+                <div class="col">
+                    <div class="card inovices-card active">
+                        <div class="card-body">
+                            <div class="inovices-widget-header">
+                                <span class="fa fa-credit-card fa-2x"></span>
+                                <div class="inovices-dash-count">
+                                    <div class="inovices-amountt active">Rp{{ number_format($totalkeuntungan, 0, ',', '.') }}</div>
+                                </div>
+                            </div>
+                            <p class="inovices-all">Total Keuntungan<span>{{ $pesanan->count() }}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-1">
+                <div class="col">
+                    <div class="card inovices-card active">
+                        <div class="card-body">
+                            <div class="inovices-widget-header">
+                                <span class="fa fa-credit-card fa-2x"></span>
+                                <div class="inovices-dash-count">
+                                    <div class="inovices-amountt active">Rp{{ number_format($totalpengeluaran, 0, ',', '.') }}</div>
+                                </div>
+                            </div>
+                            <p class="inovices-all">Total Pengeluaran<span>{{ $pesanan->count() }}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <div class="row row-cols-3">
-        @foreach($kegiatanData as $kegiatan)
-        <div class="col">
-            <div class="card inovices-card">
-                <div class="card-body">
-                    <div class="inovices-widget-header">
-                        <span class="fa fa-credit-card fa-2x"></span>
-                        <div class="inovices-dash-count">
-                            <div class="inovices-amountt">Rp{{ number_format($kegiatan->total_per_kegiatan, 0, ',', '.') }}</div>
+            <div class="col-">
+                <p>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Daftar Total Pengeluaran per Kegiatan
+                    </button>
+                </p>
+                <div class="collapse show" id="collapseExample">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="datatable table table-stripped">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Kegiatan</th>
+                                        <th>Total per Kegiatan</th>
+                                        <th>Keuntungan per Kegiatan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($kegiatanData as $kegiatan)
+                                        <tr>
+                                            <td>{{ $kegiatan->kegiatan->name ?? 'Kegiatan Tidak Diketahui' }}</td>
+                                            <td>Rp{{ number_format($kegiatan->total_per_kegiatan, 0, ',', '.') }}</td>
+                                            <td>Rp{{ number_format($kegiatan->keuntungan_per_kegiatan, 0, ',', '.') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <p class="inovices-all">{{ $kegiatan->kegiatan->name ?? 'Kegiatan Tidak Diketahui' }}<span>{{ $kegiatan->jumlah_pesanan }}</span></p>
                 </div>
             </div>
         </div>
-        @endforeach
-    </div>
-</div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">

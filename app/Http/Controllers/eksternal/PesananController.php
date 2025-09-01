@@ -11,6 +11,7 @@ use App\Models\Penerima;
 use App\Models\Barang;
 use App\Models\Bendahara;
 use App\Models\Kepsek;
+use App\Models\Expenditure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -37,15 +38,17 @@ class PesananController extends Controller
             ->get();
 
         $totals = Pesanan::where('userID', $id)->sum('total');
+        $totalkeuntungan = Pesanan::where('userID', $id)->sum('profit');
+$totalpengeluaran = Expenditure::sum('nominal');
 
         // Ambil data kegiatan dengan total per kegiatan
         $kegiatanData = Pesanan::with('kegiatan')
             ->where('userID', $id)
-            ->select('kegiatanID', DB::raw('SUM(total) as total_per_kegiatan'), DB::raw('COUNT(*) as jumlah_pesanan'))
+            ->select('kegiatanID', DB::raw('SUM(total) as total_per_kegiatan'), DB::raw('SUM(profit) as keuntungan_per_kegiatan'), DB::raw('COUNT(*) as jumlah_pesanan'))
             ->groupBy('kegiatanID')
             ->get();
 
-        return view('dashboard', compact('pesanan', 'totals', 'kegiatanData'));
+        return view('dashboard', compact('pesanan', 'totals', 'kegiatanData', 'totalkeuntungan', 'totalpengeluaran'));
     }
 
     public function addSession()

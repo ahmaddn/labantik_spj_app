@@ -113,6 +113,10 @@ Route::middleware(['auth'])->group(function () {
     // Report
     Route::get('/report', [ReportController::class, 'index'])->name('report.index');
     Route::get('/report/export-excel', [ReportController::class, 'exportExcel'])->name('report.export');
+    Route::get('/report/data-excel', [ReportController::class, 'dataExcel'])->name('report.excel');
+    Route::get('/about', function () {
+        return view('about');
+    })->name('about');
 });
 
 Route::match(['GET', 'POST'], '/riwayat', [RiwayatController::class, 'index'])->middleware('auth')->name('riwayat');
@@ -122,5 +126,6 @@ Route::post('/upload-pdf', [PDFWatermarkController::class, 'uploadPDF']);
 Route::post('/upload-watermark', [PDFWatermarkController::class, 'uploadWatermark']);
 Route::post('/apply-watermark', [PDFWatermarkController::class, 'applyWatermark']);
 Route::get('/download/{filename}', [PDFWatermarkController::class, 'download']);
+
 // resources/views/pdf/watermark.blade.php
 // Copy the HTML content from the second artifact and save it as watermark.blade.php
