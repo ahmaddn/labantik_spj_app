@@ -88,10 +88,11 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::get('/pesanan/addForm', [PesananController::class, 'addForm'])->name('pesanan.addForm');
     Route::post('/pesanan/session', [PesananController::class, 'session'])->name('pesanan.session');
     Route::post('/pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
-    Route::put('/pesanan/saveTotal/{id}', [PesananController::class, 'saveTotal'])->name('pesanan.saveTotal');
+    Route::put('/pesanan/saveProfit/{id}', [PesananController::class, 'saveProfit'])->name('pesanan.saveProfit');
     Route::get('/pesanan/edit/{id}', [PesananController::class, 'edit'])->name('pesanan.edit');
     Route::post('/pesanan/edit/barang', [PesananController::class, 'editBarang'])->name('pesanan.editBarang');
     Route::put('/pesanan/update/{id}', [PesananController::class, 'update'])->name('pesanan.update');
+    Route::post('/pesanan/import', [PesananController::class, 'import'])->name('pesanan.import');
     Route::delete('/pesanan/delete/{id}', [PesananController::class, 'delete'])->name('pesanan.delete');
     Route::get('/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
 });
@@ -112,6 +113,10 @@ Route::middleware(['auth'])->group(function () {
     // Report
     Route::get('/report', [ReportController::class, 'index'])->name('report.index');
     Route::get('/report/export-excel', [ReportController::class, 'exportExcel'])->name('report.export');
+    Route::get('/report/data-excel', [ReportController::class, 'dataExcel'])->name('report.excel');
+    Route::get('/about', function () {
+        return view('about');
+    })->name('about');
 });
 
 Route::match(['GET', 'POST'], '/riwayat', [RiwayatController::class, 'index'])->middleware('auth')->name('riwayat');
@@ -121,5 +126,6 @@ Route::post('/upload-pdf', [PDFWatermarkController::class, 'uploadPDF']);
 Route::post('/upload-watermark', [PDFWatermarkController::class, 'uploadWatermark']);
 Route::post('/apply-watermark', [PDFWatermarkController::class, 'applyWatermark']);
 Route::get('/download/{filename}', [PDFWatermarkController::class, 'download']);
+
 // resources/views/pdf/watermark.blade.php
 // Copy the HTML content from the second artifact and save it as watermark.blade.php

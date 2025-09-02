@@ -47,8 +47,13 @@
                                 </a>
                                 <!-- Export Button dengan ID untuk update dinamis -->
                                 <a href="{{ route('report.export') }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}"
-                                    id="exportLink" class="btn btn-success">
-                                    <i class="fas fa-file-excel"></i> Export Excel
+                                    id="exportLink" class="btn btn-success me-3">
+                                    <i class="fas
+                                    fa-file-excel"></i> Export Excel
+                                </a>
+                                <a href="{{ route('report.excel') }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}"
+                                    id="exportLink" class="btn btn-dark" target="_blank">
+                                    <i class="fas fa-file-excel"></i> Data Excel
                                 </a>
                             </div>
                         </div>
@@ -103,6 +108,10 @@
                                 .
                             </p>
                         </div>
+                        <div>
+                            Keuntungan: <span class="badge badge-soft-secondary">Rp.
+                                {{ number_format($totalKeuntungan, 0, ',', '.') }}</span>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -128,7 +137,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ date('d M Y', strtotime($data->order_date)) }}</td>
-                                            <td>{{ $data->kegiatan->name }}</td>
+                                            <td>{{ $data->kegiatan->name ?? '-' }}</td>
                                             <td>{{ $data->penerima->name ?? '-' }}</td>
                                             <td>{{ 'Rp ' . number_format($data->total, 0, ',', '.') }}</td>
                                             <td>{{ 'Rp ' . number_format($data->profit, 0, ',', '.') }}</td>

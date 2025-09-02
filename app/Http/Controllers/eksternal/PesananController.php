@@ -11,8 +11,14 @@ use App\Models\Penerima;
 use App\Models\Barang;
 use App\Models\Bendahara;
 use App\Models\Kepsek;
+use App\Models\Expenditure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use App\Imports\BarangImport;
+use Illuminate\Support\Facades\Log;
 
 class PesananController extends Controller
 {
@@ -22,6 +28,7 @@ class PesananController extends Controller
         $pesanan = Pesanan::with(['kegiatan', 'penyedia', 'penerima', 'barang'])->where('userID', $id)->get();
         return view('eksternal.pesanan.index', compact('pesanan'));
     }
+
     public function dashboard()
     {
         $id = Auth::id();
@@ -31,17 +38,18 @@ class PesananController extends Controller
             ->get();
 
         $totals = Pesanan::where('userID', $id)->sum('total');
+        $totalkeuntungan = Pesanan::where('userID', $id)->sum('profit');
+$totalpengeluaran = Expenditure::sum('nominal');
 
         // Ambil data kegiatan dengan total per kegiatan
         $kegiatanData = Pesanan::with('kegiatan')
             ->where('userID', $id)
-            ->select('kegiatanID', DB::raw('SUM(total) as total_per_kegiatan'), DB::raw('COUNT(*) as jumlah_pesanan'))
+            ->select('kegiatanID', DB::raw('SUM(total) as total_per_kegiatan'), DB::raw('SUM(profit) as keuntungan_per_kegiatan'), DB::raw('COUNT(*) as jumlah_pesanan'))
             ->groupBy('kegiatanID')
             ->get();
 
-        return view('dashboard', compact('pesanan', 'totals', 'kegiatanData'));
+        return view('dashboard', compact('pesanan', 'totals', 'kegiatanData', 'totalkeuntungan', 'totalpengeluaran'));
     }
-
 
     public function addSession()
     {
@@ -84,7 +92,7 @@ class PesananController extends Controller
             return back()->withErrors(['error', 'Data Kegiatan Tidak Ditemukan!'])->withInput();
         }
         $request->validate([
-            'invoice_num'   => 'required|unique:pesanan',
+            'invoice_num'   => 'required|unique:pesanan|',
             'order_num'   => 'required|unique:pesanan',
             'note_num'   => 'required|unique:pesanan',
             'bast_num'   => 'required|unique:pesanan',
@@ -97,7 +105,7 @@ class PesananController extends Controller
             'kepsekID'   => 'required|exists:kepsek,id',
             'accepted'          => "required|date|after_or_equal:$kegiatan->order",
             'billing'          => "nullable|date",
-            'paid'          => 'required|date|after_or_equal:2025-01-01',
+            'paid'          => "required|date|before_or_equal:$kegiatan->deadline",
             'prey' => 'required|date',
             'order_date' => 'required|date',
             'pic' => 'required|string'
@@ -168,7 +176,193 @@ class PesananController extends Controller
         }
     }
 
-    public function saveTotal(Request $request, $id)
+    public function import(Request $request)
+    {
+        $request->validate([
+            'excel_file' => 'required|file|mimes:xlsx,xls,csv|max:2048'
+        ], [
+            'excel_file.required' => 'File Excel wajib diupload',
+            'excel_file.mimes' => 'Format file harus .xlsx, .xls, atau .csv',
+            'excel_file.max' => 'Ukuran file maksimal 2MB'
+        ]);
+
+        try {
+            $file = $request->file('excel_file');
+            $filePath = $file->getRealPath();
+
+            Log::info('Processing file:', [
+                'originalName' => $file->getClientOriginalName(),
+                'extension' => $file->getClientOriginalExtension(),
+                'mimeType' => $file->getMimeType(),
+                'realPath' => $filePath,
+                'exists' => file_exists($filePath),
+                'size' => file_exists($filePath) ? filesize($filePath) : 0
+            ]);
+
+            if (!file_exists($filePath)) {
+                throw new \Exception('File upload tidak ditemukan di path: ' . $filePath);
+            }
+
+            // Langsung proses tanpa validasi extension di SpreadsheetHelper
+            // karena Laravel sudah validasi di request
+            DB::beginTransaction();
+
+            try {
+                // Load spreadsheet langsung
+                $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile($filePath);
+                $reader->setReadDataOnly(true);
+                $reader->setReadEmptyCells(false);
+
+                $spreadsheet = $reader->load($filePath);
+                $worksheet = $spreadsheet->getActiveSheet();
+
+                $highestRow = $worksheet->getHighestRow();
+                $highestColumn = $worksheet->getHighestColumn();
+
+                if ($highestRow <= 1) {
+                    throw new \Exception('File Excel kosong atau hanya memiliki header');
+                }
+
+                Log::info('Spreadsheet loaded:', [
+                    'rows' => $highestRow,
+                    'columns' => $highestColumn
+                ]);
+
+                // Buat pesanan
+                $userId = Auth::id();
+                $pesanan = Pesanan::create([
+                    'userID' => $userId,
+                    'invoice_num' => 'IMP-' . time() . '-' . rand(1000, 9999),
+                    'order_num' => 'ORD-' . time() . '-' . rand(1000, 9999),
+                    'note_num' => 'NOT-' . time() . '-' . rand(1000, 9999),
+                    'bast_num' => 'BST-' . time() . '-' . rand(1000, 9999),
+                    'type_num' => $highestRow - 1,
+                    'tax' => 0,
+                    'shipping_cost' => 0,
+                    'total' => 0,
+                    'order_date' => \Carbon\Carbon::now(),
+                    'paid' => \Carbon\Carbon::now()->addDays(30),
+                    'accepted' => \Carbon\Carbon::now(),
+                    'prey' => \Carbon\Carbon::now(),
+                    'pic' => 'Import Excel - ' . \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
+                    'kegiatanID' => null,
+                    'penyediaID' => null,
+                    'penerimaID' => null,
+                    'bendaharaID' => null,
+                    'kepsekID' => null,
+                    'billing' => null
+                ]);
+
+                // Deteksi kolom dari header
+                $columnMapping = [];
+                for ($col = 'A'; $col <= $highestColumn; $col++) {
+                    $headerValue = trim($worksheet->getCell($col . '1')->getCalculatedValue());
+                    if (empty($headerValue)) continue;
+
+                    $cleanHeader = strtolower(str_replace([' ', '_', '-', '/', '.'], '', $headerValue));
+
+                    if (in_array($cleanHeader, ['namabarang', 'nama', 'barang', 'item', 'produk'])) {
+                        $columnMapping['nama'] = $col;
+                    } elseif (in_array($cleanHeader, ['qty', 'quantity', 'jumlah', 'jml'])) {
+                        $columnMapping['qty'] = $col;
+                    } elseif (in_array($cleanHeader, ['satuan', 'unit', 'sat'])) {
+                        $columnMapping['unit'] = $col;
+                    } elseif (in_array($cleanHeader, ['harga', 'price', 'hargarp', 'rp'])) {
+                        $columnMapping['harga'] = $col;
+                    }
+                }
+
+                Log::info('Column mapping:', $columnMapping);
+
+                // Validasi kolom wajib
+                if (!isset($columnMapping['nama']) || !isset($columnMapping['qty']) || !isset($columnMapping['harga'])) {
+                    throw new \Exception('Kolom wajib tidak ditemukan. Pastikan ada kolom: Nama Barang, Qty, Harga');
+                }
+
+                // Proses data
+                $totalBarang = 0;
+                $processedRows = 0;
+
+                for ($row = 2; $row <= $highestRow; $row++) {
+                    try {
+                        $nama = trim($worksheet->getCell($columnMapping['nama'] . $row)->getCalculatedValue());
+                        $qty = (float)$worksheet->getCell($columnMapping['qty'] . $row)->getCalculatedValue();
+                        $harga = (float)$worksheet->getCell($columnMapping['harga'] . $row)->getCalculatedValue();
+
+                        $unit = 'unit'; // default
+                        if (isset($columnMapping['unit'])) {
+                            $unitValue = trim($worksheet->getCell($columnMapping['unit'] . $row)->getCalculatedValue());
+                            if (!empty($unitValue)) {
+                                $unit = $unitValue;
+                            }
+                        }
+
+                        // Skip baris kosong
+                        if (empty($nama) && $qty == 0 && $harga == 0) {
+                            continue;
+                        }
+
+                        if (empty($nama)) {
+                            Log::warning("Row {$row}: Nama barang kosong");
+                            continue;
+                        }
+
+                        if ($qty <= 0) $qty = 1;
+                        if ($harga < 0) $harga = 0;
+
+                        $total = $qty * $harga;
+                        $totalBarang += $total;
+
+                        Barang::create([
+                            'pesananID' => $pesanan->id,
+                            'userID' => $userId,
+                            'name' => $nama,
+                            'price' => $harga,
+                            'amount' => $qty,
+                            'unit' => $unit,
+                            'total' => $total
+                        ]);
+
+                        $processedRows++;
+                    } catch (\Exception $e) {
+                        Log::error("Error processing row {$row}: " . $e->getMessage());
+                        continue;
+                    }
+                }
+
+                // Update total pesanan
+                $pesanan->update(['total' => $totalBarang]);
+
+                // Cleanup
+                $spreadsheet->disconnectWorksheets();
+                unset($spreadsheet);
+
+                DB::commit();
+
+                Log::info('Import completed:', [
+                    'processedRows' => $processedRows,
+                    'totalAmount' => $totalBarang
+                ]);
+
+                return redirect()->route('eksternal.pesanan.index')
+                    ->with('success', "Data berhasil diimport dari Excel. {$processedRows} item berhasil diproses. " .
+                        'Silakan edit pesanan untuk melengkapi data Kegiatan, Penyedia, dan Penerima.');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
+        } catch (\Exception $e) {
+            Log::error('Import failed:', [
+                'error' => $e->getMessage(),
+                'file' => isset($file) ? $file->getClientOriginalName() : 'unknown'
+            ]);
+
+            return redirect()->route('eksternal.pesanan.index')
+                ->with('error', 'Gagal mengimport data: ' . $e->getMessage());
+        }
+    }
+
+    public function saveProfit(Request $request, $id)
     {
         $request->validate([
             'profit' => 'required|numeric'
@@ -180,9 +374,8 @@ class PesananController extends Controller
         ]);
 
         return redirect()->route('eksternal.pesanan.index')
-            ->with('success', 'Data Pesanan (Total) berhasil ditambahkan.');
+            ->with('success', 'Data Pesanan ( Keuntungan ) berhasil ditambahkan.');
     }
-
 
     public function delete($id)
     {
@@ -244,7 +437,7 @@ class PesananController extends Controller
             'paid'          => "required|date|after_or_equal:$kegiatan->order",
             'prey' => 'required|date',
             'order_date' => 'required|date',
-            'pic' => 'required|date'
+            'pic' => 'required|string'
         ]);
 
         session(['data_editPesanan' => $validated]);

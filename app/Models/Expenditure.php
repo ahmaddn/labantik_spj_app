@@ -21,7 +21,6 @@ class Expenditure extends Model
     ];
 
     protected $casts = [
-        'nominal' => 'decimal:2',
         'date' => 'date',
         'created_at' => 'datetime',
     ];

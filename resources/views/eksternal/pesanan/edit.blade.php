@@ -70,7 +70,7 @@
                                     </option>
                                     @foreach ($kepsek as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ $item->id === $pesanan->kepsek->id ? 'selected' : '' }}>
+                                            {{ $item->id === ($pesanan->kepsek->id ?? '') ? 'selected' : '' }}>
                                             {{ $item->name }}</option>
                                     @endforeach
 
@@ -88,7 +88,7 @@
                                     </option>
                                     @foreach ($bendahara as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ $item->id === $pesanan->bendahara->id ? 'selected' : '' }}>
+                                            {{ $item->id === ($pesanan->bendahara->id ?? '') ? 'selected' : '' }}>
                                             {{ $item->name }}</option>
                                     @endforeach
 
@@ -106,7 +106,7 @@
                                     </option>
                                     @foreach ($penerima as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ $item->id == $pesanan->penerima->id ? 'selected' : '' }}>
+                                            {{ $item->id == ($pesanan->penerima->id ?? '') ? 'selected' : '' }}>
                                             {{ $item->name }}</option>
                                     @endforeach
                                 </select>
@@ -123,7 +123,7 @@
                                     </option>
                                     @foreach ($kegiatan as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ $item->id == $pesanan->kegiatan->id ? 'selected' : '' }}>
+                                            {{ $item->id == ($pesanan->kegiatan->id ?? '') ? 'selected' : '' }}>
                                             {{ $item->name }}
                                         </option>
                                     @endforeach
@@ -141,7 +141,7 @@
                                     </option>
                                     @foreach ($penyedia as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ $item->id == $pesanan->penyedia->id ? 'selected' : '' }}>
+                                            {{ $item->id == ($pesanan->penyedia->id ?? '') ? 'selected' : '' }}>
                                             {{ $item->company }}
                                         </option>
                                     @endforeach
