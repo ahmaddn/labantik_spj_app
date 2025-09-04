@@ -89,7 +89,7 @@ class ReportController extends Controller
                 'nominal' => 0,
                 'expense' => $e->nominal,
                 'profit' => -$e->nominal, // pengeluaran mengurangi saldo
-                'description' => $e->qty ?? ''
+                'description' => ''
             ]);
         }
 
@@ -324,7 +324,7 @@ class ReportController extends Controller
                 'nominal' => 0,
                 'expense' => $e->nominal,
                 'profit' => -$e->nominal, // pengeluaran mengurangi saldo
-                'description' => $e->qty ?? ''
+                'description' => ''
             ]);
         }
 
@@ -332,87 +332,98 @@ class ReportController extends Controller
 
         // Buat HTML untuk tampilan
         $html = '<!DOCTYPE html>
-    <html>
-    <head>
-        <title>Laporan Keuangan</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 20px;
-                background-color: #f5f5f5;
-            }
-            .report-title {
-                text-align: center;
-                color: #333;
-                margin-bottom: 20px;
-            }
-            table {
-                border-collapse: collapse;
-                width: 100%;
-                margin-bottom: 20px;
-                background-color: white;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            th {
-                background-color: #E6E6FA;
-                border: 1px solid #ccc;
-                padding: 12px 8px;
-                text-align: center;
-                font-weight: bold;
-                color: #333;
-            }
-            td {
-                border: 1px solid #ccc;
-                padding: 8px;
-                text-align: left;
-            }
-            .number {
-                text-align: right;
-            }
-            .center {
-                text-align: center;
-            }
-            .summary-table {
-                width: 300px;
-                margin-top: 30px;
-            }
-            .summary-header {
-                background-color: #E6E6FA !important;
-            }
-            .income-row {
-                background-color: #E8F5E8;
-            }
-            .expense-row {
-                background-color: #FFE8E8;
-            }
-            .balance-row {
-                background-color: #E8E8FF;
-            }
-            .print-btn {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 10px 20px;
-                background-color: #4CAF50;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 14px;
-            }
-            .print-btn:hover {
-                background-color: #45a049;
-            }
-            @media print {
-                .print-btn { display: none; }
-                body { background-color: white; }
-            }
-        </style>
-    </head>
-    <body>
+<html>
+<head>
+    <title>Laporan Keuangan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .report-title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #E6E6FA;
+            border: 1px solid #ccc;
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            white-space: nowrap;
+        }
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            white-space: nowrap;
+        }
+        .number {
+            text-align: right;
+            white-space: nowrap;
+            min-width: 120px;
+        }
+        .center {
+            text-align: center;
+            white-space: nowrap;
+        }
+        .summary-table {
+            width: 300px;
+            margin-top: 30px;
+        }
+        .summary-header {
+            background-color: #E6E6FA !important;
+        }
+        .income-row {
+            background-color: #E8F5E8;
+        }
+        .expense-row {
+            background-color: #FFE8E8;
+        }
+        .balance-row {
+            background-color: #E8E8FF;
+        }
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .print-btn:hover {
+            background-color: #45a049;
+        }
+        .description {
+            white-space: normal;
+            max-width: 200px;
+            padding: 12px 15px;
+            line-height: 1.5;
+        }
+        @media print {
+            .print-btn { display: none; }
+            body { background-color: white; }
+        }
+    </style>
+</head>
+<body>
 
-        <a class="print-btn" href="' . route('report.index') . '">Kembali</a>
-        <h1 class="report-title">LAPORAN KEUANGAN';
+    <a class="print-btn" href="' . route('report.index') . '">Kembali</a>
+    <h1 class="report-title">LAPORAN KEUANGAN';
 
         if ($request->start_date && $request->end_date) {
             $html .= '<br><small>Periode: ' . $request->start_date . ' s/d ' . $request->end_date . '</small>';
@@ -426,21 +437,21 @@ class ReportController extends Controller
 
         $html .= '</h1>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Tanggal</th>
-                    <th>Nama Projek/Kegiatan</th>
-                    <th>Penanggung Jawab Projek</th>
-                    <th>Nominal Keseluruhan</th>
-                    <th>Pemasukan</th>
-                    <th>Pengeluaran</th>
-                    <th>Saldo</th>
-                    <th>Keterangan</th>
-                </tr>
-            </thead>
-            <tbody>';
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Tanggal</th>
+                <th>Nama Projek/Kegiatan</th>
+                <th>Penanggung Jawab Projek</th>
+                <th>Nominal Keseluruhan</th>
+                <th>Pemasukan</th>
+                <th>Pengeluaran</th>
+                <th>Saldo</th>
+                <th>Keterangan</th>
+            </tr>
+        </thead>
+        <tbody>';
 
         $currentBalance = 0;
 
@@ -467,7 +478,7 @@ class ReportController extends Controller
             }
 
             $html .= '<td class="number">Rp ' . number_format($currentBalance, 0, ',', '.') . '</td>';
-            $html .= '<td>' . $transaction['description'] . '</td>';
+            $html .= '<td class="description">' . $transaction['description'] . '</td>';
             $html .= '</tr>';
         }
 
@@ -479,34 +490,33 @@ class ReportController extends Controller
             $totalExpense = $allTransactions->where('type', 'expense')->sum('expense');
 
             $html .= '
-        <table class="summary-table">
-            <thead>
-                <tr>
-                    <th class="summary-header">Keterangan</th>
-                    <th class="summary-header">Jumlah</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="income-row">
-                    <td><strong>TOTAL PEMASUKAN</strong></td>
-                    <td class="number"><strong>Rp ' . number_format($totalIncome, 0, ',', '.') . '</strong></td>
-                </tr>
-                <tr class="expense-row">
-                    <td><strong>TOTAL PENGELUARAN</strong></td>
-                    <td class="number"><strong>Rp ' . number_format($totalExpense, 0, ',', '.') . '</strong></td>
-                </tr>
-                <tr class="balance-row">
-                    <td><strong>SALDO AKHIR</strong></td>
-                    <td class="number"><strong>Rp ' . number_format($currentBalance, 0, ',', '.') . '</strong></td>
-                </tr>
-            </tbody>
-        </table>';
+    <table class="summary-table">
+        <thead>
+            <tr>
+                <th class="summary-header">Keterangan</th>
+                <th class="summary-header">Jumlah</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="income-row">
+                <td><strong>TOTAL PEMASUKAN</strong></td>
+                <td class="number"><strong>Rp ' . number_format($totalIncome, 0, ',', '.') . '</strong></td>
+            </tr>
+            <tr class="expense-row">
+                <td><strong>TOTAL PENGELUARAN</strong></td>
+                <td class="number"><strong>Rp ' . number_format($totalExpense, 0, ',', '.') . '</strong></td>
+            </tr>
+            <tr class="balance-row">
+                <td><strong>SALDO AKHIR</strong></td>
+                <td class="number"><strong>Rp ' . number_format($currentBalance, 0, ',', '.') . '</strong></td>
+            </tr>
+        </tbody>
+    </table>';
         }
 
         $html .= '
-    </body>
-    </html>';
-
+</body>
+</html>';
         // Return response dengan HTML
         return response($html)->header('Content-Type', 'text/html');
     }

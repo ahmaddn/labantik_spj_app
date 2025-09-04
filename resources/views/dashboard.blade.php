@@ -8,30 +8,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        <style>
-            .inovices-card {
-                border: 2px solid #27ffbe;
-                /* stroke hitam tebal */
-            }
-
-            .inovices-card.active {
-                background: #27ffbe;
-                /* stroke hitam tebal */
-            }
-
-            .inovices-amountt.active {
-                font-weight: 600;
-                font-size: 24px;
-                color: white;
-                /* warna teks putih */
-            }
-
-            .inovices-amountt {
-                color: #3d5ee1;
-                font-size: 24px;
-                font-weight: 600;
-                /* warna teks putih */
-            }
         </style>
         <div class="page-header">
             <div class="row">
@@ -46,383 +22,185 @@
                 </div>
             </div>
         </div>
-        <div class="card" style="padding: 20px 20px 0px 20px; margin-bottom: 20px;">
-            <div class="row row-cols-1">
-                <div class="col">
-                    <div class="card inovices-card active">
-                        <div class="card-body">
-                            <div class="inovices-widget-header">
-                                <span class="fa fa-credit-card fa-2x"></span>
-                                <div class="inovices-dash-count">
-                                    <div class="inovices-amountt active">Rp{{ number_format($totals, 0, ',', '.') }}</div>
-                                </div>
-                            </div>
-                            <p class="inovices-all">Semua Transaksi<span>{{ $pesanan->count() }}</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row row-cols-1">
-                <div class="col">
-                    <div class="card inovices-card active">
-                        <div class="card-body">
-                            <div class="inovices-widget-header">
-                                <span class="fa fa-credit-card fa-2x"></span>
-                                <div class="inovices-dash-count">
-                                    <div class="inovices-amountt active">Rp{{ number_format($totalkeuntungan, 0, ',', '.') }}</div>
-                                </div>
-                            </div>
-                            <p class="inovices-all">Total Keuntungan<span>{{ $pesanan->count() }}</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row row-cols-1">
-                <div class="col">
-                    <div class="card inovices-card active">
-                        <div class="card-body">
-                            <div class="inovices-widget-header">
-                                <span class="fa fa-credit-card fa-2x"></span>
-                                <div class="inovices-dash-count">
-                                    <div class="inovices-amountt active">Rp{{ number_format($totalpengeluaran, 0, ',', '.') }}</div>
-                                </div>
-                            </div>
-                            <p class="inovices-all">Total Pengeluaran<span>{{ $pesanan->count() }}</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-">
-                <p>
-                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        Daftar Total Pengeluaran per Kegiatan
-                    </button>
-                </p>
-                <div class="collapse show" id="collapseExample">
-                    <div class="card">
-                        <div class="card-body">
-                            <table class="datatable table table-stripped">
-                                <thead>
-                                    <tr>
-                                        <th>Nama Kegiatan</th>
-                                        <th>Total per Kegiatan</th>
-                                        <th>Keuntungan per Kegiatan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($kegiatanData as $kegiatan)
-                                        <tr>
-                                            <td>{{ $kegiatan->kegiatan->name ?? 'Kegiatan Tidak Diketahui' }}</td>
-                                            <td>Rp{{ number_format($kegiatan->total_per_kegiatan, 0, ',', '.') }}</td>
-                                            <td>Rp{{ number_format($kegiatan->keuntungan_per_kegiatan, 0, ',', '.') }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row">
-            <div class="col-md-12">
-                <div class="card">
+
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card inovices-card">
                     <div class="card-body">
-                        <h3 class="card-title">Development Progress</h3>
-
-                        <div class="cd-horizontal-timeline">
-                            <div class="timeline">
-                                <div class="events-wrapper">
-                                    <div class="events">
-                                        <ol>
-                                            <li><a href="#0" data-date="21/03/2025" class="selected">21 Mar</a>
-                                            <li><a href="#0" data-date="22/03/2025">22 Mar</a>
-                                            <li><a href="#0" data-date="08/04/2025">08 Apr</a>
-                                            <li><a href="#0" data-date="11/04/2025">11 Apr</a>
-                                            <li><a href="#0" data-date="12/04/2025">12 Apr</a>
-                                            <li><a href="#0" data-date="14/04/2025">14 Apr</a>
-                                            <li><a href="#0" data-date="16/05/2025">16 Mei</a>
-                                            <li><a href="#0" data-date="19/05/2025">19 Mei</a>
-                                            <li><a href="#0" data-date="21/05/2025">21 Mei</a>
-                                            <li><a href="#0" data-date="18/06/2025">18 Jun</a>
-                                            <li><a href="#0" data-date="20/06/2025">20 Jun</a>
-                                            <li><a href="#0" data-date="21/06/2025">21 Jun</a>
-                                            <li><a href="#0" data-date="22/06/2025">22 Jun</a>
-                                            <li><a href="#0" data-date="23/06/2025">23 Jun</a>
-                                            <li><a href="#0" data-date="24/06/2025">24 Jun</a>
-                                            <li><a href="#0" data-date="26/06/2025">26 Jun</a>
-                                            <li><a href="#0" data-date="27/06/2025">27 Jun</a>
-                                            <li><a href="#0" data-date="28/06/2025">28 Jun</a>
-                                            <li><a href="#0" data-date="02/07/2025">02 Jul</a>
-                                            </li>
-                                        </ol>
-                                        <span class="filling-line" aria-hidden="true"></span>
-                                    </div>
-
+                        <div class="inovices-widget-header">
+                            <span class="inovices-widget-icon">
+                                <img src="assets/img/icons/invoices-icon1.svg" alt=""
+                                    style="width: 40px; height: 40px; object-fit: contain;" />
+                            </span>
+                            <div class="inovices-dash-count">
+                                <div class="inovices-amount">
+                                    Rp.{{ number_format($totals, 0, ',', '.') }}
                                 </div>
-                                <ul class="cd-timeline-navigation">
-                                    <li><a href="#0" class="prev inactive">Prev</a></li>
-                                    <li><a href="#0" class="next">Next</a></li>
-                                </ul>
 
                             </div>
-
-                            <div class="events-content">
-                                <ol>
-                                    <li class="selected" data-date="21/03/2025">
-                                        <h3><small>Initial github and change framework</small></h3>
-                                        <p class="m-t-40">
-                                            Projek SPJ dikerjakan ulang oleh tim berisi 2 orang siswa (
-                                            sekarang
-                                            alumni ) Pengembangan Perangkat Lunak dan Gim (PPLG) SMKN 1 Talaga yaitu Najmy
-                                            Ahmad Maulana
-                                            dan Azmy Gilar Bharizqi. Disini kami menginisialisasi projek ini ke github lalu
-                                            mengubah framework PHP yang semula menggunakan Codeigniter 3 menjadi Laravel 12.
-                                        </p>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Membuat repository, inisial commit ke github dan membuat branch untuk kami
-                                            berdua dengan main sebagai branch utamanya
-                                        </p>
-                                    </li>
-                                    <li data-date="22/03/2025">
-                                        <h3><small>Add Database</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Menambahkan migrasi dan model Website SPJ
-                                        </p>
-                                    </li>
-                                    <li data-date="08/04/2025">
-                                        <h3><small>New Template</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Menambahkan dan mengimplementasikan template tampilan yang baru.
-                                        </p>
-                                    </li>
-                                    <li data-date="11/04/2025">
-                                        <h3><small>Frontend Dashboard, Login, Register & Backend Login and Register</small>
-                                        </h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Menambahkan tampilan login dan fungsinya. <br>
-                                            2. Menambahkan tampilan register dan fungsinya. <br>
-                                            3. Menambahkan tampilan dashboard.
-                                        </p>
-                                    </li>
-                                    <li data-date="12/04/2025">
-                                        <h3><small>Logout function</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Menambahkan fungsi logout <br>
-                                            2. Menyesuaikan tampilan dashboardnya (termasuk sidebar, topbar, dll).
-                                        </p>
-                                    </li>
-                                    <li data-date="14/04/2025">
-                                        <h3><small>Kegiatan Page</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Menambahkan tampilan halaman kegiatan.
-                                        </p>
-                                    </li>
-                                    <li data-date="16/05/2025">
-                                        <h3><small>CRUD Internal</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Menambahkan tampilan CRUD di semua submenu yang ada dalam menu internal. <br>
-                                            2. Menambahkan fungsi CRUD di semua submenu internal.
-                                        </p>
-                                    </li>
-                                    <li data-date="19/05/2025">
-                                        <h3><small>CRD Eksternal & CRUD Pesanan</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Menambahkan tampilan CRUD di semua submenu yang ada dalam menu eksternal.
-                                            <br>
-                                            2. Menambahkan fungsi CRD ( Tambah, Tampilkan, dan Hapus ) di submenu barang,
-                                            kegiatan, penyedia. <br>
-                                            3. Menambahkan fungsi CRUD ( Tambah, Tampilkan, Edit, Hapus ) di submenu
-                                            pesanan
-                                        </p>
-                                    </li>
-                                    <li data-date="21/05/2025">
-                                        <h3><small>Template Print</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Menambahkan tampilan Print PDF.
-                                        </p>
-                                    </li>
-                                    <li data-date="18/06/2025">
-                                        <h3><small>Helper Terbilang</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Menambahkan helper untuk mendeskripsikan "terbilang".
-                                        </p>
-                                    </li>
-                                    <li data-date="20/06/2025">
-                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Update AppServiceProvider.php<br>
-                                            2. Update RegisterUserController.php<br>
-                                            3. Memperbaiki tampilan dan env serta kesalahan kodenya<br>
-                                            4. Memperbaiki show data budget<br>
-                                            5. Memperbaiki default value role user<br>
-                                            6. Memperbaiki validasi tanggal dan tampilannya<br>
-                                            7. Menambahkan validasi tambahan saat registrasi username<br>
-                                            8. Memperbaiki delete timestamps false in model<br>
-                                            9. Memperbaiki validasi username<br>
-                                            10. Memperbaiki memperbaiki tampilan budget pesanan dan menambahkan validasi
-                                            minimal
-                                            di input date<br>
-                                            11. Menambahkan fungsi softdeletes di semua model kecuali user<br>
-                                            12. Menambahkan halaman edit pesanan dan perbaikan detail kecil yang lain<br>
-                                            13. Memperbaiki typo judul<br>
-                                            14. Menambahkan package bahasa indonesia<br>
-                                            15. Menambahkan input kategori di barang<br>
-                                            16. Menambahkan end tag<br>
-                                            17. Memperbaiki rendering content
-                                            18. Mendeploy website
-                                        </p>
-                                    </li>
-                                    <li data-date="21/06/2025">
-                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Memperbaiki tampilan login dan register di mobile<br>
-                                            2. Memperbaiki terbilang miliaran dan menampilkan nilai
-                                            edit dari kategori satuan<br>
-                                            4. Memperbaiki typo kode<br>
-                                            5. Memperbaiki route action<br>
-                                            6. Menambahkan halaman 4 dan 5 di halaman print<br>
-                                        </p>
-                                    </li>
-                                    <li data-date="22/06/2025">
-                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Menambahkan faktur di halaman print<br>
-                                            2. Memperbaiki beberapa kesalahan logika antara tampilan dan be,
-                                            serta menambah halaman submission sebagai form penerimaan, menambah logika
-                                            tombol, menambah kolom migrasi tambahan, serta penyesuaian kolom pada tabel
-                                            kegiatan, pesanan, dan lainnya agar sesuai dengan kebutuhan print pdf<br>
-                                            3. Memperbaiki type date accepted<br>
-                                            4. Memperbaiki datetime acceppted<br>
-                                            5. Memperbaiki PesananController, Pesanan Model, and template view<br>
-                                            6. Memperbaiki url logo<br>
-                                            7. Menghapus file html template<br>
-                                            8. Memperbaiki typo value bendahara<br>
-                                            9. Menambahkan favicon<br>
-                                            10. Menambahkan migration, model pesanan_barang dan memperbaiki select barang
-                                            menjadi multiple select serta menyesuaikan logika backend store dan edit
-                                            pesanannya<br>
-                                        </p>
-                                    </li>
-                                    <li data-date="23/06/2025">
-                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Memperbaiki logika payload form penerimaan/penyerahan dan penanganan
-                                            backend-nya, menyesuaikan migrasi pesanan dan pesanan barang, serta menyesuaikan
-                                            tampilan di form penerimaan/penyerahan. <br>
-                                            2. Menyesuaikan dengan format PDF. <br>
-                                            3. Merapikan format tulisan agar sesuai dengan sampel. <br>
-                                            4. Menambahkan timeline di halaman dashboard. <br>
-                                        </p>
-                                    </li>
-                                    <li data-date="24/06/2025">
-                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Memperbaiki fitur edit bendahara, kepsek, dan penerima serta menampilkan
-                                            semua
-                                            input jika error di halaman form penyerahan
-                                        </p>
-                                    </li>
-                                    <li data-date="26/06/2025">
-                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Memperbaiki workflow (alur kerja) pesanan. <br>
-                                            2. Mengubah form add pesanan menjadi form wizard. <br>
-                                            3. Menyesuaikan migrasi pesanan dan relasi pesanan. <br>
-                                            4. Menghapus menu barang dan inputan yang tidak diperlukan. <br>
-                                            5. Mengintegrasikan input barang ke form wizard pesanan. <br>
-                                        </p>
-                                    </li>
-                                    <li data-date="27/06/2025">
-                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Menambahkan form wizard single page di halaman tambah barang. <br>
-                                            2. Menyesuaikan tampilan edit pesanan. <br>
-                                            3. Memperbaiki dan menyesuaikan fungsi update pesanan. <br>
-                                            3. Menyesuaikan tampilan print dengan sample pdf. <br>
-                                            4. Menambahkan input pajak dan ongkos kirim di form pesanan. <br>
-                                            5. Menambahkan seeder user.
-                                        </p>
-                                    </li>
-                                    <li data-date="28/06/2025">
-                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Menambahkan menu riwayat dan fungsinya. <br>
-                                        </p>
-                                    </li>
-                                    <li data-date="02/07/2025">
-                                        <h3><small>Fixing Error and Adjust Feature</small></h3>
-                                        <p class="m-t-40"><strong>
-                                                Berikut merupakan beberapa perubahan di tanggal ini:</strong>
-                                        </p>
-                                        <p class="m-t-10">
-                                            1. Memperbaiki tampilan halaman edit barang. <br>
-                                            2. Memperbaiki tampilan print.
-                                        </p>
-                                    </li>
-                                </ol>
+                        </div>
+                        <p class="inovices-all small">Jumlah
+                            Semua Transaksi
+                            <span>
+                                <a data-bs-toggle="collapse" href="#jumlahSemuaTransaksi" aria-expanded="false"
+                                    aria-controls="jumlahSemuaTransaksi"class="btn btn-sm bg-success-light ">
+                                    <i class="fas fa-asterisk"></i>
+                                </a>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card inovices-card">
+                    <div class="card-body">
+                        <div class="inovices-widget-header">
+                            <span class="inovices-widget-icon">
+                                <img src="assets/img/icons/invoices-icon2.svg " alt=""
+                                    style="width: 40px; height: 40px; object-fit: contain;" />
+                            </span>
+                            <div class="inovices-dash-count">
+                                <div class="inovices-amount">Rp.{{ number_format($totalkeuntungan, 0, ',', '.') }}</div>
                             </div>
-
+                        </div>
+                        <div>
+                            <p class="inovices-all small">
+                                Jumlah Keuntungan
+                                <span>
+                                    <a data-bs-toggle="collapse" href="#jumlahKeuntungan" aria-expanded="false"
+                                        aria-controls="jumlahKeuntungan"class="btn btn-sm bg-success-light ">
+                                        <i class="fas fa-asterisk"></i>
+                                    </a>
+                                </span>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card inovices-card">
+                    <div class="card-body">
+                        <div class="inovices-widget-header">
+                            <span class="inovices-widget-icon">
+                                <img src="assets/img/icons/invoices-icon4.svg" alt=""
+                                    style="width: 40px; height: 40px; object-fit: contain;" />
+                            </span>
+                            <div class="inovices-dash-count">
+                                <div class="inovices-amount"
+                                    style="max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    Rp.{{ number_format($totalpengeluaran, 0, ',', '.') }}
+                                </div>
+                            </div>
+                        </div>
+                        <p class="inovices-all">
+                            Jumlah Pengeluaran
+                            <span>
+                                <a data-bs-toggle="collapse" href="#jumlahPengeluaran" aria-expanded="false"
+                                    aria-controls="jumlahPengeluaran"class="btn btn-sm bg-success-light ">
+                                    <i class="fas fa-asterisk"></i>
+                                </a>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card inovices-card">
+                    <div class="card-body">
+                        <div class="inovices-widget-header">
+                            <span class="inovices-widget-icon">
+                                <img src="assets/img/icons/invoices-icon3.svg" alt=""
+                                    style="width: 40px; height: 40px; object-fit: contain;" />
+                            </span>
+                            <div class="inovices-dash-count">
+                                @php
+                                    $labaBersih = $totalkeuntungan - $totalpengeluaran;
+                                @endphp
+                                <div class="inovices-amount"
+                                    style="max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    Rp.{{ number_format($labaBersih, 0, ',', '.') }}
+                                </div>
+
+                            </div>
+                        </div>
+                        <p class="inovices-all">Jumlah Laba Bersih
+                            <span>
+                                <a href="{{ route('report.excel') }}" class="btn btn-sm bg-success-light " target="_blank">
+                                    <i class="fas fa-asterisk"></i>
+                                </a>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="collapse hidden" id="jumlahSemuaTransaksi">
+                <div class="card">
+                    <h5 class="card-header">Detail Semua Transaksi</h5>
+                    <div class="card-body">
+                        <table class="datatable table table-stripped">
+                            <thead>
+                                <tr>
+                                    <th>Nama Kegiatan</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($dataTransaksi as $total)
+                                    <tr>
+                                        <td>{{ $total->kegiatan->name ?? 'Kegiatan Tidak Diketahui' }}</td>
+                                        <td>Rp{{ number_format($total->total, 0, ',', '.') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="collapse hidden" id="jumlahKeuntungan">
+                <div class="card">
+                    <h5 class="card-header">Detail Keuntungan</h5>
+                    <div class="card-body">
+                        <table class="datatable table table-stripped">
+                            <thead>
+                                <tr>
+                                    <th>Nama Kegiatan</th>
+                                    <th>Keuntungan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($dataTransaksi as $total)
+                                    <tr>
+                                        <td>{{ $total->kegiatan->name ?? 'Kegiatan Tidak Diketahui' }}</td>
+                                        <td>Rp{{ number_format($total->profit, 0, ',', '.') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="collapse hidden" id="jumlahPengeluaran">
+                <div class="card">
+                    <h5 class="card-header">Detail Keuntungan</h5>
+                    <div class="card-body">
+                        <table class="datatable table table-stripped">
+                            <thead>
+                                <tr>
+                                    <th>Nama Kegiatan</th>
+                                    <th>Pengeluaran</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($dataPengeluaran as $total)
+                                    <tr>
+                                        <td>{{ $total->type ?? 'Kegiatan Tidak Diketahui' }}</td>
+                                        <td>Rp{{ number_format($total->nominal, 0, ',', '.') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-@endsection
+    @endsection
