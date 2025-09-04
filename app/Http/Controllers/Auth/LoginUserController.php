@@ -18,7 +18,7 @@ class LoginUserController extends Controller
         $credentials = $request->only('username', 'password');
         $remember_me = $request->has('remember_me');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $remember_me)) {
             $request->session()->regenerate();
 
             if ($remember_me) {
@@ -29,7 +29,7 @@ class LoginUserController extends Controller
             cookie()->queue(Cookie::forget('remember_username'));
             cookie()->queue(Cookie::forget('remember_password'));
 
-            return redirect()->route('dashboard')->with('success', 'Login berhasil!');
+            return redirect()->intended('dashboard')->with('success', 'Login berhasil!');
         }
 
         cookie()->queue(Cookie::forget('remember_username'));
