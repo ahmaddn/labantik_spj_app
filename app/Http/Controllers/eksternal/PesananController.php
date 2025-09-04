@@ -15,9 +15,6 @@ use App\Models\Expenditure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use App\Imports\BarangImport;
 use Illuminate\Support\Facades\Log;
 
 class PesananController extends Controller
@@ -39,16 +36,15 @@ class PesananController extends Controller
 
         $totals = Pesanan::where('userID', $id)->sum('total');
         $totalkeuntungan = Pesanan::where('userID', $id)->sum('profit');
-$totalpengeluaran = Expenditure::sum('nominal');
+        $totalpengeluaran = Expenditure::sum('nominal');
 
         // Ambil data kegiatan dengan total per kegiatan
-        $kegiatanData = Pesanan::with('kegiatan')
+        $dataTransaksi = Pesanan::with('kegiatan')
             ->where('userID', $id)
-            ->select('kegiatanID', DB::raw('SUM(total) as total_per_kegiatan'), DB::raw('SUM(profit) as keuntungan_per_kegiatan'), DB::raw('COUNT(*) as jumlah_pesanan'))
-            ->groupBy('kegiatanID')
             ->get();
+        $dataPengeluaran = Expenditure::where('user_id', $id)->get();
 
-        return view('dashboard', compact('pesanan', 'totals', 'kegiatanData', 'totalkeuntungan', 'totalpengeluaran'));
+        return view('dashboard', compact('pesanan', 'totals', 'dataTransaksi', 'dataPengeluaran', 'totalkeuntungan', 'totalpengeluaran'));
     }
 
     public function addSession()
