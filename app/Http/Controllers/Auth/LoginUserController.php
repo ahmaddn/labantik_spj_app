@@ -24,12 +24,13 @@ class LoginUserController extends Controller
             if ($remember_me) {
                 cookie()->queue(cookie('remember_username', $request->username, 10080));
                 cookie()->queue(cookie('remember_password', $request->password, 10080));
+                return redirect()->intended('dashboard')->with('success', 'Login berhasil!');
             }
 
             cookie()->queue(Cookie::forget('remember_username'));
             cookie()->queue(Cookie::forget('remember_password'));
 
-            return redirect()->intended('dashboard')->with('success', 'Login berhasil!');
+            return redirect()->route('dashboard')->with('success', 'Login berhasil!');
         }
 
         cookie()->queue(Cookie::forget('remember_username'));
