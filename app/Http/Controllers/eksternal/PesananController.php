@@ -430,7 +430,7 @@ class PesananController extends Controller
             'kepsekID'   => 'required|exists:kepsek,id',
             'accepted'          => "required|date|after_or_equal:$kegiatan->order",
             'billing'          => "nullable|date",
-            'paid'          => "required|date|after_or_equal:$kegiatan->order",
+            'paid'          => "required|date|before_or_equal:$kegiatan->deadline",
             'prey' => 'required|date',
             'order_date' => 'required|date',
             'pic' => 'required|string'
