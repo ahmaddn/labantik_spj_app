@@ -192,29 +192,41 @@
                                                                 <div class="mb-3">
                                                                     <label for="totalPesanan_{{ $item->id }}"
                                                                         class="form-label">Total Pesanan</label>
-                                                                    <input type="number" class="form-control"
-                                                                        id="totalPesanan_{{ $item->id }}"
-                                                                        value="{{ $item->total }}" readonly>
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text">Rp.</span>
+                                                                        <input type="text" class="form-control"
+                                                                            id="totalPesanan_{{ $item->id }}"
+                                                                            value="{{ $item->total }}" readonly>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="mb-3">
                                                                     <label for="persenKeuntungan_{{ $item->id }}"
-                                                                        class="form-label">Persen Keuntungan (%)</label>
-                                                                    <input type="number"
-                                                                        class="form-control persen-keuntungan"
-                                                                        id="persenKeuntungan_{{ $item->id }}"
-                                                                        placeholder="Masukkan persen keuntungan"
-                                                                        step="0.01" min="0"
-                                                                        data-item-id="{{ $item->id }}">
+                                                                        class="form-label">Persen Keuntungan
+                                                                        (%)
+                                                                    </label>
+                                                                    <div class="input-group">
+                                                                        <input type="number"
+                                                                            class="form-control persen-keuntungan"
+                                                                            id="persenKeuntungan_{{ $item->id }}"
+                                                                            placeholder="Masukkan persen keuntungan"
+                                                                            step="0.01" min="0"
+                                                                            data-item-id="{{ $item->id }}">
+                                                                        <span class="input-group-text">%</span>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="mb-3">
                                                                     <label for="totalKeuntungan_{{ $item->id }}"
-                                                                        class="form-label">Total dengan Keuntungan</label>
-                                                                    <input type="number" class="form-control"
-                                                                        id="totalKeuntungan_{{ $item->id }}"
-                                                                        name="profit"
-                                                                        value="{{ old('profit', $item->profit ?? '') }}"
-                                                                        placeholder="Total akan dihitung otomatis"
-                                                                        min="0">
+                                                                        class="form-label">Total dengan
+                                                                        Keuntungan</label>
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text">Rp.</span>
+                                                                        <input type="number" class="form-control"
+                                                                            id="totalKeuntungan_{{ $item->id }}"
+                                                                            name="profit"
+                                                                            value="{{ old('profit', $item->profit ?? '') }}"
+                                                                            placeholder="Total akan dihitung otomatis"
+                                                                            min="0">
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">

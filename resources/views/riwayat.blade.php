@@ -89,9 +89,9 @@
                                                 </td>
                                                 <td>{{ \Carbon\Carbon::parse($item->paid)->translatedFormat('d F Y') }}
                                                 </td>
-                                                <td>{{ $item->kegiatan->name }}</td>
-                                                <td>{{ $item->penyedia->company }}</td>
-                                                <td>{{ $item->penerima->name }}</td>
+                                                <td>{{ $item->kegiatan->name ?? '-' }}</td>
+                                                <td>{{ $item->penyedia->company ?? '-' }}</td>
+                                                <td>{{ $item->penerima->name ?? '-' }}</td>
                                                 <td> <a href="{{ route('eksternal.pesanan.export', $item->id) }}"
                                                         class="btn btn-sm btn-outline-primary" target="_blank">
                                                         <i class="fas fa-print"></i>
