@@ -181,7 +181,7 @@
             </div>
             <div class="collapse hidden" id="jumlahPengeluaran">
                 <div class="card">
-                    <h5 class="card-header">Detail Keuntungan</h5>
+                    <h5 class="card-header">Detail Pengeluaran</h5>
                     <div class="card-body">
                         <table class="datatable table table-stripped">
                             <thead>
