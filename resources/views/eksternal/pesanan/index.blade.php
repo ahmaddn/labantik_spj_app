@@ -155,11 +155,14 @@
                                                             class="btn btn-sm btn-outline-info" title="Edit Pesanan">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <a href="{{ route('eksternal.pesanan.export', $item->id) }}"
-                                                            class="btn btn-sm btn-outline-primary" target="_blank"
-                                                            title="Print">
-                                                            <i class="fas fa-print"></i>
-                                                        </a>
+                                                        @if ($item->kegiatanID && $item->penyediaID && $item->penerimaID && $item->bendaharaID && $item->kepsekID)
+                                                            <a href="{{ route('eksternal.pesanan.export', $item->id) }}"
+                                                                class="btn btn-sm btn-outline-primary" target="_blank"
+                                                                title="Print">
+                                                                <i class="fas fa-print"></i>
+                                                            </a>
+                                                        @endif
+
                                                         <form action="{{ route('eksternal.pesanan.delete', $item->id) }}"
                                                             method="POST" class="d-inline-block"
                                                             onsubmit="return confirm('Yakin ingin menghapus data ini?');">
