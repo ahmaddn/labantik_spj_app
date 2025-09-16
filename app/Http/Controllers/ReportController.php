@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Pesanan;
 use App\Models\Expenditure;
@@ -16,7 +17,7 @@ class ReportController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Pesanan::with(['kegiatan', 'penerima'])->orderBy('order_date');
+        $query = Pesanan::where('userID', Auth::id())->with(['kegiatan', 'penerima'])->orderBy('order_date');
 
         // Apply date filters
         if ($request->start_date) {
@@ -37,7 +38,7 @@ class ReportController extends Controller
     public function exportExcel(Request $request)
     {
         // Query untuk pesanan dengan filter
-        $pesananQuery = Pesanan::with(['kegiatan', 'penerima'])->orderBy('order_date');
+        $pesananQuery = Pesanan::where('userID', Auth::id())->with(['kegiatan', 'penerima'])->orderBy('order_date');
 
         if ($request->start_date) {
             $pesananQuery->whereDate('order_date', '>=', $request->start_date);
@@ -50,7 +51,7 @@ class ReportController extends Controller
         $pesanan = $pesananQuery->get();
 
         // Query untuk expenditure dengan filter yang sama
-        $expenditureQuery = Expenditure::orderBy('date');
+        $expenditureQuery = Expenditure::where('user_id', Auth::id())->orderBy('date');
 
         if ($request->start_date) {
             $expenditureQuery->whereDate('date', '>=', $request->start_date);
@@ -272,7 +273,7 @@ class ReportController extends Controller
     public function dataExcel(Request $request)
     {
         // Query untuk pesanan dengan filter
-        $pesananQuery = Pesanan::with(['kegiatan', 'penerima'])->orderBy('order_date');
+        $pesananQuery = Pesanan::where('userID', Auth::id())->with(['kegiatan', 'penerima'])->orderBy('order_date');
 
         if ($request->start_date) {
             $pesananQuery->whereDate('order_date', '>=', $request->start_date);
@@ -285,7 +286,7 @@ class ReportController extends Controller
         $pesanan = $pesananQuery->get();
 
         // Query untuk expenditure dengan filter yang sama
-        $expenditureQuery = Expenditure::orderBy('date');
+        $expenditureQuery = Expenditure::where('user_id', Auth::id())->orderBy('date');
 
         if ($request->start_date) {
             $expenditureQuery->whereDate('date', '>=', $request->start_date);
