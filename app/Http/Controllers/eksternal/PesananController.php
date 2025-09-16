@@ -36,7 +36,7 @@ class PesananController extends Controller
 
         $totals = Pesanan::where('userID', $id)->sum('total');
         $totalkeuntungan = Pesanan::where('userID', $id)->sum('profit');
-        $totalpengeluaran = Expenditure::sum('nominal');
+        $totalpengeluaran = Expenditure::where('user_id', $id)->sum('nominal');
 
         // Ambil data kegiatan dengan total per kegiatan
         $dataTransaksi = Pesanan::with('kegiatan')
