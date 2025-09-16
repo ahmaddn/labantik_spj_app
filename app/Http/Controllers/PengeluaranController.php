@@ -11,7 +11,7 @@ class PengeluaranController extends Controller
     //
     public function index()
     {
-        $pengeluaran = Expenditure::all();
+        $pengeluaran = Expenditure::where('user_id', Auth::id())->get();
         $totalPengeluaran = $pengeluaran->sum('nominal');
         return view('pengeluaran.index', compact('pengeluaran', 'totalPengeluaran'));
     }
@@ -45,7 +45,7 @@ class PengeluaranController extends Controller
 
     public function edit($id)
     {
-        $pengeluaran = Expenditure::findOrFail($id);
+        $pengeluaran = Expenditure::where('user_id', Auth::id())->findOrFail($id);
         return view('pengeluaran.edit', compact('pengeluaran'));
     }
 
