@@ -31,6 +31,11 @@
 
         <div class="card p-4 bg-white rounded shadow">
             <div class="d-flex justify-content-between align-items-center mb-4">
+                <a href="{{ route('eksternal.pesanan.addLetterhead') }}"
+                    class="btn btn-primary text-white px-4 py-2 rounded hover:bg-blue-600">
+                    <i class="fas fa-plus me-2"></i> Tambah Kop Surat
+                </a>
+
                 <!-- Tombol Import Excel -->
                 <button type="button" class="btn btn-success text-white px-4 py-2 rounded hover:bg-green-600 me-2"
                     data-bs-toggle="modal" data-bs-target="#importModal">

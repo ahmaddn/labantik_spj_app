@@ -47,6 +47,11 @@ class PesananController extends Controller
         return view('dashboard', compact('pesanan', 'totals', 'dataTransaksi', 'dataPengeluaran', 'totalkeuntungan', 'totalpengeluaran'));
     }
 
+    public function addLetterhead()
+    {
+        return view('eksternal.pesanan.addLetterhead');
+    }
+
     public function addSession()
     {
         $lastInvoiceNum = Pesanan::where('userID', Auth::id())->max(DB::raw('CAST(invoice_num AS UNSIGNED)'));

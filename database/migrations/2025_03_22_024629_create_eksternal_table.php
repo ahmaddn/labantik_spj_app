@@ -52,11 +52,11 @@ return new class extends Migration
             $table->integer('shipping_cost')->nullable();
             $table->integer('profit')->nullable();
             $table->integer('total')->nullable();
-            $table->unsignedInteger('kegiatanID');
-            $table->unsignedInteger('penyediaID');
-            $table->unsignedInteger('penerimaID');
-            $table->unsignedInteger('bendaharaID');
-            $table->unsignedInteger('kepsekID');
+            $table->unsignedInteger('kegiatanID')->nullable();
+            $table->unsignedInteger('penyediaID')->nullable();
+            $table->unsignedInteger('penerimaID')->nullable();
+            $table->unsignedInteger('bendaharaID')->nullable();
+            $table->unsignedInteger('kepsekID')->nullable();
             $table->date('order_date');
             $table->date('prey');
             $table->date('paid');
