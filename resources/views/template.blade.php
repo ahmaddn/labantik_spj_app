@@ -128,7 +128,29 @@
         <tr>
             <td width="10%" style="text-align: center; vertical-align: middle;
             ">
-                <img src="{{ asset('jabar.png') }}" width="100" style="margin-left:50px; display:block;" />
+                {{-- dynamic logo: prefer $logoUrl passed from controller, then Letterhead model logo in storage, fall back to public asset --}}
+                @php
+                    // Resolve logo URL safely
+                    $logoUrl = $logoUrl ?? null;
+                    if (empty($logoUrl)) {
+                        try {
+                            $letterhead = \App\Models\Letterhead::first();
+                        } catch (\Throwable $e) {
+                            $letterhead = null;
+                        }
+                        if (!empty($letterhead) && !empty($letterhead->logo)) {
+                            // If logo already stores a full URL, use it. Otherwise assume it's stored in storage/app/public
+        if (filter_var($letterhead->logo, FILTER_VALIDATE_URL)) {
+            $logoUrl = $letterhead->logo;
+        } else {
+            $logoUrl = \Illuminate\Support\Facades\Storage::url($letterhead->logo);
+        }
+    }
+}
+// final fallback to bundled asset
+$logoUrl = $logoUrl ?: asset('jabar.png');
+                @endphp
+                <img src="{{ $logoUrl }}" width="100" style="margin-left:50px; display:block;" />
             </td>
             <td width="90%" style="text-align: center; vertical-align: middle;">
                 <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
@@ -263,7 +285,26 @@
             <tr>
                 <td width="15%" style="text-align: center; vertical-align: middle;
             ">
-                    <img src="{{ asset('jabar.png') }}" width="100" style="margin-left:50px; display:block;" />
+                    {{-- same dynamic logo for second header --}}
+                    @php
+                        $logoUrl = $logoUrl ?? null;
+                        if (empty($logoUrl)) {
+                            try {
+                                $letterhead = \App\Models\Letterhead::first();
+                            } catch (\Throwable $e) {
+                                $letterhead = null;
+                            }
+                            if (!empty($letterhead) && !empty($letterhead->logo)) {
+                                if (filter_var($letterhead->logo, FILTER_VALIDATE_URL)) {
+                                    $logoUrl = $letterhead->logo;
+                                } else {
+                                    $logoUrl = \Illuminate\Support\Facades\Storage::url($letterhead->logo);
+                                }
+                            }
+                        }
+                        $logoUrl = $logoUrl ?: asset('jabar.png');
+                    @endphp
+                    <img src="{{ $logoUrl }}" width="100" style="margin-left:50px; display:block;" />
                 </td>
                 <td width="90%" style="text-align: center; vertical-align: middle;">
                     <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>

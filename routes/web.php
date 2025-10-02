@@ -85,6 +85,8 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
 
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan.index');
     Route::get('/pesanan/addSession', [PesananController::class, 'addSession'])->name('pesanan.addSession');
+    Route::get('/pesanan/addLetterhead', [PesananController::class, 'addLetterhead'])->name('pesanan.addLetterhead');
+    Route::post('/pesanan/storeLetterhead', [PesananController::class, 'storeLetterhead'])->name('pesanan.storeLetterhead');
     Route::get('/pesanan/addForm', [PesananController::class, 'addForm'])->name('pesanan.addForm');
     Route::post('/pesanan/session', [PesananController::class, 'session'])->name('pesanan.session');
     Route::post('/pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
