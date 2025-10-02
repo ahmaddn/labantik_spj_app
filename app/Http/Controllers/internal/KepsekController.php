@@ -29,7 +29,7 @@ class KepsekController extends Controller
             // Validasi input
             $id = Auth::id();
             $request->validate([
-                'name' => 'required|unique:kepsek,name',
+                'name' => 'required',
                 'nip' => 'nullable|unique:kepsek,nip|regex:/^[A-Za-z0-9 \-]+$/',
                 'year' => 'required',
                 'school' => 'required|string',
