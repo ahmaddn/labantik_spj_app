@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\eksternal;
 
 use App\Http\Controllers\Controller;
+use App\Models\Letterhead;
 use Illuminate\Http\Request;
 use App\Models\Pesanan;
 use App\Models\Kegiatan;
@@ -22,36 +23,10 @@ class PesananController extends Controller
     public function index()
     {
         $id = Auth::id();
+        $letterheads = Letterhead::where('userID', $id)->get();
         $pesanan = Pesanan::with(['kegiatan', 'penyedia', 'penerima', 'barang'])->where('userID', $id)->get();
-        return view('eksternal.pesanan.index', compact('pesanan'));
+        return view('eksternal.pesanan.index', compact('letterheads', 'pesanan'));
     }
-
-    public function dashboard()
-    {
-        $id = Auth::id();
-
-        $pesanan = Pesanan::with(['kegiatan', 'penyedia', 'penerima', 'barang'])
-            ->where('userID', $id)
-            ->get();
-
-        $totals = Pesanan::where('userID', $id)->sum('total');
-        $totalkeuntungan = Pesanan::where('userID', $id)->sum('profit');
-        $totalpengeluaran = Expenditure::where('user_id', $id)->sum('nominal');
-
-        // Ambil data kegiatan dengan total per kegiatan
-        $dataTransaksi = Pesanan::with('kegiatan')
-            ->where('userID', $id)
-            ->get();
-        $dataPengeluaran = Expenditure::where('user_id', $id)->get();
-
-        return view('dashboard', compact('pesanan', 'totals', 'dataTransaksi', 'dataPengeluaran', 'totalkeuntungan', 'totalpengeluaran'));
-    }
-
-    public function addLetterhead()
-    {
-        return view('eksternal.pesanan.addLetterhead');
-    }
-
     public function addSession()
     {
         $lastInvoiceNum = Pesanan::where('userID', Auth::id())->max(DB::raw('CAST(invoice_num AS UNSIGNED)'));
@@ -526,5 +501,76 @@ class PesananController extends Controller
         $kepsek = Kepsek::where('userID', $userID)->first(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
 
         return view('template', compact('pesanan', 'kepsek'));
+    }
+
+    public function dashboard()
+    {
+        $id = Auth::id();
+
+        $pesanan = Pesanan::with(['kegiatan', 'penyedia', 'penerima', 'barang'])
+            ->where('userID', $id)
+            ->get();
+
+        $totals = Pesanan::where('userID', $id)->sum('total');
+        $totalkeuntungan = Pesanan::where('userID', $id)->sum('profit');
+        $totalpengeluaran = Expenditure::where('user_id', $id)->sum('nominal');
+
+        // Ambil data kegiatan dengan total per kegiatan
+        $dataTransaksi = Pesanan::with('kegiatan')
+            ->where('userID', $id)
+            ->get();
+        $dataPengeluaran = Expenditure::where('user_id', $id)->get();
+
+        return view('dashboard', compact('pesanan', 'totals', 'dataTransaksi', 'dataPengeluaran', 'totalkeuntungan', 'totalpengeluaran'));
+    }
+
+    public function addLetterhead()
+    {
+        return view('eksternal.pesanan.addLetterhead');
+    }
+
+    public function storeLetterhead(Request $request)
+    {
+        $request->validate([
+            'main_institution' => 'required|string|max:255',
+            'sub_institution' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'field' => 'required|string|max:255',
+            'address1' => 'required|string',
+            'address2' => 'nullable|string',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:50',
+            'fax' => 'nullable|string|max:50',
+            'pos' => 'nullable|string|max:20',
+            'npsn' => 'nullable|string|max:50',
+            'website' => 'nullable|url|max:255',
+            'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('logos', $filename, 'public');
+        }
+
+        Letterhead::create([
+            'userID' => Auth::id(),
+            'main_institution' => $request->main_institution,
+            'sub_institution' => $request->sub_institution,
+            'name' => $request->name,
+            'field' => $request->field,
+            'address1' => $request->address1,
+            'address2' => $request->address2,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'fax' => $request->fax,
+            'pos' => $request->pos,
+            'npsn' => $request->npsn,
+            'website' => $request->website,
+            'logo' => $filename ?? null,
+        ]);
+
+        return redirect()->route('eksternal.pesanan.index')
+            ->with('success', 'Kop Surat berhasil ditambahkan.');
     }
 }

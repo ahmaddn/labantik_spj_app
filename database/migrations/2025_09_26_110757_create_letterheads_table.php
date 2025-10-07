@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('letterheads', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('userID');
             $table->string('main_institution')->nullable();
             $table->string('sub_institution')->nullable();
             $table->string('name')->nullable();
@@ -27,6 +28,8 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('logo');
             $table->timestamps();
+
+            $table->foreign('userID')->references('id')->on('users');
         });
     }
 

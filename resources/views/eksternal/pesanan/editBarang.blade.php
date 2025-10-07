@@ -70,6 +70,7 @@
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
+
                                         <div class="col-md-6 mb-2">
                                             <label>Harga Barang</label>
                                             <div class="input-group">
@@ -82,6 +83,7 @@
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
+
                                         <div class="col-md-6 mb-2">
                                             <label>Jumlah Barang</label>
                                             <input type="number" name="items[{{ $i }}][amount]"
@@ -103,37 +105,41 @@
                                                 class="form-control satuan-select" id="satuan-barang-{{ $i }}"
                                                 data-index="{{ $i }}">
                                                 <option value="">-- Pilih Satuan --</option>
-                                                <option value="unit"
-                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'unit' ? 'selected' : '' }}>
-                                                    Unit</option>
-                                                <option value="paket"
-                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'paket' ? 'selected' : '' }}>
-                                                    Paket</option>
-                                                <option value="set"
-                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'set' ? 'selected' : '' }}>
-                                                    Set
-                                                </option>
-                                                <option value="pcs"
-                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'pcs' ? 'selected' : '' }}>
-                                                    Pcs
-                                                </option>
-                                                <option value="box"
-                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'box' ? 'selected' : '' }}>
-                                                    Box</option>
-                                                <option value="kg"
-                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'kg' ? 'selected' : '' }}>
-                                                    Kg
-                                                </option>
-                                                <option value="liter"
-                                                    {{ old("items.$i.unit", $item->unit ?? '') == 'liter' ? 'selected' : '' }}>
-                                                    Liter</option>
+                                                @foreach ($units as $unit)
+                                                    <option value="{{ $unit }}"
+                                                        {{ $oldUnit == $unit ? 'selected' : '' }}>
+                                                        {{ ucfirst($unit) }}
+                                                    </option>
+                                                @endforeach
                                                 <option value="Other" {{ $isOtherSelected ? 'selected' : '' }}>Lainnya...
                                                 </option>
                                             </select>
-                                            @error('items.$i.unit')
+                                            @error("items.$i.unit")
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
+
+                                        {{-- Tambahkan select kop surat hanya di step terakhir --}}
+                                        @if ($i == $totalSteps - 1)
+                                            <div class="col-md-6 mb-2">
+                                                <label>Kop Surat</label>
+                                                <select name="letterhead" class="form-control">
+                                                    <option value="">-- Pilih Kop Surat --</option>
+                                                    <option value="kop1"
+                                                        {{ old('letterhead') == 'kop1' ? 'selected' : '' }}>Kop Surat 1
+                                                    </option>
+                                                    <option value="kop2"
+                                                        {{ old('letterhead') == 'kop2' ? 'selected' : '' }}>Kop Surat 2
+                                                    </option>
+                                                    <option value="kop3"
+                                                        {{ old('letterhead') == 'kop3' ? 'selected' : '' }}>Kop Surat 3
+                                                    </option>
+                                                </select>
+                                                @error('letterhead')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        @endif
 
                                         <div class="col-md-6 mb-2">
                                             <label>Total Barang</label>
@@ -153,8 +159,8 @@
                                             <label>Satuan Lainnya</label>
                                             <input type="text" class="form-control"
                                                 name="items[{{ $i }}][other_unit]"
-                                                value="{{ $isOtherSelected ? old("items.$i.unit", $item->unit ?? '') : '' }}">
-                                            @error('items.$i.other_unit')
+                                                value="{{ $isOtherSelected ? $oldUnit : '' }}">
+                                            @error("items.$i.other_unit")
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -169,13 +175,16 @@
                                             <li class="next float-end"><a href="javascript:;"
                                                     class="btn btn-primary">Selanjutnya</a></li>
                                         @else
-                                            <li class="float-end"><button type="submit" class="btn btn-success">Perbarui
-                                                    Pesanan</button></li>
+                                            <li class="float-end">
+                                                <button type="submit" class="btn btn-success">Perbarui Pesanan</button>
+                                            </li>
                                         @endif
                                     </ul>
                                 </div>
                             @endfor
                         </div>
+
+
                     </form>
                 </div>
             </div>

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Letterhead extends Model
 {
     protected $fillable = [
+        'userID',
         'main_institution',
         'sub_institution',
         'name',
