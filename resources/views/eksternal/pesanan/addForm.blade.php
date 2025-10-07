@@ -110,6 +110,28 @@
                                             @enderror
                                         </div>
 
+                                        {{-- Tambahkan select kop surat hanya di step terakhir --}}
+                                        @if ($i == $totalSteps - 1)
+                                            <div class="col-md-6 mb-2">
+                                                <label>Kop Surat</label>
+                                                <select name="letterhead" class="form-control">
+                                                    <option value="">-- Pilih Kop Surat --</option>
+                                                    <option value="kop1"
+                                                        {{ old('letterhead') == 'kop1' ? 'selected' : '' }}>Kop Surat 1
+                                                    </option>
+                                                    <option value="kop2"
+                                                        {{ old('letterhead') == 'kop2' ? 'selected' : '' }}>Kop Surat 2
+                                                    </option>
+                                                    <option value="kop3"
+                                                        {{ old('letterhead') == 'kop3' ? 'selected' : '' }}>Kop Surat 3
+                                                    </option>
+                                                </select>
+                                                @error('letterhead')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        @endif
+
                                         <div class="col-md-6 mb-2">
                                             <label>Total Barang</label>
                                             <div class="input-group">
@@ -150,6 +172,7 @@
                                     </ul>
                                 </div>
                             @endfor
+
                         </div>
                     </form>
                 </div>

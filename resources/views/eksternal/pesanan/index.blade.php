@@ -31,10 +31,78 @@
 
         <div class="card p-4 bg-white rounded shadow">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <a href="{{ route('eksternal.pesanan.addLetterhead') }}"
-                    class="btn btn-primary text-white px-4 py-2 rounded hover:bg-blue-600">
-                    <i class="fas fa-plus me-2"></i> Tambah Kop Surat
-                </a>
+                <button href="{{ route('eksternal.pesanan.addLetterhead') }}"
+                    class="btn btn-primary text-white px-4 py-2 rounded hover:bg-blue-600" data-bs-toggle="modal"
+                    data-bs-target="#letterheadModal">
+                    <i class="fas fa-sticky-note me-2"></i> Kop Surat
+                </button>
+
+                <!-- Modal Letterhead -->
+                <div class="modal fade" id="letterheadModal" tabindex="-1" aria-labelledby="letterheadModal"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg"> <!-- lebih lebar biar tabel muat -->
+                        <div class="modal-content">
+                            <div class="modal-header d-flex justify-content-between align-items-center">
+                                <h5 class="modal-title mb-0" id="importModalLabel">Data Kop Surat</h5>
+                                <a href="{{ route('eksternal.pesanan.addLetterhead') }}" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-plus-circle"></i> Tambah
+                                </a>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-bordered table-striped align-middle">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Lembaga Utama</th>
+                                            <th>Sub Lembaga</th>
+                                            <th>Nama Perusahaan/Instansi</th>
+                                            <th>Bidang</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($letterheads as $lethead)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $lethead->main_institution }}</td>
+                                                <td>{{ $lethead->sub_institution }}</td>
+                                                <td>{{ $lethead->name }}</td>
+                                                <td>{{ $lethead->field }}</td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <a href="{{ route('eksternal.pesanan.editLetterhead', $lethead->id) }}"
+                                                            class="btn btn-sm btn-outline-info" title="Edit Letterhead">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+
+                                                        <form
+                                                            action="{{ route('eksternal.pesanan.deleteLetterhead', $lethead->id) }}"
+                                                            method="POST" class="d-inline-block"
+                                                            onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                                title="Hapus">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="6" class="text-center">No Data Available</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Tombol Import Excel -->
                 <button type="button" class="btn btn-success text-white px-4 py-2 rounded hover:bg-green-600 me-2"
@@ -82,7 +150,6 @@
 
                         <div class="card-header">
                             <h4 class="card-title">Daftar Pesanan</h4>
-
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -134,7 +201,8 @@
                                                                 {{ $barang->unit }})</li>
                                                         @endforeach
                                                         @if ($item->barang->count() > 3)
-                                                            <li class="text-muted">... dan {{ $item->barang->count() - 3 }}
+                                                            <li class="text-muted">... dan
+                                                                {{ $item->barang->count() - 3 }}
                                                                 item lainnya</li>
                                                         @endif
                                                     </ul>

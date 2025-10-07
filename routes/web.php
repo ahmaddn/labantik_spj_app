@@ -76,6 +76,7 @@ Route::prefix('internal')->name('internal.')->middleware('auth')->group(function
 
 // Eksternal
 Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(function () {
+    //Kegiatan
     Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
     Route::get('/add', [KegiatanController::class, 'add'])->name('kegiatan.add');
     Route::post('/add', [KegiatanController::class, 'addKegiatan'])->name('kegiatan.addKegiatan');
@@ -83,10 +84,9 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::put('/update/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
     Route::delete('/delete/{id}', [KegiatanController::class, 'deleteKegiatan'])->name('kegiatan.deleteKegiatan');
 
+    //Pesanan
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan.index');
     Route::get('/pesanan/addSession', [PesananController::class, 'addSession'])->name('pesanan.addSession');
-    Route::get('/pesanan/addLetterhead', [PesananController::class, 'addLetterhead'])->name('pesanan.addLetterhead');
-    Route::post('/pesanan/storeLetterhead', [PesananController::class, 'storeLetterhead'])->name('pesanan.storeLetterhead');
     Route::get('/pesanan/addForm', [PesananController::class, 'addForm'])->name('pesanan.addForm');
     Route::post('/pesanan/session', [PesananController::class, 'session'])->name('pesanan.session');
     Route::post('/pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
@@ -97,6 +97,13 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::post('/pesanan/import', [PesananController::class, 'import'])->name('pesanan.import');
     Route::delete('/pesanan/delete/{id}', [PesananController::class, 'delete'])->name('pesanan.delete');
     Route::get('/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
+
+    //Letterhead/Kop Surat
+    Route::get('/pesanan/addLetterhead', [PesananController::class, 'addLetterhead'])->name('pesanan.addLetterhead');
+    Route::post('/pesanan/storeLetterhead', [PesananController::class, 'storeLetterhead'])->name('pesanan.storeLetterhead');
+    Route::get('/pesanan/editLetterhead/{id}', [PesananController::class, 'editLetterhead'])->name('pesanan.editLetterhead');
+    Route::put('/pesanan/updateLetterhead/{id}', [PesananController::class, 'updateLetterhead'])->name('pesanan.updateLetterhead');
+    Route::delete('/pesanan/deleteLetterhead/{id}', [PesananController::class, 'deleteLetterhead'])->name('pesanan.deleteLetterhead');
 });
 
 Route::middleware(['auth'])->group(function () {
