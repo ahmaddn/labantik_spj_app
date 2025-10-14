@@ -139,8 +139,9 @@
                     </div>
                 </div>
 
+
                 <a href="{{ route('eksternal.pesanan.addSession') }}"
-                    class="btn btn-primary text-white px-4 py-2 rounded hover:bg-blue-600">
+                    class="btn btn-primary text-white px-4 py-2 rounded hover:bg-blue-600 @disabled($letterheads->isEmpty())">
                     <i class="fas fa-plus me-2"></i> Tambah Pesanan
                 </a>
             </div>
@@ -174,7 +175,8 @@
                                                     {{ $item->kegiatan->name ?? 'Belum diisi' }}
                                                     @if (!$item->kegiatanID)
                                                         <small class="text-muted d-block"><i
-                                                                class="fas fa-exclamation-triangle text-warning"></i> Perlu
+                                                                class="fas fa-exclamation-triangle text-warning"></i>
+                                                            Perlu
                                                             dilengkapi</small>
                                                     @endif
                                                 </td>
@@ -182,7 +184,8 @@
                                                     {{ $item->penyedia->company ?? 'Belum diisi' }}
                                                     @if (!$item->penyediaID)
                                                         <small class="text-muted d-block"><i
-                                                                class="fas fa-exclamation-triangle text-warning"></i> Perlu
+                                                                class="fas fa-exclamation-triangle text-warning"></i>
+                                                            Perlu
                                                             dilengkapi</small>
                                                     @endif
                                                 </td>
@@ -190,7 +193,8 @@
                                                     {{ $item->penerima->name ?? 'Belum diisi' }}
                                                     @if (!$item->penerimaID)
                                                         <small class="text-muted d-block"><i
-                                                                class="fas fa-exclamation-triangle text-warning"></i> Perlu
+                                                                class="fas fa-exclamation-triangle text-warning"></i>
+                                                            Perlu
                                                             dilengkapi</small>
                                                     @endif
                                                 </td>
@@ -318,7 +322,8 @@
                                         @endforeach
                                         @if ($pesanan->isEmpty())
                                             <tr>
-                                                <td colspan="7" class="text-center py-4 text-gray-500">Belum ada data
+                                                <td colspan="7" class="text-center py-4 text-gray-500">Belum
+                                                    ada data
                                                     pesanan.</td>
                                             </tr>
                                         @endif

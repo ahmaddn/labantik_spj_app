@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class PesananController extends Controller
 {
@@ -50,6 +51,8 @@ class PesananController extends Controller
 
     public function addForm()
     {
+        $letterheads = Letterhead::where('userID', Auth::id())->get();
+
         $data = session('data');
 
         if (!$data || !isset($data['type_num'])) {
@@ -57,7 +60,8 @@ class PesananController extends Controller
         }
 
         return view('eksternal.pesanan.addForm', [
-            'type_num' => $data['type_num']
+            'type_num' => $data['type_num'],
+            'letterheads' => $letterheads
         ]);
     }
 
@@ -68,7 +72,7 @@ class PesananController extends Controller
             return back()->withErrors(['error', 'Data Kegiatan Tidak Ditemukan!'])->withInput();
         }
         $request->validate([
-            'invoice_num'   => 'required|unique:pesanan|',
+            'invoice_num'   => 'required|unique:pesanan',
             'order_num'   => 'required|unique:pesanan',
             'note_num'   => 'required|unique:pesanan',
             'bast_num'   => 'required|unique:pesanan',
@@ -394,6 +398,7 @@ class PesananController extends Controller
     public function editBarang(Request $request)
     {
         $kegiatan = Kegiatan::findOrFail($request->kegiatanID);
+        $letterheads = Letterhead::where('userID', Auth::id())->get();
 
         $validated = $request->validate([
             'invoice_num'   => 'required',
@@ -423,7 +428,7 @@ class PesananController extends Controller
         session(['edit_pesanan' => $pesanan]);
         $barang = session('edit_barang');
 
-        return view('eksternal.pesanan.editBarang', compact('pesanan', 'barang'));
+        return view('eksternal.pesanan.editBarang', compact('pesanan',  'barang', 'letterheads'));
     }
 
     public function update(Request $request, $id)
@@ -572,5 +577,24 @@ class PesananController extends Controller
 
         return redirect()->route('eksternal.pesanan.index')
             ->with('success', 'Kop Surat berhasil ditambahkan.');
+    }
+
+    public function deleteLetterhead($id)
+    {
+        $letterhead = Letterhead::findOrFail($id);
+        if ($letterhead->userID != Auth::id()) {
+            return redirect()->route('eksternal.pesanan.index')
+                ->with('error', 'Anda tidak memiliki izin untuk menghapus kop surat ini.');
+        }
+
+        // Hapus file logo jika ada
+        if ($letterhead->logo && Storage::disk('public')->exists('logos/' . $letterhead->logo)) {
+            Storage::disk('public')->delete('logos/' . $letterhead->logo);
+        }
+
+        $letterhead->delete();
+
+        return redirect()->route('eksternal.pesanan.index')
+            ->with('success', 'Kop Surat berhasil dihapus.');
     }
 }

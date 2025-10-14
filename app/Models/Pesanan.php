@@ -32,6 +32,7 @@ class Pesanan extends Model
         'barangID',
         'bendaharaID',
         'kepsekID',
+        'letterheadID',
         'order_date',
         'prey',
         'total',
