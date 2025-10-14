@@ -71,7 +71,7 @@ class PesananController extends Controller
         if (!$kegiatan) {
             return back()->withErrors(['error', 'Data Kegiatan Tidak Ditemukan!'])->withInput();
         }
-    $request->validate([
+        $request->validate([
             'invoice_num'   => 'required|unique:pesanan',
             'order_num'   => 'required|unique:pesanan',
             'note_num'   => 'required|unique:pesanan',
