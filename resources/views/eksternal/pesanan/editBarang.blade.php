@@ -123,17 +123,14 @@
                                         @if ($i == $totalSteps - 1)
                                             <div class="col-md-6 mb-2">
                                                 <label>Kop Surat</label>
-                                                <select name="letterhead" class="form-control">
-                                                    <option value="">-- Pilih Kop Surat --</option>
-                                                    <option value="kop1"
-                                                        {{ old('letterhead') == 'kop1' ? 'selected' : '' }}>Kop Surat 1
-                                                    </option>
-                                                    <option value="kop2"
-                                                        {{ old('letterhead') == 'kop2' ? 'selected' : '' }}>Kop Surat 2
-                                                    </option>
-                                                    <option value="kop3"
-                                                        {{ old('letterhead') == 'kop3' ? 'selected' : '' }}>Kop Surat 3
-                                                    </option>
+                                                <select name="letterheadID" class="form-control">
+                                                    @foreach ($letterheads as $lethead)
+                                                        <option value="">-- Pilih Kop Surat --</option>
+                                                        <option value="{{ $lethead->id }}"
+                                                            {{ $lethead->id ? 'selected' : '' }}>
+                                                            {{ $lethead->name }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                                 @error('letterhead')
                                                     <small class="text-danger">{{ $message }}</small>

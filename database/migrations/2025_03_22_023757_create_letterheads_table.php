@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('letterheads', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->unsignedInteger('userID');
             $table->string('main_institution')->nullable();
             $table->string('sub_institution')->nullable();
