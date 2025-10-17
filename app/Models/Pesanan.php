@@ -34,7 +34,6 @@ class Pesanan extends Model
         'kepsekID',
         'letterheadID',
         'order_date',
-        'prey',
         'total',
         'profit',
         'paid',

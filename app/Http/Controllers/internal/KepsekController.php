@@ -85,7 +85,7 @@ class KepsekController extends Controller
         $request->validate([
             'name' => 'required',
             'nip' => 'required|regex:/^[A-Za-z0-9 \-]+$/',
-            'school' => 'nullable|numeric',
+            'school' => 'nullable',
             'address' => 'required',
         ]);
 

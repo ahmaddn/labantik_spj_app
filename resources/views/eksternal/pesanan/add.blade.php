@@ -18,6 +18,23 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title">Form Pesanan</h5>
+                @if (session('error'))
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {{ session('error') }}
+    </div>
+@endif
+
+@if ($errors->any())
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
             </div>
             <div class="card-body">
 
@@ -42,7 +59,7 @@
                             <div class="form-group">
                                 <label>Nomor Invoice</label>
                                 <input type="text" name="invoice_num" class="form-control"
-                                    value="{{ str_pad((int) old('invoice_num', $lastInvoiceNum) + 1, 3, '0', STR_PAD_LEFT) }}">
+                                    placeholder="contoh: 001/NamaPerusahaan/Kwitansi/IV/2025">
                                 @error('invoice_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -50,7 +67,7 @@
                             <div class="form-group">
                                 <label>Nomor Nota</label>
                                 <input type="text" name="note_num" class="form-control"
-                                    value="{{ str_pad((int) old('note_num', $lastNoteNum) + 1, 3, '0', STR_PAD_LEFT) }}">
+                                    placeholder="contoh: 001/NamaPerusahaan/Nota/IV/2025">
                                 @error('note_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -58,7 +75,7 @@
                             <div class="form-group">
                                 <label>Nomor Berita Acara Serah Terima</label>
                                 <input type="text" name="bast_num" class="form-control"
-                                    value="{{ str_pad((int) old('bast_num', $lastBastNum) + 1, 3, '0', STR_PAD_LEFT) }}">
+                                    placeholder="contoh: 001/NamaPerusahaan/BA/IV/2025">
                                 @error('bast_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -153,7 +170,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Tanggal Pesanan</label>
+                                <label>Titimangsa Tanggal Pesanan</label>
                                 <input type="date" name="order_date" class="form-control" min="2025-01-01"
                                     value="{{ old('order_date') }}">
                                 @error('order_date')
@@ -161,14 +178,14 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Tanggal Penagihan</label>
+                                <label>Titimangsa Tanggal Penagihan</label>
                                 <input type="date" name="billing" class="form-control" value="{{ old('billing') }}">
                                 @error('billing')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Tanggal Bayar</label>
+                                <label>Titimangsa Tanggal Bayar</label>
                                 <input type="date" name="paid" class="form-control" min="2025-01-01"
                                     value="{{ old('paid') }}">
                                 @error('paid')
@@ -176,21 +193,14 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Tanggal Diterima</label>
+                                <label>Titimangsa Tanggal Diterima</label>
                                 <input type="date" name="accepted" class="form-control" min="2025-01-01"
                                     value="{{ old('accepted') }}">
                                 @error('accepted')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label>Titimangsa</label>
-                                <input type="date" name="prey" class="form-control" min="2025-01-01"
-                                    value="{{ old('prey') }}">
-                                @error('prey')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
+                            
                             <div class="form-group">
                                 <label>Jumlah Jenis Barang</label>
                                 <input type="number" name="type_num" class="form-control"
