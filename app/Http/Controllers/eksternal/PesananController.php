@@ -505,7 +505,10 @@ class PesananController extends Controller
         // return response()->json($pesanan);
         $kepsek = Kepsek::where('userID', $userID)->first(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
 
-        return view('template', compact('pesanan', 'kepsek'));
+        // Prefer letterhead assigned to pesanan, otherwise fall back to user's first letterhead
+        $letterhead = $pesanan->letterhead ?? Letterhead::where('userID', $userID)->first();
+
+        return view('template', compact('pesanan', 'kepsek', 'letterhead'));
     }
 
     public function dashboard()
@@ -544,7 +547,7 @@ class PesananController extends Controller
             'address1' => 'required|string',
             'address2' => 'nullable|string',
             'email' => 'nullable|email|max:255',
-            'phone' => 'nullable|string|max:50',
+            'no_telp' => 'nullable|string|max:50',
             'fax' => 'nullable|string|max:50',
             'pos' => 'nullable|string|max:20',
             'npsn' => 'nullable|string|max:50',
@@ -567,7 +570,7 @@ class PesananController extends Controller
             'address1' => $request->address1,
             'address2' => $request->address2,
             'email' => $request->email,
-            'phone' => $request->phone,
+            'no_telp' => $request->no_telp,
             'fax' => $request->fax,
             'pos' => $request->pos,
             'npsn' => $request->npsn,

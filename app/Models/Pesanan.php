@@ -75,6 +75,11 @@ class Pesanan extends Model
         return $this->belongsTo(Kepsek::class, 'kepsekID', 'id');
     }
 
+    public function letterhead()
+    {
+        return $this->belongsTo(\App\Models\Letterhead::class, 'letterheadID', 'id');
+    }
+
     protected $casts = [
         'total' => 'decimal:2',
         'keuntungan' => 'decimal:2',

@@ -128,42 +128,39 @@
         <tr>
             <td width="10%" style="text-align: center; vertical-align: middle;
             ">
-                {{-- dynamic logo: prefer $logoUrl passed from controller, then Letterhead model logo in storage, fall back to public asset --}}
+                {{-- dynamic logo: prefer $logoUrl passed from controller, then $letterhead logo, fall back to public asset --}}
                 @php
-                    // Resolve logo URL safely
                     $logoUrl = $logoUrl ?? null;
                     if (empty($logoUrl)) {
-                        try {
-                            $letterhead = \App\Models\Letterhead::first();
-                        } catch (\Throwable $e) {
-                            $letterhead = null;
+                        $lh = $letterhead ?? null;
+                        if (!empty($lh) && !empty($lh->logo)) {
+                            if (filter_var($lh->logo, FILTER_VALIDATE_URL)) {
+                                $logoUrl = $lh->logo;
+                            } else {
+                                // logo stored as filename in 'logos/' directory on public disk
+                                $logoUrl = \Illuminate\Support\Facades\Storage::url('logos/' . $lh->logo);
+                            }
                         }
-                        if (!empty($letterhead) && !empty($letterhead->logo)) {
-                            // If logo already stores a full URL, use it. Otherwise assume it's stored in storage/app/public
-        if (filter_var($letterhead->logo, FILTER_VALIDATE_URL)) {
-            $logoUrl = $letterhead->logo;
-        } else {
-            $logoUrl = \Illuminate\Support\Facades\Storage::url($letterhead->logo);
-        }
-    }
-}
-// final fallback to bundled asset
-$logoUrl = $logoUrl ?: asset('jabar.png');
+                    }
+                    $logoUrl = $logoUrl ?: asset('jabar.png');
                 @endphp
                 <img src="{{ $logoUrl }}" width="100" style="margin-left:50px; display:block;" />
             </td>
             <td width="90%" style="text-align: center; vertical-align: middle;">
-                <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
-                    <span style="font-size: 29px;">CABANG DINAS PENDIDIKAN WILAYAH IX</span><br>
-                    <span style="font-size: 21px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
+                <strong style="font-size: 19px;">{{ $letterhead->main_institution }}<br>
+                    <span style="font-size: 29px;">{{ $letterhead->sub_institution }}</span><br>
+                    <span style="font-size: 21px;">{{ $letterhead->name }}</span></strong><br>
                 <div style="font-size: 13px; line-height: 1.15; font-weight: normal; align-text: justify;">
-                    Bidang Keahlian: Teknologi dan Rekayasa, Teknologi Informasi komunikasi, Bisnis dan Manajemen<br>
-                    Kampus 1: Jalan Sekolah Nomor 20 Desa Talagakulon Kecamatan Talaga Kabupaten Majalengka <br>
-                    Kampus 2: Jalan Talaga Bantarujeg Desa Mekarraharja Kecamatan Talaga Kabupaten Majalengka<br>
-                    Telpon ☎(0233) 319238 FAX ✉ (0233) 319238 POS 45463 NPSN: 20213872<br>
+                    Bidang Keahlian: {{ $letterhead->field }}<br>
+                    {{ $letterhead->address1 }} <br>
+                    {{ $letterhead->address2 }}<br>
+                    Telpon ☎{{ $letterhead->no_telp }} FAX ✉ {{ $letterhead->fax }} POS {{ $letterhead->pos }} NPSN:
+                    {{ $letterhead->npsn }}<br>
 
-                    Website 🌐 <a href="www.smkn1talaga.sch.id">www.smkn1talaga.sch.id</a> – Email 📧 <a
-                        href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
+                    Website 🌐 <a
+                        href="{{ $letterhead->website ?? 'https://www.smkn1talaga.sch.id' }}">{{ $letterhead->website ?? 'www.smkn1talaga.sch.id' }}</a>
+                    – Email 📧 <a
+                        href="mailto:{{ $letterhead->email ?? 'admin@smkn1talaga.sch.id' }}">{{ $letterhead->email ?? 'admin@smkn1talaga.sch.id' }}</a><br>
                 </div>
             </td>
         </tr>
@@ -298,7 +295,7 @@ $logoUrl = $logoUrl ?: asset('jabar.png');
                                 if (filter_var($letterhead->logo, FILTER_VALIDATE_URL)) {
                                     $logoUrl = $letterhead->logo;
                                 } else {
-                                    $logoUrl = \Illuminate\Support\Facades\Storage::url($letterhead->logo);
+                                    $logoUrl = \Illuminate\Support\Facades\Storage::url('logos/' . $letterhead->logo);
                                 }
                             }
                         }
@@ -307,18 +304,20 @@ $logoUrl = $logoUrl ?: asset('jabar.png');
                     <img src="{{ $logoUrl }}" width="100" style="margin-left:50px; display:block;" />
                 </td>
                 <td width="90%" style="text-align: center; vertical-align: middle;">
-                    <strong style="font-size: 19px;">PEMERINTAH DAERAH PROVINSI JAWA BARAT<br>
-                        <span style="font-size: 29px;">CABANG DINAS PENDIDIKAN WILAYAH IX</span><br>
-                        <span style="font-size: 21px;">SEKOLAH MENENGAH KEJURUAN NEGERI 1 TALAGA</span></strong><br>
+                    <strong style="font-size: 19px;">{{ $letterhead->main_institution }}<br>
+                        <span style="font-size: 29px;">{{ $letterhead->sub_institution }}</span><br>
+                        <span style="font-size: 21px;">{{ $letterhead->name }}</span></strong><br>
                     <div style="font-size: 13px; line-height: 1.15; font-weight: normal; align-text: justify;">
-                        Bidang Keahlian: Teknologi dan Rekayasa, Teknologi Informasi komunikasi, Bisnis dan
-                        Manajemen<br>
-                        Kampus 1: Jalan Sekolah Nomor 20 Desa Talagakulon Kecamatan Talaga Kabupaten Majalengka <br>
-                        Kampus 2: Jalan Talaga Bantarujeg Desa Mekarraharja Kecamatan Talaga Kabupaten Majalengka<br>
-                        Telpon ☎(0233) 319238 FAX ✉ (0233) 319238 POS 45463 NPSN: 20213872<br>
+                        Bidang Keahlian: {{ $letterhead->field }}<br>
+                        {{ $letterhead->address1 }} <br>
+                        {{ $letterhead->address2 }}<br>
+                        Telpon ☎{{ $letterhead->no_telp }} FAX ✉ {{ $letterhead->fax }} POS {{ $letterhead->pos }}
+                        NPSN: {{ $letterhead->npsn }}<br>
 
-                        Website 🌐 <a href="www.smkn1talaga.sch.id">www.smkn1talaga.sch.id</a> – Email 📧 <a
-                            href="mailto:admin@smkn1talaga.sch.id">admin@smkn1talaga.sch.id</a><br>
+                        Website 🌐 <a
+                            href="{{ $letterhead->website ?? 'https://www.smkn1talaga.sch.id' }}">{{ $letterhead->website ?? 'www.smkn1talaga.sch.id' }}</a>
+                        – Email 📧 <a
+                            href="mailto:{{ $letterhead->email ?? 'admin@smkn1talaga.sch.id' }}">{{ $letterhead->email ?? 'admin@smkn1talaga.sch.id' }}</a><br>
                     </div>
                 </td>
             </tr>
@@ -771,7 +770,8 @@ $logoUrl = $logoUrl ?: asset('jabar.png');
             <tr>
                 <td style="width:170px; padding-top:2px; padding-bottom:2px;">Nama</td>
                 <td style="width:10px; padding-top:2px; padding-bottom:2px;">:</td>
-                <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->delegation_name ?? '-' }}</td>
+                <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->penyedia->delegation_name ?? '-' }}
+                </td>
             </tr>
             <tr>
                 <td style="padding-top:2px; padding-bottom:2px;">Jabatan</td>

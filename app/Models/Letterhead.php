@@ -22,4 +22,9 @@ class Letterhead extends Model
         'email',
         'logo',
     ];
+
+    public function pesanan()
+    {
+        return $this->hasMany(\App\Models\Pesanan::class, 'letterheadID', 'id');
+    }
 }
