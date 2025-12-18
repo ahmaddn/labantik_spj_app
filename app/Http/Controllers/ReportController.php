@@ -17,7 +17,8 @@ class ReportController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Pesanan::where('userID', Auth::id())->with(['kegiatan', 'penerima'])->orderBy('order_date');
+    // Ambil pesanan terbaru dulu (newest -> oldest)
+    $query = Pesanan::where('userID', Auth::id())->with(['kegiatan', 'penerima'])->orderByDesc('order_date');
 
         // Apply date filters
         if ($request->start_date) {
@@ -38,7 +39,8 @@ class ReportController extends Controller
     public function exportExcel(Request $request)
     {
         // Query untuk pesanan dengan filter
-        $pesananQuery = Pesanan::where('userID', Auth::id())->with(['kegiatan', 'penerima'])->orderBy('order_date');
+    // Untuk export Excel: ambil pesanan terbaru terlebih dahulu
+    $pesananQuery = Pesanan::where('userID', Auth::id())->with(['kegiatan', 'penerima'])->orderByDesc('order_date');
 
         if ($request->start_date) {
             $pesananQuery->whereDate('order_date', '>=', $request->start_date);
@@ -51,7 +53,8 @@ class ReportController extends Controller
         $pesanan = $pesananQuery->get();
 
         // Query untuk expenditure dengan filter yang sama
-        $expenditureQuery = Expenditure::where('user_id', Auth::id())->orderBy('date');
+    // Ambil pengeluaran terbaru terlebih dahulu
+    $expenditureQuery = Expenditure::where('user_id', Auth::id())->orderByDesc('date');
 
         if ($request->start_date) {
             $expenditureQuery->whereDate('date', '>=', $request->start_date);
@@ -94,7 +97,10 @@ class ReportController extends Controller
             ]);
         }
 
-        $allTransactions = $allTransactions->sortBy('date')->values();
+        // Urutkan gabungan transaksi: terbaru (desc) -> lama
+        $allTransactions = $allTransactions->sortByDesc(function ($t) {
+            return $t['date'] ?? null;
+        })->values();
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();

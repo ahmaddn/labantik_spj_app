@@ -187,8 +187,8 @@
                 <td>Nama satuan Pendidikan<br>
                     Alamat Satuan Pendidikan<br>
                     Kategori Barang dan Jasa</td>
-                <td>: {{ $kepsek->school }} <br>
-                    : {{ $kepsek->address }}<br>
+                <td>: {{ $pesanan->kepsek->school ?? '-'}} <br>
+                    : {{ $pesanan->kepsek->address ?? '- '}}<br>
                     : {{ $pesanan->kegiatan->name ?? '-' }}</td>
             </tr>
         </table>
@@ -223,12 +223,12 @@
                 <tr>
                     <td>3.</td>
                     <td>Waktu serah terima</td>
-                    <td>{{ \Carbon\Carbon::parse($pesanan->kegiatan->accepted)->translatedFormat('d F Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($pesanan->accepted)->translatedFormat('d F Y') }}</td>
                 </tr>
                 <tr>
                     <td>4.</td>
                     <td>Lokasi serah terima</td>
-                    <td>{{ $kepsek->school }}</td>
+                    <td>{{ $pesanan->kepsek->school }}</td>
                 </tr>
                 <tr>
                     <td>5.</td>
@@ -268,11 +268,11 @@
 
         <div class="" style="margin-top: 100px;
         margin-left: 60%;">
-            Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}<br>
+            Majalengka, {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}<br>
             Pelaksana,<br><br><br><br><br>
             <strong
                 style="text-decoration: underline;">{{ $pesanan->kepsek->name ?? 'Nama Kepala Sekolah' }}</strong><br>
-            NIP. {{ $kepsek->nip ?? '-' }}
+            NIP. {{ $pesanan->kepsek->nip ?? '-' }}
         </div>
     </div>
 
@@ -367,7 +367,7 @@
             <tr>
                 <td style="width: 300px; padding-top: 0; padding-bottom: 0;">Nama</td>
                 <td style="padding-top: 0; padding-bottom: 0;">:</td>
-                <td style="padding-top: 0; padding-bottom: 0;">{{ $pesanan->kepsek->name }}</td>
+                <td style="padding-top: 0; padding-bottom: 0;">{{ $pesanan->kepsek->name ?? '-' }}</td>
             </tr>
             <tr>
                 <td style="padding-top: 0; padding-bottom: 0;">Jabatan</td>
@@ -377,7 +377,7 @@
             <tr>
                 <td style="padding-top: 0; padding-bottom: 0;">Alamat</td>
                 <td style="padding-top: 0; padding-bottom: 0;">:</td>
-                <td style="padding-top: 0; padding-bottom: 0;">{{ $kepsek->address }}</td>
+                <td style="padding-top: 0; padding-bottom: 0;">{{ $pesanan->kepsek->address }}</td>
             </tr>
 
             <tr>
@@ -504,7 +504,7 @@
                 <tr>
                     <td style="padding-top:0; padding-bottom:0;">3. Alamat Pengiriman Barang</td>
                     <td style="padding-top:0; padding-bottom:0;">:</td>
-                    <td style="padding-top:0; padding-bottom:0;">{{ $kepsek->address }}</td>
+                    <td style="padding-top:0; padding-bottom:0;">{{ $pesanan->kepsek->address }}</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -522,7 +522,7 @@
                     <tr>
                         <td style="width: 60%"></td>
                         <td style="vertical-align:top; padding-top: 0; padding-bottom: 0;">
-                            Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}
+                            Majalengka, {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}
                         </td>
                     </tr>
                     <tr>
@@ -532,7 +532,7 @@
                         </td>
                         <td style="vertical-align:top; padding-top: 0; padding-bottom: 0;">
                             Untuk dan atas nama<br>
-                            Kepala {{ $kepsek->school }}
+                            Kepala {{ $pesanan->kepsek->school }}
                         </td>
                     </tr>
                     <tr>
@@ -548,7 +548,7 @@
                             <br>
                             <br>
                             <strong><u>{{ $pesanan->kepsek->name }}</u></strong><br>
-                            NIP. {{ $kepsek->nip }}
+                            NIP. {{ $pesanan->kepsek->nip }}
                         </td>
                     </tr>
                 </table>
@@ -599,7 +599,7 @@
                 </div>
             </div>
             <div style="text-align:left; min-width:300px; padding-left:42%;">
-                Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}<br>
+                Majalengka, {{ \Carbon\Carbon::parse($pesanan->paid)->translatedFormat('d F Y') }}<br>
                 {{ $pesanan->penyedia->company ?? '-' }}<br><br><br><br><br><br><br><br>
                 <span
                     style="font-weight:bold; text-decoration:underline;">{{ $pesanan->penyedia->delegation_name ?? '-' }}</span>
@@ -612,10 +612,10 @@
                 Lunas dibayar :
                 {{ \Carbon\Carbon::parse($pesanan->paid)->translatedFormat('d F Y') }}<br>
                 Setuju dibayar,<br>
-                Kepala {{ $kepsek->school }}<br>
+                Kepala {{ $pesanan->kepsek->school }}<br>
                 <br><br><br><br><br>
                 <b><u>{{ $pesanan->kepsek->name }}</u></b><br>
-                NIP. {{ $kepsek->nip ?? '-' }}
+                NIP. {{ $pesanan->kepsek->nip ?? '-' }}
             </td>
             <td style="vertical-align: top; text-align: left; width: 50%; border: none;">
                 Tanggal Pemesanan :
@@ -642,12 +642,12 @@
             <tr>
                 <td style="width:80px;">Tn/Ny</td>
                 <td style="width:10px;">:</td>
-                <td>{{ $kepsek->school }}</td>
+                <td>{{ $pesanan->kepsek->school }}</td>
             </tr>
             <tr>
                 <td>Di</td>
                 <td>:</td>
-                <td>{{ $kepsek->address }}</td>
+                <td>{{ $pesanan->kepsek->address }}</td>
             </tr>
         </table>
 
@@ -711,7 +711,7 @@
                 <tr>
                     <td style=" width: 60%"></td>
                     <td style="text-align: left; ">
-                        Majalengka, {{ \Carbon\Carbon::parse($pesanan->prey)->translatedFormat('d F Y') }}<br>
+                        Majalengka, {{ \Carbon\Carbon::parse($pesanan->paid)->translatedFormat('d F Y') }}<br>
                     </td>
                 </tr>
 
@@ -810,12 +810,12 @@
             <tr>
                 <td style="padding-top:2px; padding-bottom:2px;">Nama Instansi</td>
                 <td style="padding-top:2px; padding-bottom:2px;">:</td>
-                <td style="padding-top:2px; padding-bottom:2px;">{{ $kepsek->school }}</td>
+                <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->kepsek->school }}</td>
             </tr>
             <tr>
                 <td style="padding-top:2px; padding-bottom:2px;">Alamat</td>
                 <td style="padding-top:2px; padding-bottom:2px;">:</td>
-                <td style="padding-top:2px; padding-bottom:2px;">{{ $kepsek->address ?? '-' }}</td>
+                <td style="padding-top:2px; padding-bottom:2px;">{{ $pesanan->kepsek->address ?? '-' }}</td>
             </tr>
             <tr>
                 <td colspan="3" style="padding-top:2px; padding-bottom:2px;">Sebagai pihak yang menerima,
@@ -905,7 +905,7 @@
                                 <div style="text-align: left; vertical-align: bottom; margin-top: 70px;">
                                     <strong
                                         style="text-decoration:underline;">{{ $pesanan->kepsek->name ?? '-' }}</strong><br>
-                                    NIP. {{ $kepsek->nip ?? '-' }}
+                                    NIP. {{ $pesanan->kepsek->nip ?? '-' }}
                                 </div>
                             </div>
                         </td>
@@ -973,12 +973,12 @@
                             <tr>
                                 <td style="padding:0;">Nama Perusahaan</td>
                                 <td style="padding:0;">:</td>
-                                <td style="padding:0;" class="break-cell">{{ $kepsek->school }}</td>
+                                <td style="padding:0;" class="break-cell">{{ $pesanan->kepsek->school }}</td>
                             </tr>
                             <tr>
                                 <td style="padding:0;">Alamat Lengkap</td>
                                 <td style="padding:0;">:</td>
-                                <td style="padding:0;" class="break-cell">{{ $kepsek->address ?? '-' }}</td>
+                                <td style="padding:0;" class="break-cell">{{ $pesanan->kepsek->address ?? '-' }}</td>
                             </tr>
                             <tr>
                                 <td style="padding:0;">Kode POS</td>

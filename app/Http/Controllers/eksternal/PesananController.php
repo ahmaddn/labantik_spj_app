@@ -25,7 +25,9 @@ class PesananController extends Controller
     {
         $id = Auth::id();
         $letterheads = Letterhead::where('userID', $id)->get();
-        $pesanan = Pesanan::with(['kegiatan', 'penyedia', 'penerima', 'barang'])->where('userID', $id)->get();
+        $pesanan = Pesanan::with(['kegiatan','penyedia','penerima','barang','bendahara'])
+        ->orderBy('created_at', 'desc') // terbaru dulu
+        ->get();
         return view('eksternal.pesanan.index', compact('letterheads', 'pesanan'));
     }
     public function addSession()
@@ -86,7 +88,6 @@ class PesananController extends Controller
             'accepted'          => "required|date|after_or_equal:$kegiatan->order",
             'billing'          => "nullable|date",
             'paid'          => "required|date",
-            'prey' => 'required|date',
             'order_date' => 'required|date',
             'pic' => 'required|string'
         ]);
@@ -223,7 +224,6 @@ class PesananController extends Controller
                     'order_date' => \Carbon\Carbon::now(),
                     'paid' => \Carbon\Carbon::now()->addDays(30),
                     'accepted' => \Carbon\Carbon::now(),
-                    'prey' => \Carbon\Carbon::now(),
                     'pic' => 'Import Excel - ' . \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
                     'kegiatanID' => null,
                     'penyediaID' => null,
@@ -416,7 +416,7 @@ class PesananController extends Controller
             'accepted'          => "required|date|after_or_equal:$kegiatan->order",
             'billing'          => "nullable|date",
             'paid'          => "required|date",
-            'prey' => 'required|date',
+            
             'order_date' => 'required|date',
             'pic' => 'required|string'
         ]);
@@ -501,14 +501,13 @@ class PesananController extends Controller
     public function export($id)
     {
         $userID = Auth::id();
-        $pesanan = Pesanan::with(['barang', 'penyedia', 'bendahara'])->findOrFail($id);
-        // return response()->json($pesanan);
-        $kepsek = Kepsek::where('userID', $userID)->first(); // Ambil data kepala sekolah terakhir (atau sesuaikan)
+        $pesanan = Pesanan::with(['barang', 'penyedia', 'bendahara', 'kepsek'])->findOrFail($id);
+
 
         // Prefer letterhead assigned to pesanan, otherwise fall back to user's first letterhead
         $letterhead = $pesanan->letterhead ?? Letterhead::where('userID', $userID)->first();
 
-        return view('template', compact('pesanan', 'kepsek', 'letterhead'));
+        return view('template', compact('pesanan', 'letterhead'));
     }
 
     public function dashboard()
