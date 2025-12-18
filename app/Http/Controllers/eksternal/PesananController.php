@@ -25,9 +25,9 @@ class PesananController extends Controller
     {
         $id = Auth::id();
         $letterheads = Letterhead::where('userID', $id)->get();
-        $pesanan = Pesanan::with(['kegiatan','penyedia','penerima','barang','bendahara'])
-        ->orderBy('created_at', 'desc') // terbaru dulu
-        ->get();
+        $pesanan = Pesanan::with(['kegiatan', 'penyedia', 'penerima', 'barang', 'bendahara'])
+            ->orderBy('created_at', 'desc') // terbaru dulu
+            ->get();
         return view('eksternal.pesanan.index', compact('letterheads', 'pesanan'));
     }
     public function addSession()
@@ -416,7 +416,7 @@ class PesananController extends Controller
             'accepted'          => "required|date|after_or_equal:$kegiatan->order",
             'billing'          => "nullable|date",
             'paid'          => "required|date",
-            
+
             'order_date' => 'required|date',
             'pic' => 'required|string'
         ]);

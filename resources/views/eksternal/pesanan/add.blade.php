@@ -19,22 +19,22 @@
             <div class="card-header">
                 <h5 class="card-title">Form Pesanan</h5>
                 @if (session('error'))
-    <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        {{ session('error') }}
-    </div>
-@endif
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        {{ session('error') }}
+                    </div>
+                @endif
 
-@if ($errors->any())
-    <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
             <div class="card-body">
 
@@ -59,7 +59,7 @@
                             <div class="form-group">
                                 <label>Nomor Invoice</label>
                                 <input type="text" name="invoice_num" class="form-control"
-                                    placeholder="contoh: 001/NamaPerusahaan/Kwitansi/IV/2025">
+                                    value="{{ str_pad((int) old('invoice_num', $lastInvoiceNum) + 1, 3, '0', STR_PAD_LEFT) }}">
                                 @error('invoice_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -67,7 +67,7 @@
                             <div class="form-group">
                                 <label>Nomor Nota</label>
                                 <input type="text" name="note_num" class="form-control"
-                                    placeholder="contoh: 001/NamaPerusahaan/Nota/IV/2025">
+                                    value="{{ str_pad((int) old('note_num', $lastNoteNum) + 1, 3, '0', STR_PAD_LEFT) }}">
                                 @error('note_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label>Nomor Berita Acara Serah Terima</label>
                                 <input type="text" name="bast_num" class="form-control"
-                                    placeholder="contoh: 001/NamaPerusahaan/BA/IV/2025">
+                                    value="{{ str_pad((int) old('bast_num', $lastBastNum) + 1, 3, '0', STR_PAD_LEFT) }}">
                                 @error('bast_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -200,7 +200,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            
+
                             <div class="form-group">
                                 <label>Jumlah Jenis Barang</label>
                                 <input type="number" name="type_num" class="form-control"
