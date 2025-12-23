@@ -25,7 +25,7 @@ class PesananController extends Controller
     {
         $id = Auth::id();
         $letterheads = Letterhead::where('userID', $id)->get();
-        $pesanan = Pesanan::with(['kegiatan', 'penyedia', 'penerima', 'barang', 'bendahara'])
+        $pesanan = Pesanan::where('userID', $id)->with(['kegiatan', 'penyedia', 'penerima', 'barang', 'bendahara'])
             ->orderBy('created_at', 'desc') // terbaru dulu
             ->get();
         return view('eksternal.pesanan.index', compact('letterheads', 'pesanan'));
