@@ -1105,11 +1105,11 @@
                 <td style="width:70%; vertical-align:top;">
                     <strong>Cara Pembayaran</strong><br>
                     Transfer via Bank {{ $pesanan->penyedia->bank }}<br>
-                    a.n CV Techria Indonesia<br>
+                    a.n {{ $pesanan->penyedia->company }}<br>
                     No. Rek : {{ $pesanan->penyedia->account ?? '-' }}<br>
                 </td>
                 <td style="width:30%; text-align:justify; vertical-align:top;">
-                    CV Techria Indonesia<br>
+                    {{ $pesanan->penyedia->company }}<br>
                     {{ $pesanan->penyedia->delegate_position }},<br><br><br>
                     <strong>{{ $pesanan->penyedia->delegation_name ?? '-' }}</strong>
                 </td>
