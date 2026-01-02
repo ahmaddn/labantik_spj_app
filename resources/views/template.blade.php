@@ -187,8 +187,8 @@
                 <td>Nama satuan Pendidikan<br>
                     Alamat Satuan Pendidikan<br>
                     Kategori Barang dan Jasa</td>
-                <td>: {{ $pesanan->kepsek->school ?? '-'}} <br>
-                    : {{ $pesanan->kepsek->address ?? '- '}}<br>
+                <td>: {{ $pesanan->kepsek->school ?? '-' }} <br>
+                    : {{ $pesanan->kepsek->address ?? '- ' }}<br>
                     : {{ $pesanan->kegiatan->name ?? '-' }}</td>
             </tr>
         </table>
@@ -334,8 +334,10 @@
 
     <div class="konten-utama">
         <div class="text-center">
-            <h4 style="margin-bottom: 3px ">SURAT PESANAN</h4>
-            <p style="margin-top: 7px">Nomor: {{ $pesanan->order_num }}</p>
+            <h4 style="margin-bottom: 3px">SURAT PESANAN</h4>
+            <p style="margin-top: 7px; {{ empty($pesanan->order_num) ? 'text-align: left;' : '' }}">
+                Nomor: {{ $pesanan->order_num ?? '' }}
+            </p>
         </div>
 
         <table class="tulisan" style="border: none;">
@@ -497,8 +499,13 @@
                     <td style="padding-top:0; padding-bottom:0;">2. Waktu Penyelesaian</td>
                     <td style="padding-top:0; padding-bottom:0;">:</td>
                     <td style="padding-top:0; padding-bottom:0;">
-                        {{ \Carbon\Carbon::parse($pesanan->kegiatan->order)->diffInDays(\Carbon\Carbon::parse($pesanan->accepted)) }}
-                        Hari Kalender
+                        @php
+                            $orderDate = \Carbon\Carbon::parse($pesanan->kegiatan->order);
+                            $acceptedDate = \Carbon\Carbon::parse($pesanan->accepted);
+                            $hariKalender = $orderDate->diffInDays($acceptedDate);
+                            $hariKalender = $hariKalender == 0 ? 1 : $hariKalender;
+                        @endphp
+                        {{ $hariKalender }} Hari Kalender
                     </td>
                 </tr>
                 <tr>
@@ -882,16 +889,17 @@
                 </tr>
                 <tr>
                     <td style="text-align:left;">
-                        <strong style="text-decoration:underline;">{{ $pesanan->penerima->name ?? '-' }}</strong><br>
-                        NIP. {{ $pesanan->penerima->nip ?? '-' }}
-                    </td>
-                    <td style="text-align:left;">
                         <strong
                             style="text-decoration:underline;">{{ $pesanan->penyedia->delegation_name ?? '-' }}</strong><br>
                     </td>
+                    <td style="text-align:left;">
+                        <strong style="text-decoration:underline;">{{ $pesanan->penerima->name ?? '-' }}</strong><br>
+                        NIP. {{ $pesanan->penerima->nip ?? '-' }}
+                    </td>
+
                 </tr>
             </table>
-            <div style="display: flex; justify-content: center; margin-top:-70px;">
+            <div style="display: flex; justify-content: center; margin-top:-300;">
                 <table class="no-border" style="width: 50%; border: none;">
                     <tr>
                         <td style="text-align: center;">
@@ -978,7 +986,8 @@
                             <tr>
                                 <td style="padding:0;">Alamat Lengkap</td>
                                 <td style="padding:0;">:</td>
-                                <td style="padding:0;" class="break-cell">{{ $pesanan->kepsek->address ?? '-' }}</td>
+                                <td style="padding:0;" class="break-cell">{{ $pesanan->kepsek->address ?? '-' }}
+                                </td>
                             </tr>
                             <tr>
                                 <td style="padding:0;">Kode POS</td>

@@ -25,7 +25,7 @@ class PesananController extends Controller
     {
         $id = Auth::id();
         $letterheads = Letterhead::where('userID', $id)->get();
-        $pesanan = Pesanan::with(['kegiatan', 'penyedia', 'penerima', 'barang', 'bendahara'])
+        $pesanan = Pesanan::where('userID', $id)->with(['kegiatan', 'penyedia', 'penerima', 'barang', 'bendahara'])
             ->orderBy('created_at', 'desc') // terbaru dulu
             ->get();
         return view('eksternal.pesanan.index', compact('letterheads', 'pesanan'));
@@ -37,10 +37,10 @@ class PesananController extends Controller
         $lastNoteNum = Pesanan::where('userID', Auth::id())->max(DB::raw('CAST(note_num AS UNSIGNED)'));
         $lastBastNum = Pesanan::where('userID', Auth::id())->max(DB::raw('CAST(bast_num AS UNSIGNED)'));
 
-        $lastInvoiceNum = $lastInvoiceNum ??= 0;
-        $lastOrderNum = $lastOrderNum ??= 0;
-        $lastNoteNum = $lastNoteNum ??= 0;
-        $lastBastNum = $lastBastNum ??= 0;
+        $lastInvoiceNum = $lastInvoiceNum ?? 0;
+        $lastOrderNum = $lastOrderNum ?? 0;
+        $lastNoteNum = $lastNoteNum ?? 0;
+        $lastBastNum = $lastBastNum ?? 0;
 
         $id = Auth::id();
         $kegiatan = Kegiatan::where('userID', $id)->get();
@@ -48,7 +48,26 @@ class PesananController extends Controller
         $penerima = Penerima::where('userID', $id)->get();
         $bendahara = Bendahara::where('userID', $id)->get();
         $kepsek = Kepsek::where('userID', $id)->get();
-        return view('eksternal.pesanan.add', compact('kegiatan', 'penyedia', 'kepsek', 'penerima', 'bendahara', 'lastInvoiceNum', 'lastOrderNum', 'lastNoteNum', 'lastBastNum'));
+
+        return view('eksternal.pesanan.add', compact(
+            'kegiatan',
+            'penyedia',
+            'kepsek',
+            'penerima',
+            'bendahara',
+            'lastInvoiceNum',
+            'lastOrderNum',
+            'lastNoteNum',
+            'lastBastNum'
+        ));
+    }
+
+    public function backToSession()
+    {
+        $data = session('data');
+
+        return redirect()->route('eksternal.pesanan.addSession')
+            ->withInput($data);
     }
 
     public function addForm()
@@ -69,31 +88,32 @@ class PesananController extends Controller
 
     public function session(Request $request)
     {
-        $kegiatan = Kegiatan::find($request->kegiatanID);
-        if (!$kegiatan) {
-            return back()->withErrors(['error', 'Data Kegiatan Tidak Ditemukan!'])->withInput();
+        if ($request->kegiatanID) {
+            $kegiatan = Kegiatan::find($request->kegiatanID);
         }
-        $request->validate([
-            'invoice_num'   => 'required|unique:pesanan',
-            'order_num'   => 'required|unique:pesanan',
-            'note_num'   => 'required|unique:pesanan',
-            'bast_num'   => 'required|unique:pesanan',
-            'tax'   => 'required|numeric',
-            'shipping_cost'   => 'required',
-            'kegiatanID'    => 'required|exists:kegiatan,id',
-            'penyediaID'    => 'required|exists:penyedia,id',
-            'penerimaID'    => 'required|exists:penerima,id',
-            'bendaharaID'   => 'required|exists:bendahara,id',
-            'kepsekID'   => 'required|exists:kepsek,id',
-            'accepted'          => "required|date|after_or_equal:$kegiatan->order",
-            'billing'          => "nullable|date",
-            'paid'          => "required|date",
-            'order_date' => 'required|date',
-            'pic' => 'required|string'
+
+        $validated = $request->validate([
+            'order_num' => 'required',
+            'invoice_num' => 'required',
+            'note_num' => 'required',
+            'bast_num' => 'required',
+            'kepsekID' => 'required',
+            'bendaharaID' => 'required',
+            'penerimaID' => 'required',
+            'kegiatanID' => 'required',
+            'penyediaID' => 'required',
+            'order_date' => 'nullable|date',
+            'billing' => 'nullable|date',
+            'paid' => 'required|date',
+            'accepted' => "required|date|after_or_equal:$kegiatan->order",
+            'type_num' => 'required|integer|min:1',
+            'tax' => 'nullable|numeric',
+            'shipping_cost' => 'nullable|numeric',
+            'pic' => 'nullable|string',
         ]);
 
-        session(['data' => $request->except('_token')]);
-
+        session(['data' => $validated]);
+        session()->flash('old_input', $validated);
         return redirect()->route('eksternal.pesanan.addForm');
     }
 
