@@ -44,7 +44,7 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('userID');
             $table->string('invoice_num');
-            $table->string('order_num');
+            $table->string('order_num')->nullable();
             $table->string('note_num');
             $table->string('bast_num');
             $table->integer('type_num');

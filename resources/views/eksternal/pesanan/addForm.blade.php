@@ -29,10 +29,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                <form action="{{ route('eksternal.pesanan.backToSession') }}" method="POST" style="display: inline;">
-                    @csrf
-                    <button type="submit" class="btn btn-secondary">Kembali</button>
-                </form>
+                <div class="d-flex justify-content-end">
+                    <form action="{{ route('eksternal.pesanan.backToSession') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></button>
+                    </form>
+                </div>
 
                 <div id="basic-pills-wizard" class="twitter-bs-wizard wizard">
                     <ul class="twitter-bs-wizard-nav nav nav-pills nav-justified">

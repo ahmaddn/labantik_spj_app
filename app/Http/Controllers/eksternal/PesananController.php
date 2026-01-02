@@ -93,7 +93,7 @@ class PesananController extends Controller
         }
 
         $validated = $request->validate([
-            'order_num' => 'required',
+            'order_num' => 'nullable',
             'invoice_num' => 'required',
             'note_num' => 'required',
             'bast_num' => 'required',
@@ -422,7 +422,7 @@ class PesananController extends Controller
 
         $validated = $request->validate([
             'invoice_num'   => 'required',
-            'order_num'   => 'required',
+            'order_num'   => 'nullable',
             'note_num'   => 'required',
             'bast_num'   => 'required',
             'type_num'   => 'required',
