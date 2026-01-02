@@ -299,7 +299,7 @@
                                 }
                             }
                         }
-                        $logoUrl = $logoUrl ?: asset('jabar.png');
+                        $logoUrl = $logoUrl ?? asset('jabar.png');
                     @endphp
                     <img src="{{ $logoUrl }}" width="100" style="margin-left:50px; display:block;" />
                 </td>
@@ -500,7 +500,7 @@
                     <td style="padding-top:0; padding-bottom:0;">:</td>
                     <td style="padding-top:0; padding-bottom:0;">
                         @php
-                            $orderDate = \Carbon\Carbon::parse($pesanan->kegiatan->order);
+                            $orderDate = \Carbon\Carbon::parse($pesanan->order_date);
                             $acceptedDate = \Carbon\Carbon::parse($pesanan->accepted);
                             $hariKalender = $orderDate->diffInDays($acceptedDate);
                             $hariKalender = $hariKalender == 0 ? 1 : $hariKalender;
