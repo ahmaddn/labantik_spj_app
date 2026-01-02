@@ -29,6 +29,10 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                <form action="{{ route('eksternal.pesanan.backToSession') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn btn-secondary">Kembali</button>
+                </form>
 
                 <div id="basic-pills-wizard" class="twitter-bs-wizard wizard">
                     <ul class="twitter-bs-wizard-nav nav nav-pills nav-justified">
@@ -157,7 +161,6 @@
                                             @enderror
                                         </div>
                                     </div>
-
                                     <ul class="pager wizard twitter-bs-wizard-pager-link mt-3">
                                         @if ($i > 0)
                                             <li class="previous me-2"><a href="javascript:;"

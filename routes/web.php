@@ -24,11 +24,11 @@ Route::get('/register', function () {
     return view('auth.register');
 });
 
-Route::get('/register', [RegisterUserController::class, 'create'])->name('register');
+Route::get('/register', [RegisterUserController::class, 'create'])->middleware('guest')->name('register');
 Route::post('/register', [RegisterUserController::class, 'store']);
 
 
-Route::get('/login', [LoginUserController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [LoginUserController::class, 'showLoginForm'])->middleware('guest')->name('login');
 Route::post('/login', [LoginUserController::class, 'login']);
 Route::post('/logout', [LoginUserController::class, 'logout'])->name('logout');
 
@@ -85,6 +85,8 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::delete('/delete/{id}', [KegiatanController::class, 'deleteKegiatan'])->name('kegiatan.deleteKegiatan');
 
     //Pesanan
+    Route::post('/pesanan/back-to-session', [PesananController::class, 'backToSession'])
+        ->name('pesanan.backToSession');
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan.index');
     Route::get('/pesanan/addSession', [PesananController::class, 'addSession'])->name('pesanan.addSession');
     Route::get('/pesanan/addForm', [PesananController::class, 'addForm'])->name('pesanan.addForm');

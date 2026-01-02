@@ -51,15 +51,15 @@
                             <div class="form-group">
                                 <label>Nomor Pesanan</label>
                                 <input type="text" name="order_num" class="form-control"
-                                    value="{{ str_pad((int) old('order_num', $lastOrderNum) + 1, 3, '0', STR_PAD_LEFT) }}">
+                                    value="{{ old('order_num', $sessionData['order_num'] ?? str_pad((int) $lastOrderNum + 1, 3, '0', STR_PAD_LEFT)) }}">
                                 @error('order_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Nomor Invoice</label>
+                                <label>Nomor Invoice (contoh: 001/NamaPerusahaan/Kwitansi/IV/2025)</label>
                                 <input type="text" name="invoice_num" class="form-control"
-                                    value="{{ str_pad((int) old('invoice_num', $lastInvoiceNum) + 1, 3, '0', STR_PAD_LEFT) }}">
+                                    value="{{ old('invoice_num', $sessionData['invoice_num'] ?? str_pad((int) $lastInvoiceNum + 1, 3, '0', STR_PAD_LEFT)) }}">
                                 @error('invoice_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -67,7 +67,7 @@
                             <div class="form-group">
                                 <label>Nomor Nota</label>
                                 <input type="text" name="note_num" class="form-control"
-                                    value="{{ str_pad((int) old('note_num', $lastNoteNum) + 1, 3, '0', STR_PAD_LEFT) }}">
+                                    value="{{ old('note_num', $sessionData['note_num'] ?? str_pad((int) $lastNoteNum + 1, 3, '0', STR_PAD_LEFT)) }}">
                                 @error('note_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label>Nomor Berita Acara Serah Terima</label>
                                 <input type="text" name="bast_num" class="form-control"
-                                    value="{{ str_pad((int) old('bast_num', $lastBastNum) + 1, 3, '0', STR_PAD_LEFT) }}">
+                                    value="{{ old('bast_num', $sessionData['bast_num'] ?? str_pad((int) $lastBastNum + 1, 3, '0', STR_PAD_LEFT)) }}">
                                 @error('bast_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -88,7 +88,8 @@
                                     </option>
                                     @foreach ($kepsek as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ old('kepsekID') === $item->id ? 'selected' : '' }}>{{ $item->name }}
+                                            {{ old('kepsekID', $sessionData['kepsekID'] ?? '') == $item->id ? 'selected' : '' }}>
+                                            {{ $item->name }}
                                         </option>
                                     @endforeach
 
@@ -106,7 +107,8 @@
                                     </option>
                                     @foreach ($bendahara as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ old('bendaharaID') === $item->id ? 'selected' : '' }}>{{ $item->name }}
+                                            {{ old('bendaharaID', $sessionData['bendaharaID'] ?? '') == $item->id ? 'selected' : '' }}>
+                                            {{ $item->name }}
                                         </option>
                                     @endforeach
 
@@ -124,7 +126,8 @@
                                     </option>
                                     @foreach ($penerima as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ old('penerimaID') === $item->id ? 'selected' : '' }}>{{ $item->name }}
+                                            {{ old('penerimaID', $sessionData['penerimaID'] ?? '') == $item->id ? 'selected' : '' }}>
+                                            {{ $item->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -141,7 +144,8 @@
                                     </option>
                                     @foreach ($kegiatan as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ old('kegiatanID') === $item->id ? 'selected' : '' }}>{{ $item->name }}
+                                            {{ old('kegiatanID', $sessionData['kegiatanID'] ?? '') == $item->id ? 'selected' : '' }}>
+                                            {{ $item->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -158,7 +162,8 @@
                                     </option>
                                     @foreach ($penyedia as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ old('penyediaID') === $item->id ? 'selected' : '' }}>{{ $item->company }}
+                                            {{ old('penyediaID', $sessionData['penyediaID'] ?? '') == $item->id ? 'selected' : '' }}>
+                                            {{ $item->company }}
                                         </option>
                                     @endforeach
                                 </select>
