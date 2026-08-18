@@ -127,6 +127,37 @@
 
 <body>
 
+    @php
+        $anyEmpty = empty($pesanan->order_num) || empty($pesanan->invoice_num) || empty($pesanan->note_num) || empty($pesanan->bast_num);
+    @endphp
+
+    <div class="no-print" style="position: fixed; top: 20px; left: 20px; z-index: 9999; background: #ffffff; border: 1px solid #e2e8f0; padding: 20px; border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); width: 280px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1e293b;">
+        <h5 style="margin-top: 0; margin-bottom: 12px; font-size: 14px; color: #0f172a; font-weight: 600; letter-spacing: -0.025em; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px;">Toolbar Dokumen</h5>
+        
+        <button type="button" onclick="window.print()" style="width: 100%; padding: 10px 16px; background: #2563eb; color: #ffffff; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; margin-bottom: 14px; font-size: 13px; transition: background 0.2s ease-in-out; text-align: center;">
+            Cetak Dokumen (PDF)
+        </button>
+
+        @if($anyEmpty)
+            <div style="margin-bottom: 12px; border-top: 1px solid #f1f5f9; padding-top: 12px;">
+                <label style="font-size: 12px; display: block; margin-bottom: 8px; color: #475569; font-weight: 500;">Geser Posisi Nomor Kosong:</label>
+                <input type="range" id="global-padding-slider" min="0" max="80" value="0" style="width: 100%; cursor: pointer; accent-color: #2563eb;" oninput="adjustGlobalNomorPadding(this.value)">
+            </div>
+            <div style="font-size: 11px; color: #64748b; line-height: 1.4;">Pengatur geser aktif karena terdapat nomor dokumen yang kosong.</div>
+        @endif
+    </div>
+
+    @if($anyEmpty)
+    <script class="no-print">
+        function adjustGlobalNomorPadding(val) {
+            const emptyNumElements = document.querySelectorAll('.empty-nomor-p');
+            emptyNumElements.forEach(function(el) {
+                el.style.paddingLeft = val + '%';
+            });
+        }
+    </script>
+    @endif
+
     <table width="100%" class="no-border" style="border: none; margin-bottom: 0;">
         <tr>
             <td width="10%" style="text-align: center; vertical-align: middle;
@@ -338,14 +369,8 @@
     <div class="konten-utama">
         <div class="text-center">
             <h4 style="margin-bottom: 3px">SURAT PESANAN</h4>
-            <p id="order-num-p" style="margin-top: 7px; {{ empty($pesanan->order_num) ? 'text-align: left;' : '' }}">
+            <p id="order-num-p" class="{{ empty($pesanan->order_num) ? 'empty-nomor-p' : '' }}" style="margin-top: 7px; {{ empty($pesanan->order_num) ? 'text-align: left; padding-left: 0%; transition: padding-left 0.1s ease;' : '' }}">
                 Nomor: {{ $pesanan->order_num ?? '' }}
-                @if(empty($pesanan->order_num))
-                    <span class="no-print" style="margin-left: 10px; font-size: 12px; font-family: Arial, sans-serif;">
-                        <button type="button" onclick="document.getElementById('order-num-p').style.textAlign='left'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Left</button>
-                        <button type="button" onclick="document.getElementById('order-num-p').style.textAlign='right'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Right</button>
-                    </span>
-                @endif
             </p>
         </div>
 
@@ -586,15 +611,8 @@
     <div class="page-break"></div>
     <div class="page with-bg">
         <h3 class="text-center">KWITANSI</h3>
-        <div id="invoice-num-div" style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
-            <span>Nomor : {{ $pesanan->invoice_num ?? '' }}
-                @if(empty($pesanan->invoice_num))
-                    <span class="no-print" style="margin-left: 10px; font-size: 12px; font-family: Arial, sans-serif; display: inline-block;">
-                        <button type="button" onclick="document.getElementById('invoice-num-div').style.textAlign='left'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Left</button>
-                        <button type="button" onclick="document.getElementById('invoice-num-div').style.textAlign='right'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Right</button>
-                    </span>
-                @endif
-            </span>
+        <div id="invoice-num-div" class="{{ empty($pesanan->invoice_num) ? 'empty-nomor-p' : '' }}" style="width:100%; {{ empty($pesanan->invoice_num) ? 'text-align: left; padding-left: 0%; transition: padding-left 0.1s ease;' : 'text-align: center;' }} margin-bottom:10px; font-size:19px;">
+            <span>Nomor : {{ $pesanan->invoice_num ?? '' }}</span>
         </div>
         <table style="width:100%; border:none; font-size:19px;" class="no-border">
             <tr>
@@ -655,16 +673,8 @@
     <div class="page-break"></div>
     <div class="page with-bg nota">
         <h3 class="text-center">NOTA</h3>
-        <div id="note-num-div" style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
-            <span>Nomor :
-                {{ $pesanan->note_num ?? '' }}
-                @if(empty($pesanan->note_num))
-                    <span class="no-print" style="margin-left: 10px; font-size: 12px; font-family: Arial, sans-serif; display: inline-block;">
-                        <button type="button" onclick="document.getElementById('note-num-div').style.textAlign='left'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Left</button>
-                        <button type="button" onclick="document.getElementById('note-num-div').style.textAlign='right'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Right</button>
-                    </span>
-                @endif
-            </span>
+        <div id="note-num-div" class="{{ empty($pesanan->note_num) ? 'empty-nomor-p' : '' }}" style="width:100%; {{ empty($pesanan->note_num) ? 'text-align: left; padding-left: 0%; transition: padding-left 0.1s ease;' : 'text-align: center;' }} margin-bottom:10px; font-size:19px;">
+            <span>Nomor : {{ $pesanan->note_num ?? '' }}</span>
         </div>
         <!-- Header nota -->
         <table class="no-border" style="width:100%; font-size:19px; margin-bottom:10px; border: none;">
@@ -780,15 +790,8 @@
     <!-- HALAMAN 1: BERITA ACARA SERAH TERIMA -->
     <div class="page berita-acara">
         <h3 class="text-center">BERITA ACARA SERAH TERIMA</h3>
-        <div id="bast-num-div" style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
-            <span>Nomor : {{ $pesanan->bast_num ?? '' }}
-                @if(empty($pesanan->bast_num))
-                    <span class="no-print" style="margin-left: 10px; font-size: 12px; font-family: Arial, sans-serif; display: inline-block;">
-                        <button type="button" onclick="document.getElementById('bast-num-div').style.textAlign='left'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Left</button>
-                        <button type="button" onclick="document.getElementById('bast-num-div').style.textAlign='right'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Right</button>
-                    </span>
-                @endif
-            </span>
+        <div id="bast-num-div" class="{{ empty($pesanan->bast_num) ? 'empty-nomor-p' : '' }}" style="width:100%; {{ empty($pesanan->bast_num) ? 'text-align: left; padding-left: 0%; transition: padding-left 0.1s ease;' : 'text-align: center;' }} margin-bottom:10px; font-size:19px;">
+            <span>Nomor : {{ $pesanan->bast_num ?? '' }}</span>
         </div>
 
         <!-- Data pihak pertama -->

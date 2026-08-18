@@ -94,9 +94,9 @@ class PesananController extends Controller
 
         $validated = $request->validate([
             'order_num' => 'nullable',
-            'invoice_num' => 'required',
-            'note_num' => 'required',
-            'bast_num' => 'required',
+            'invoice_num' => 'nullable',
+            'note_num' => 'nullable',
+            'bast_num' => 'nullable',
             'kepsekID' => 'required',
             'bendaharaID' => 'required',
             'penerimaID' => 'required',
@@ -421,10 +421,10 @@ class PesananController extends Controller
         $letterheads = Letterhead::where('userID', Auth::id())->get();
 
         $validated = $request->validate([
-            'invoice_num'   => 'required',
+            'invoice_num'   => 'nullable',
             'order_num'   => 'nullable',
-            'note_num'   => 'required',
-            'bast_num'   => 'required',
+            'note_num'   => 'nullable',
+            'bast_num'   => 'nullable',
             'type_num'   => 'required',
             'tax'   => 'required',
             'shipping_cost'   => 'required',
