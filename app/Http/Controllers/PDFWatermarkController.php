@@ -271,8 +271,15 @@ class PDFWatermarkController extends Controller
 
     private function hasGhostscript()
     {
-        exec('gs --version', $output, $returnCode);
-        return $returnCode === 0;
+        if (!function_exists('exec')) {
+            return false;
+        }
+        try {
+            exec('gs --version', $output, $returnCode);
+            return $returnCode === 0;
+        } catch (\Throwable $e) {
+            return false;
+        }
     }
 
     private function calculateWatermarkPosition($pageWidth, $pageHeight, $imgWidth, $imgHeight, $vPos, $hPos, $scale)
