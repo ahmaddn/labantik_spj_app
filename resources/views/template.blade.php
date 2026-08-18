@@ -33,6 +33,9 @@
                 border: 0.3px solid black;
                 margin-top: 0.5px;
             }
+            .no-print {
+                display: none !important;
+            }
         }
 
         .nowrap {
@@ -335,8 +338,14 @@
     <div class="konten-utama">
         <div class="text-center">
             <h4 style="margin-bottom: 3px">SURAT PESANAN</h4>
-            <p style="margin-top: 7px; {{ empty($pesanan->order_num) ? 'text-align: left;' : '' }}">
+            <p id="order-num-p" style="margin-top: 7px; {{ empty($pesanan->order_num) ? 'text-align: left;' : '' }}">
                 Nomor: {{ $pesanan->order_num ?? '' }}
+                @if(empty($pesanan->order_num))
+                    <span class="no-print" style="margin-left: 10px; font-size: 12px; font-family: Arial, sans-serif;">
+                        <button type="button" onclick="document.getElementById('order-num-p').style.textAlign='left'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Left</button>
+                        <button type="button" onclick="document.getElementById('order-num-p').style.textAlign='right'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Right</button>
+                    </span>
+                @endif
             </p>
         </div>
 
@@ -577,8 +586,14 @@
     <div class="page-break"></div>
     <div class="page with-bg">
         <h3 class="text-center">KWITANSI</h3>
-        <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
-            <span style="display:inline-block;">Nomor : {{ $pesanan->invoice_num ?? '-' }}
+        <div id="invoice-num-div" style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
+            <span>Nomor : {{ $pesanan->invoice_num ?? '' }}
+                @if(empty($pesanan->invoice_num))
+                    <span class="no-print" style="margin-left: 10px; font-size: 12px; font-family: Arial, sans-serif; display: inline-block;">
+                        <button type="button" onclick="document.getElementById('invoice-num-div').style.textAlign='left'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Left</button>
+                        <button type="button" onclick="document.getElementById('invoice-num-div').style.textAlign='right'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Right</button>
+                    </span>
+                @endif
             </span>
         </div>
         <table style="width:100%; border:none; font-size:19px;" class="no-border">
@@ -640,9 +655,16 @@
     <div class="page-break"></div>
     <div class="page with-bg nota">
         <h3 class="text-center">NOTA</h3>
-        <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
-            <span style="display:inline-block;">Nomor :
-                {{ $pesanan->note_num ?? '-' }}</span>
+        <div id="note-num-div" style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
+            <span>Nomor :
+                {{ $pesanan->note_num ?? '' }}
+                @if(empty($pesanan->note_num))
+                    <span class="no-print" style="margin-left: 10px; font-size: 12px; font-family: Arial, sans-serif; display: inline-block;">
+                        <button type="button" onclick="document.getElementById('note-num-div').style.textAlign='left'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Left</button>
+                        <button type="button" onclick="document.getElementById('note-num-div').style.textAlign='right'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Right</button>
+                    </span>
+                @endif
+            </span>
         </div>
         <!-- Header nota -->
         <table class="no-border" style="width:100%; font-size:19px; margin-bottom:10px; border: none;">
@@ -758,8 +780,14 @@
     <!-- HALAMAN 1: BERITA ACARA SERAH TERIMA -->
     <div class="page berita-acara">
         <h3 class="text-center">BERITA ACARA SERAH TERIMA</h3>
-        <div style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
-            <span style="display:inline-block;">Nomor : {{ $pesanan->bast_num ?? '-' }}
+        <div id="bast-num-div" style="width:100%; text-align:center; margin-bottom:10px; font-size:19px;">
+            <span>Nomor : {{ $pesanan->bast_num ?? '' }}
+                @if(empty($pesanan->bast_num))
+                    <span class="no-print" style="margin-left: 10px; font-size: 12px; font-family: Arial, sans-serif; display: inline-block;">
+                        <button type="button" onclick="document.getElementById('bast-num-div').style.textAlign='left'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Left</button>
+                        <button type="button" onclick="document.getElementById('bast-num-div').style.textAlign='right'" style="cursor:pointer; padding: 2px 6px; border: 1px solid #ccc; border-radius: 3px; background: #fff;">Right</button>
+                    </span>
+                @endif
             </span>
         </div>
 
@@ -933,7 +961,7 @@
                     <table style="border:none; font-size:18px; width:100%;">
                         <tr>
                             <td>Nomor Faktur</td>
-                            <td>: {{ $pesanan->invoice_num ?? '007' }}</td>
+                            <td>: {{ $pesanan->invoice_num ?? '' }}</td>
                         </tr>
                     </table>
                 </td>
