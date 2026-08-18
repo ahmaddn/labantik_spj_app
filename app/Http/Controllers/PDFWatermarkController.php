@@ -74,7 +74,7 @@ class PDFWatermarkController extends Controller
         try {
             $request->validate([
                 'pdf_path' => 'required|string',
-                'watermark_path' => 'required|string',
+                'watermark_path' => 'nullable|string',
                 'opacity' => 'required|numeric|min:0|max:1',
                 'as_background' => 'sometimes|string|in:true,false',
                 'scale' => 'required|numeric|min:1|max:100',
@@ -83,13 +83,13 @@ class PDFWatermarkController extends Controller
             ]);
 
             $pdfPath = storage_path('app/public/' . $request->pdf_path);
-            $watermarkPath = storage_path('app/public/' . $request->watermark_path);
+            $watermarkPath = $request->watermark_path ? storage_path('app/public/' . $request->watermark_path) : null;
 
             if (!file_exists($pdfPath)) {
                 throw new \Exception('PDF file tidak ditemukan');
             }
 
-            if (!file_exists($watermarkPath)) {
+            if ($watermarkPath && !file_exists($watermarkPath)) {
                 throw new \Exception('Watermark file tidak ditemukan');
             }
 
@@ -197,9 +197,11 @@ class PDFWatermarkController extends Controller
     {
         try {
             $pdf = new Fpdi();
+            $pdf->setPrintHeader(false);
+            $pdf->setPrintFooter(false);
             $pageCount = $pdf->setSourceFile($pdfPath);
-            $imageInfo = getimagesize($watermarkPath);
-            if (!$imageInfo) {
+            $imageInfo = $watermarkPath ? getimagesize($watermarkPath) : null;
+            if ($watermarkPath && !$imageInfo) {
                 throw new \Exception('Tidak dapat membaca informasi watermark image');
             }
             for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
@@ -207,7 +209,7 @@ class PDFWatermarkController extends Controller
                     $templateId = $pdf->importPage($pageNo);
                     $size = $pdf->getTemplateSize($templateId);
                     $pdf->AddPage($size['orientation'], [$size['width'], $size['height']]);
-                    $shouldWatermark = !$pages || in_array($pageNo, $pages);
+                    $shouldWatermark = $watermarkPath && (!$pages || in_array($pageNo, $pages));
                     if ($shouldWatermark) {
                         if ($fullCover) {
                             $pdf->SetAlpha($opacity);

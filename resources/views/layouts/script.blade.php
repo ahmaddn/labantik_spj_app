@@ -463,11 +463,11 @@
 
     function checkCanApplyWatermark() {
         const applyBtn = document.getElementById('applyWatermark');
-        applyBtn.disabled = !(currentPdfPath && currentWatermarkPath) || isProcessing;
+        applyBtn.disabled = !currentPdfPath || isProcessing;
     }
 
     function autoApplyWatermark() {
-        if (currentPdfPath && currentWatermarkPath && !isProcessing) {
+        if (currentPdfPath && !isProcessing) {
             setTimeout(() => {
                 applyWatermark();
             }, 500);
@@ -475,14 +475,16 @@
     }
 
     function applyWatermark() {
-        if (!currentPdfPath || !currentWatermarkPath || isProcessing) return;
+        if (!currentPdfPath || isProcessing) return;
 
         const formData = new FormData();
         const opacity = document.getElementById('opacity').value;
         const scale = document.getElementById('scale').value;
 
         formData.append('pdf_path', currentPdfPath);
-        formData.append('watermark_path', currentWatermarkPath);
+        if (currentWatermarkPath) {
+            formData.append('watermark_path', currentWatermarkPath);
+        }
         formData.append('opacity', opacity);
         formData.append('scale', scale);
         formData.append('as_background', document.querySelector('input[name="mode"]:checked').value === 'background');
