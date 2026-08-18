@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('pesanan', function (Blueprint $table) {
             if (!Schema::hasColumn('pesanan', 'letterheadID')) {
-                $table->unsignedBigInteger('letterheadID')->nullable()->after('kepsekID');
+                $table->unsignedInteger('letterheadID')->nullable()->after('kepsekID');
                 $table->foreign('letterheadID')->references('id')->on('letterheads')->onDelete('set null');
             }
         });
