@@ -22,6 +22,7 @@ class Penyedia extends Model
         'account',
         'delegation_name',
         'delegate_position',
+        'logo',
         'userID'
     ];
 }

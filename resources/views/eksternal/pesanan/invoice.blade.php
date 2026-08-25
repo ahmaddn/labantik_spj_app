@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice #{{ $pesanan->invoice_num ?? '0000' }}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -51,7 +53,7 @@
             background: #ffffff;
             padding: 15px 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .btn-print {
@@ -417,6 +419,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Panel Aksi Atas -->
@@ -435,21 +438,29 @@
             <!-- Header -->
             <div class="header-section">
                 <div class="logo-container">
-                    @if ($pesanan->letterhead && $pesanan->letterhead->logo)
-                        <img src="{{ asset('storage/logos/' . $pesanan->letterhead->logo) }}" alt="Logo" style="max-height: 55px; max-width: 150px; object-fit: contain;">
+                    @if ($pesanan->penyedia && $pesanan->penyedia->logo)
+                        <img src="{{ asset('storage/logos/' . $pesanan->penyedia->logo) }}" alt="Logo"
+                            style="max-height: 65px; max-width: 170px; object-fit: contain; mix-blend-mode: multiply;">
                     @else
                         <div class="logo-icon"><i class="fas fa-image"></i></div>
                     @endif
                     <div>
-                        <h2 class="brand-name" style="margin-bottom: 4px;">{{ $pesanan->penyedia->company ?? 'Nama Perusahaan' }}</h2>
-                        @if (!$pesanan->letterhead || !$pesanan->letterhead->logo)
-                            <div class="no-print-panel" style="margin-top: 6px; padding: 6px 10px; background: #e3f2fd; border-radius: 4px; border: 1px dashed #90caf9; display: flex; align-items: center; justify-content: space-between; gap: 15px;">
+                        <h2 class="brand-name" style="margin-bottom: 4px;">
+                            {{ $pesanan->penyedia->company ?? 'Nama Perusahaan' }}</h2>
+                        @if (!$pesanan->penyedia || !$pesanan->penyedia->logo)
+                            <div class="no-print-panel"
+                                style="margin-top: 6px; padding: 6px 10px; background: #e3f2fd; border-radius: 4px; border: 1px dashed #90caf9; display: flex; align-items: center; justify-content: space-between; gap: 15px;">
                                 <span style="font-size: 11px; color: #495057;">
-                                    <i class="fas fa-info-circle text-primary"></i> Logo otomatis diambil dari Kop Surat.
+                                    <i class="fas fa-info-circle text-primary"></i> Logo belum diunggah untuk Penyedia
+                                    ini.
                                 </span>
-                                <a href="{{ route('eksternal.pesanan.addLetterhead') }}" class="btn-print" style="font-size: 11px; padding: 4px 8px; text-decoration: none; border-radius: 4px; color: #ffffff; background-color: #007bff; border: none; white-space: nowrap; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
-                                    <i class="fas fa-plus"></i> Tambah Kop Surat/Logo
-                                </a>
+                                @if ($pesanan->penyediaID)
+                                    <a href="{{ route('internal.penyedia.edit', $pesanan->penyediaID) }}"
+                                        class="btn-print"
+                                        style="font-size: 11px; padding: 4px 8px; text-decoration: none; border-radius: 4px; color: #ffffff; background-color: #007bff; border: none; white-space: nowrap; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                                        <i class="fas fa-edit"></i> Edit Penyedia & Unggah Logo
+                                    </a>
+                                @endif
                             </div>
                         @endif
                     </div>
@@ -479,7 +490,8 @@
                     </div>
                     <div class="meta-row">
                         <span class="meta-label">Tanggal:</span>
-                        <span class="meta-value">{{ \Carbon\Carbon::parse($pesanan->order_date)->format('d / m / Y') }}</span>
+                        <span
+                            class="meta-value">{{ \Carbon\Carbon::parse($pesanan->order_date)->format('d / m / Y') }}</span>
                     </div>
                 </div>
             </div>
@@ -527,21 +539,22 @@
             <div class="bottom-section">
                 <div class="bottom-left">
                     <p class="thank-you">Terima kasih atas kerja sama Anda.</p>
-                    
-                    @if($pesanan->penyedia)
-                    <div class="info-block">
-                        <p class="info-title">Informasi Pembayaran:</p>
-                        <p class="info-desc">
-                            Nama Bank: {{ $pesanan->penyedia->bank ?? '-' }}<br>
-                            No. Rekening: {{ $pesanan->penyedia->account ?? '-' }}<br>
-                            Pemilik Rekening: {{ $pesanan->penyedia->delegation_name ?? '-' }}
-                        </p>
-                    </div>
+
+                    @if ($pesanan->penyedia)
+                        <div class="info-block">
+                            <p class="info-title">Informasi Pembayaran:</p>
+                            <p class="info-desc">
+                                Nama Bank: {{ $pesanan->penyedia->bank ?? '-' }}<br>
+                                No. Rekening: {{ $pesanan->penyedia->account ?? '-' }}<br>
+                                Pemilik Rekening: {{ $pesanan->penyedia->delegation_name ?? '-' }}
+                            </p>
+                        </div>
                     @endif
 
                     <div class="info-block">
                         <p class="info-title">Syarat & Ketentuan:</p>
-                        <p class="info-desc">Pembayaran dilakukan secara penuh sesuai dengan kesepakatan penyerahan barang dan jasa.</p>
+                        <p class="info-desc">Pembayaran dilakukan secara penuh sesuai dengan kesepakatan penyerahan
+                            barang dan jasa.</p>
                     </div>
                 </div>
 
@@ -550,7 +563,7 @@
                         <span class="summary-label">Sub Total:</span>
                         <span class="summary-value">Rp. {{ number_format($subtotal, 0, ',', '.') }}</span>
                     </div>
-                    
+
                     @php
                         $taxNominal = $pesanan->tax ?? 0;
                         $taxPercentage = $subtotal > 0 ? round(($taxNominal / $subtotal) * 100, 2) : 0;
@@ -560,11 +573,12 @@
                         <span class="summary-value">Rp. {{ number_format($taxNominal, 0, ',', '.') }}</span>
                     </div>
 
-                    @if($pesanan->shipping_cost > 0)
-                    <div class="summary-row">
-                        <span class="summary-label">Biaya Pengiriman:</span>
-                        <span class="summary-value">Rp. {{ number_format($pesanan->shipping_cost, 0, ',', '.') }}</span>
-                    </div>
+                    @if ($pesanan->shipping_cost > 0)
+                        <div class="summary-row">
+                            <span class="summary-label">Biaya Pengiriman:</span>
+                            <span class="summary-value">Rp.
+                                {{ number_format($pesanan->shipping_cost, 0, ',', '.') }}</span>
+                        </div>
                     @endif
 
                     @php
@@ -580,7 +594,8 @@
             <!-- Tanda Tangan (TTD) -->
             <div class="signature-section">
                 <div class="signature-container">
-                    <p class="sig-date">Majalengka, {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}</p>
+                    <p class="sig-date">Majalengka,
+                        {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}</p>
                     <p class="sig-label">Tanda Tangan Resmi,</p>
                     <p class="sig-name">{{ $pesanan->penyedia->delegation_name ?? 'Nama Penanggung Jawab' }}</p>
                     <p class="sig-position">{{ $pesanan->penyedia->delegate_position ?? 'Direktur / Pengelola' }}</p>
@@ -590,7 +605,7 @@
             <!-- Bagian Kaki (Footer) -->
             <div class="footer-section">
                 <div class="contact-info">
-                    @if($pesanan->penyedia)
+                    @if ($pesanan->penyedia)
                         <span><strong>Kode Pos:</strong> {{ $pesanan->penyedia->post_code ?? '-' }}</span>
                         <span><strong>Alamat:</strong> {{ $pesanan->penyedia->address ?? '-' }}</span>
                     @endif
@@ -599,4 +614,5 @@
         </div>
     </div>
 </body>
+
 </html>

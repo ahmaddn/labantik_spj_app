@@ -22,7 +22,7 @@
                         <h5 class="card-title">Form Penyedia</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('internal.penyedia.store') }}" method="POST">
+                        <form action="{{ route('internal.penyedia.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
 
@@ -97,6 +97,15 @@
                                 <input type="text" class="form-control" name="delegate_position"
                                     value="{{ old('delegate_position') }}">
                                 @error('delegate_position')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            {{-- Logo Perusahaan --}}
+                            <div class="form-group">
+                                <label>Logo Perusahaan</label>
+                                <input type="file" class="form-control" name="logo" accept="image/*">
+                                @error('logo')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
