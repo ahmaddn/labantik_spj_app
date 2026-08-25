@@ -19,6 +19,7 @@ class CashTransaction extends Model
         'qty',
         'nominal',
         'pic',
+        'pesanan_id',
     ];
 
     protected $casts = [

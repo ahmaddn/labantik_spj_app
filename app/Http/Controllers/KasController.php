@@ -11,21 +11,22 @@ class KasController extends Controller
     public function index()
     {
         $id = Auth::id();
+        
         $transactions = CashTransaction::where('user_id', $id)
             ->orderBy('date', 'desc')
             ->orderBy('created_at', 'desc')
             ->get();
-
-        $totalPemasukan = CashTransaction::where('user_id', $id)
-            ->where('type', 'pemasukan')
-            ->sum('nominal');
-
-        $totalPengeluaran = CashTransaction::where('user_id', $id)
-            ->where('type', 'pengeluaran')
-            ->sum('nominal');
-
+        
+        $totalPemasukan = $transactions->where('type', 'pemasukan')->sum(function($item) {
+            return $item->nominal * $item->qty;
+        });
+        
+        $totalPengeluaran = $transactions->where('type', 'pengeluaran')->sum(function($item) {
+            return $item->nominal * $item->qty;
+        });
+        
         $saldoKas = $totalPemasukan - $totalPengeluaran;
-
+        
         return view('kas.index', compact('transactions', 'totalPemasukan', 'totalPengeluaran', 'saldoKas'));
     }
 

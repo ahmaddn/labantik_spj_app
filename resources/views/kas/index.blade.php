@@ -107,7 +107,11 @@
                                 <td>{{ \Carbon\Carbon::parse($data->date)->translatedFormat('d F Y') }}</td>
                                 <td>
                                     @if($data->type === 'pemasukan')
-                                        <span class="badge bg-success"><i class="fas fa-arrow-down"></i> Pemasukan</span>
+                                        @if($data->pesanan_id)
+                                            <span class="badge bg-info"><i class="fas fa-sync-alt"></i> Pemasukan (Pesanan)</span>
+                                        @else
+                                            <span class="badge bg-success"><i class="fas fa-arrow-down"></i> Pemasukan</span>
+                                        @endif
                                     @else
                                         <span class="badge bg-danger"><i class="fas fa-arrow-up"></i> Pengeluaran</span>
                                     @endif
@@ -118,16 +122,22 @@
                                 <td>Rp. {{ number_format($data->nominal * $data->qty, 0, ',', '.') }}</td>
                                 <td>{{ $data->pic }}</td>
                                 <td>
-                                    <a href="{{ route('kas.edit', $data->id) }}" class="btn btn-sm btn-outline-info">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="{{ route('kas.destroy', $data->id) }}" method="POST" class="d-inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
+                                    @if($data->pesanan_id)
+                                        <a href="{{ route('eksternal.pesanan.index') }}" class="btn btn-sm btn-outline-primary" title="Lihat Pesanan">
+                                            <i class="fas fa-eye"></i> Detail
+                                        </a>
+                                    @else
+                                        <a href="{{ route('kas.edit', $data->id) }}" class="btn btn-sm btn-outline-info" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form action="{{ route('kas.destroy', $data->id) }}" method="POST" class="d-inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @empty
