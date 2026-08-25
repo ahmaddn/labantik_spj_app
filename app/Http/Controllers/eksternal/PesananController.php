@@ -88,29 +88,35 @@ class PesananController extends Controller
 
     public function session(Request $request)
     {
+        $isInvoiceOnly = $request->input('input_type') === 'invoice';
+        
+        $kegiatan = null;
         if ($request->kegiatanID) {
             $kegiatan = Kegiatan::find($request->kegiatanID);
         }
-
-        $validated = $request->validate([
+        
+        $rules = [
+            'input_type' => 'nullable|string',
             'order_num' => 'nullable',
-            'invoice_num' => 'nullable',
+            'invoice_num' => $isInvoiceOnly ? 'required|string' : 'nullable',
             'note_num' => 'nullable',
             'bast_num' => 'nullable',
-            'kepsekID' => 'required',
-            'bendaharaID' => 'required',
+            'kepsekID' => $isInvoiceOnly ? 'nullable' : 'required',
+            'bendaharaID' => $isInvoiceOnly ? 'nullable' : 'required',
             'penerimaID' => 'required',
-            'kegiatanID' => 'required',
+            'kegiatanID' => $isInvoiceOnly ? 'nullable' : 'required',
             'penyediaID' => 'required',
-            'order_date' => 'nullable|date',
+            'order_date' => $isInvoiceOnly ? 'required|date' : 'nullable|date',
             'billing' => 'nullable|date',
-            'paid' => 'required|date',
-            'accepted' => "required|date|after_or_equal:$kegiatan->order",
+            'paid' => $isInvoiceOnly ? 'nullable|date' : 'required|date',
+            'accepted' => ($isInvoiceOnly || !$kegiatan) ? 'nullable|date' : "required|date|after_or_equal:{$kegiatan->order}",
             'type_num' => 'required|integer|min:1',
             'tax' => 'nullable|numeric',
             'shipping_cost' => 'nullable|numeric',
             'pic' => 'nullable|string',
-        ]);
+        ];
+
+        $validated = $request->validate($rules);
 
         session(['data' => $validated]);
         session()->flash('old_input', $validated);
@@ -434,29 +440,37 @@ class PesananController extends Controller
 
     public function editBarang(Request $request)
     {
-        $kegiatan = Kegiatan::findOrFail($request->kegiatanID);
+        $isInvoiceOnly = $request->input('input_type') === 'invoice';
+        
+        $kegiatan = null;
+        if ($request->kegiatanID) {
+            $kegiatan = Kegiatan::find($request->kegiatanID);
+        }
+        
         $letterheads = Letterhead::where('userID', Auth::id())->get();
 
-        $validated = $request->validate([
-            'invoice_num'   => 'nullable',
-            'order_num'   => 'nullable',
-            'note_num'   => 'nullable',
-            'bast_num'   => 'nullable',
-            'type_num'   => 'required',
-            'tax'   => 'required',
-            'shipping_cost'   => 'required',
-            'kegiatanID'    => 'required|exists:kegiatan,id',
+        $rules = [
+            'input_type'    => 'nullable|string',
+            'invoice_num'   => $isInvoiceOnly ? 'required|string' : 'nullable',
+            'order_num'     => 'nullable',
+            'note_num'      => 'nullable',
+            'bast_num'      => 'nullable',
+            'type_num'      => 'required',
+            'tax'           => 'required',
+            'shipping_cost' => 'required',
+            'kegiatanID'    => $isInvoiceOnly ? 'nullable' : 'required|exists:kegiatan,id',
             'penyediaID'    => 'required|exists:penyedia,id',
             'penerimaID'    => 'required|exists:penerima,id',
-            'bendaharaID'   => 'required|exists:bendahara,id',
-            'kepsekID'   => 'required|exists:kepsek,id',
-            'accepted'          => "required|date|after_or_equal:$kegiatan->order",
-            'billing'          => "nullable|date",
-            'paid'          => "required|date",
+            'bendaharaID'   => $isInvoiceOnly ? 'nullable' : 'required|exists:bendahara,id',
+            'kepsekID'      => $isInvoiceOnly ? 'nullable' : 'required|exists:kepsek,id',
+            'accepted'      => ($isInvoiceOnly || !$kegiatan) ? 'nullable|date' : "required|date|after_or_equal:$kegiatan->order",
+            'billing'       => "nullable|date",
+            'paid'          => $isInvoiceOnly ? 'nullable|date' : "required|date",
+            'order_date'    => 'required|date',
+            'pic'           => 'required|string'
+        ];
 
-            'order_date' => 'required|date',
-            'pic' => 'required|string'
-        ]);
+        $validated = $request->validate($rules);
 
         session(['data_editPesanan' => $validated]);
 

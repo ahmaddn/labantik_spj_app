@@ -30,9 +30,26 @@
 
                 <form action="{{ route('eksternal.pesanan.editBarang') }}" method="post">
                     @csrf
-                    <div class="row">
+                    @php
+                        $defaultType = (is_null($pesanan->kegiatanID) && is_null($pesanan->bendaharaID)) ? 'invoice' : 'lengkap';
+                    @endphp
+                    <input type="hidden" name="input_type" id="input_type_hidden" value="{{ old('input_type', $defaultType) }}">
+                    
+                    <div class="row mb-4">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label style="font-weight: 700; color: #007bff;">Tipe Input Pesanan</label>
+                                <select id="input-type-toggle" class="form-control form-select" style="border: 2px solid #007bff; font-weight: 600;">
+                                    <option value="lengkap" {{ old('input_type', $defaultType) === 'lengkap' ? 'selected' : '' }}>Pesanan Lengkap (Semua Dokumen SPJ)</option>
+                                    <option value="invoice" {{ old('input_type', $defaultType) === 'invoice' ? 'selected' : '' }}>Hanya Invoice (Input Cepat)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group spj-only-field">
                                 <label>Nomor Pesanan</label>
                                 <input type="text" name="order_num" class="form-control"
                                     value="{{ $pesanan->order_num }}">
@@ -48,21 +65,21 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Nomor Nota</label>
                                 <input type="text" name="note_num" class="form-control" value="{{ $pesanan->note_num }}">
                                 @error('note_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Nomor Berita Acara Serah Terima</label>
                                 <input type="text" name="bast_num" class="form-control" value="{{ $pesanan->bast_num }}">
                                 @error('bast_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Kepala Sekolah</label>
                                 <select name="kepsekID" class="form-control" {{ $kepsek->isEmpty() ? 'disabled' : '' }}>
                                     <option value="">
@@ -79,7 +96,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Bendahara</label>
                                 <select name="bendaharaID" class="form-control"
                                     {{ $bendahara->isEmpty() ? 'disabled' : '' }}>
@@ -97,7 +114,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Penerima</label>
                                 <select name="penerimaID" class="form-control"
                                     {{ $penerima->isEmpty() ? 'disabled' : '' }}>
@@ -106,7 +123,7 @@
                                     </option>
                                     @foreach ($penerima as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ $item->id == ($pesanan->penerima->id ?? '') ? 'selected' : '' }}>
+                                            {{ $item->id === ($pesanan->penerima->id ?? '') ? 'selected' : '' }}>
                                             {{ $item->name }}</option>
                                     @endforeach
                                 </select>
@@ -114,7 +131,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Kegiatan</label>
                                 <select name="kegiatanID" class="form-control"
                                     {{ $kegiatan->isEmpty() ? 'disabled' : '' }}>
@@ -123,16 +140,15 @@
                                     </option>
                                     @foreach ($kegiatan as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ $item->id == ($pesanan->kegiatan->id ?? '') ? 'selected' : '' }}>
-                                            {{ $item->name }}
-                                        </option>
+                                            {{ $item->id === ($pesanan->kegiatan->id ?? '') ? 'selected' : '' }}>
+                                            {{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('kegiatanID')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Penyedia</label>
                                 <select name="penyediaID" class="form-control"
                                     {{ $penyedia->isEmpty() ? 'disabled' : '' }}>
@@ -141,9 +157,8 @@
                                     </option>
                                     @foreach ($penyedia as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ $item->id == ($pesanan->penyedia->id ?? '') ? 'selected' : '' }}>
-                                            {{ $item->company }}
-                                        </option>
+                                            {{ $item->id === ($pesanan->penyedia->id ?? '') ? 'selected' : '' }}>
+                                            {{ $item->company }}</option>
                                     @endforeach
                                 </select>
                                 @error('penyediaID')
@@ -154,48 +169,41 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Tanggal Pesanan</label>
+                                <label>Titimangsa Tanggal Pesanan</label>
                                 <input type="date" name="order_date" class="form-control" min="2025-01-01"
-                                    value="{{ $pesanan->order_date }}">
+                                    value="{{ old('order_date', $pesanan->order_date) }}">
                                 @error('order_date')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label>Tanggal Penagihan</label>
-                                <input type="date" name="billing" class="form-control" value="{{ $pesanan->billing }}">
+                            <div class="form-group spj-only-field">
+                                <label>Titimangsa Tanggal Penagihan</label>
+                                <input type="date" name="billing" class="form-control"
+                                    value="{{ old('billing', $pesanan->billing) }}">
                                 @error('billing')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label>Tanggal Bayar</label>
+                            <div class="form-group spj-only-field">
+                                <label>Titimangsa Tanggal Bayar</label>
                                 <input type="date" name="paid" class="form-control" min="2025-01-01"
-                                    value="{{ $pesanan->paid }}">
+                                    value="{{ old('paid', $pesanan->paid) }}">
                                 @error('paid')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label>Tanggal Diterima</label>
+                            <div class="form-group spj-only-field">
+                                <label>Titimangsa Tanggal Diterima</label>
                                 <input type="date" name="accepted" class="form-control" min="2025-01-01"
-                                    value="{{ $pesanan->accepted }}">
+                                    value="{{ old('accepted', $pesanan->accepted) }}">
                                 @error('accepted')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>Titimangsa</label>
-                                <input type="date" name="prey" class="form-control" min="2025-01-01"
-                                    value="{{ $pesanan->prey }}">
-                                @error('prey')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label>Jumlah Jenis Barang</label>
                                 <input type="number" name="type_num" class="form-control"
-                                    value="{{ $pesanan->type_num }}">
+                                    value="{{ old('type_num', $pesanan->type_num) }}">
                                 @error('type_num')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -203,9 +211,8 @@
                             <div class="form-group">
                                 <label>Pajak</label>
                                 <div class="input-group">
-                                    <input type="number" name="tax" class="form-control" step="0.01"
-                                        min="0" max="100"
-                                        value="{{ old('tax', session('edit_pesanan.tax_percentage', 0)) }}">
+                                    <input type="text" name="tax" class="form-control"
+                                        value="{{ old('tax', $pesanan->tax) }}">
                                     <span class="input-group-text">%</span>
                                 </div>
                                 @error('tax')
@@ -243,4 +250,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('input-type-toggle');
+            const hiddenInput = document.getElementById('input_type_hidden');
+            const spjFields = document.querySelectorAll('.spj-only-field');
+            
+            function toggleFields(type) {
+                hiddenInput.value = type;
+                if (type === 'invoice') {
+                    spjFields.forEach(el => {
+                        el.style.display = 'none';
+                    });
+                } else {
+                    spjFields.forEach(el => {
+                        el.style.display = 'block';
+                    });
+                }
+            }
+            
+            toggle.addEventListener('change', function() {
+                toggleFields(this.value);
+            });
+            
+            // Trigger initial state
+            toggleFields(toggle.value);
+        });
+    </script>
 @endsection
