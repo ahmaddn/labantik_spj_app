@@ -8,22 +8,27 @@ use Illuminate\Support\Facades\Auth;
 
 class KasController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $id = Auth::id();
+        $type = $request->get('type');
         
-        $transactions = CashTransaction::where('user_id', $id)
-            ->orderBy('date', 'desc')
+        $query = CashTransaction::where('user_id', $id);
+        
+        if ($type === 'pemasukan' || $type === 'pengeluaran') {
+            $query->where('type', $type);
+        }
+        
+        $transactions = $query->orderBy('date', 'desc')
             ->orderBy('created_at', 'desc')
             ->get();
         
-        $totalPemasukan = $transactions->where('type', 'pemasukan')->sum('nominal');
-        
-        $totalPengeluaran = $transactions->where('type', 'pengeluaran')->sum('nominal');
-        
+        $allTransactions = CashTransaction::where('user_id', $id)->get();
+        $totalPemasukan = $allTransactions->where('type', 'pemasukan')->sum('nominal');
+        $totalPengeluaran = $allTransactions->where('type', 'pengeluaran')->sum('nominal');
         $saldoKas = $totalPemasukan - $totalPengeluaran;
         
-        return view('kas.index', compact('transactions', 'totalPemasukan', 'totalPengeluaran', 'saldoKas'));
+        return view('kas.index', compact('transactions', 'totalPemasukan', 'totalPengeluaran', 'saldoKas', 'type'));
     }
 
     public function create()

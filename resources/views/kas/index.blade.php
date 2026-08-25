@@ -79,7 +79,16 @@
 
         <div class="card p-4 bg-white rounded shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 class="card-title mb-0">Riwayat Transaksi Kas</h5>
+                <div class="d-flex align-items-center gap-3">
+                    <h5 class="card-title mb-0">Riwayat Transaksi Kas</h5>
+                    <form action="{{ route('kas.index') }}" method="GET" class="d-inline-flex align-items-center" id="filter-form">
+                        <select name="type" class="form-select form-select-sm" style="width: 160px; border-radius: 4px; padding: 5px 10px; border: 1px solid #ced4da;" onchange="document.getElementById('filter-form').submit();">
+                            <option value="">Semua Tipe</option>
+                            <option value="pemasukan" {{ request('type') === 'pemasukan' ? 'selected' : '' }}>Pemasukan</option>
+                            <option value="pengeluaran" {{ request('type') === 'pengeluaran' ? 'selected' : '' }}>Pengeluaran</option>
+                        </select>
+                    </form>
+                </div>
                 <a href="{{ route('kas.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Tambah Transaksi
                 </a>
