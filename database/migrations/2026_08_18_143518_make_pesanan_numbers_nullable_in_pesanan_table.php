@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Nonaktifkan pemeriksaan foreign key sementara
+        Schema::disableForeignKeyConstraints();
         Schema::table('pesanan', function (Blueprint $table) {
             $table->string('invoice_num')->nullable()->change();
             $table->string('order_num')->nullable()->change();
             $table->string('note_num')->nullable()->change();
             $table->string('bast_num')->nullable()->change();
         });
+        // Aktifkan kembali pemeriksaan foreign key
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
