@@ -368,13 +368,30 @@ class PesananController extends Controller
             'profit' => 'required|numeric'
         ]);
 
-        $pesanan = Pesanan::findOrFail($id);
+        $pesanan = Pesanan::with('kegiatan')->findOrFail($id);
         $pesanan->update([
             'profit' => $request->profit
         ]);
 
+        if ($request->profit > 0) {
+            \App\Models\CashTransaction::updateOrCreate(
+                ['pesanan_id' => $pesanan->id],
+                [
+                    'user_id' => $pesanan->userID,
+                    'type' => 'pemasukan',
+                    'date' => $pesanan->order_date,
+                    'category' => 'Keuntungan Pesanan: ' . ($pesanan->kegiatan->name ?? 'Proyek'),
+                    'qty' => 1,
+                    'nominal' => $request->profit,
+                    'pic' => $pesanan->pic ?? '-',
+                ]
+            );
+        } else {
+            \App\Models\CashTransaction::where('pesanan_id', $pesanan->id)->delete();
+        }
+
         return redirect()->route('eksternal.pesanan.index')
-            ->with('success', 'Data Pesanan ( Keuntungan ) berhasil ditambahkan.');
+            ->with('success', 'Data Pesanan ( Keuntungan ) berhasil ditambahkan dan disinkronisasikan ke Kas.');
     }
 
     public function delete($id)

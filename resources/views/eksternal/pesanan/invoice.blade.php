@@ -491,7 +491,7 @@
                     <div class="meta-row">
                         <span class="meta-label">Tanggal:</span>
                         <span
-                            class="meta-value">{{ \Carbon\Carbon::parse($pesanan->order_date)->format('d / m / Y') }}</span>
+                            class="meta-value">{{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}</span>
                     </div>
                 </div>
             </div>
@@ -503,9 +503,9 @@
                         <tr>
                             <th style="width: 8%;" class="text-center">No.</th>
                             <th style="width: 47%;">Deskripsi Barang / Jasa</th>
-                            <th style="width: 17%;" class="text-right">Harga Satuan</th>
+                            <th style="width: 20%; white-space: nowrap;" class="text-right">Harga Satuan</th>
                             <th style="width: 10%;" class="text-center">Jumlah</th>
-                            <th style="width: 18%;" class="text-right">Total Harga</th>
+                            <th style="width: 20%; white-space: nowrap;" class="text-right">Total Harga</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -520,9 +520,9 @@
                             <tr>
                                 <td class="text-center">{{ $index + 1 }}</td>
                                 <td>{{ $item->name }}</td>
-                                <td class="text-right">Rp. {{ number_format($item->price, 0, ',', '.') }}</td>
+                                <td class="text-right" style="white-space: nowrap;">Rp {{ number_format($item->price, 0, ',', '.') }}</td>
                                 <td class="text-center">{{ $item->amount }}</td>
-                                <td class="text-right">Rp. {{ number_format($itemTotal, 0, ',', '.') }}</td>
+                                <td class="text-right" style="white-space: nowrap;">Rp {{ number_format($itemTotal, 0, ',', '.') }}</td>
                             </tr>
                         @empty
                             <tr>
@@ -592,13 +592,42 @@
             </div>
 
             <!-- Tanda Tangan (TTD) -->
-            <div class="signature-section">
-                <div class="signature-container">
-                    <p class="sig-date">Majalengka,
-                        {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}</p>
-                    <p class="sig-label">Tanda Tangan Resmi,</p>
-                    <p class="sig-name">{{ $pesanan->penyedia->delegation_name ?? 'Nama Penanggung Jawab' }}</p>
-                    <p class="sig-position">{{ $pesanan->penyedia->delegate_position ?? 'Direktur / Pengelola' }}</p>
+            <div class="signature-section" style="display: flex; justify-content: flex-end; align-items: flex-start; gap: 20px; margin-top: 30px;">
+                <!-- Panel Pilihan Penandatangan (Screen Only, no-print) -->
+                <div class="no-print-panel" style="display: flex; flex-direction: column; gap: 6px; text-align: left; background: #f8f9fa; padding: 12px; border-radius: 6px; border: 1px solid #dee2e6; width: 220px; align-self: center;">
+                    <label style="font-size: 11px; font-weight: 700; color: #495057; margin-bottom: 2px;">Penandatangan:</label>
+                    <select id="sig-selector" class="form-select form-select-sm" style="font-size: 11.5px; padding: 5px; border-radius: 4px; border: 1px solid #ced4da; width: 100%;">
+                        <option value="default" data-name="{{ $pesanan->penyedia->delegation_name ?? '' }}" data-position="{{ $pesanan->penyedia->delegate_position ?? '' }}">
+                            {{ $pesanan->penyedia->delegation_name ?? 'Penanggung Jawab Default' }}
+                        </option>
+                        <option value="custom">Lainnya (Tulis Manual)...</option>
+                    </select>
+                    
+                    <div id="custom-sig-inputs" style="display: none; flex-direction: column; gap: 5px; margin-top: 5px;">
+                        <input type="text" id="input-sig-name" placeholder="Nama Penandatangan" style="font-size: 11px; padding: 4px 6px; border-radius: 4px; border: 1px solid #ced4da;">
+                        <input type="text" id="input-sig-position" placeholder="Jabatan" style="font-size: 11px; padding: 4px 6px; border-radius: 4px; border: 1px solid #ced4da;">
+                    </div>
+                </div>
+
+                <div class="signature-container" style="text-align: center; width: 220px;">
+                    <p class="sig-date" style="font-size: 12px; color: #495057; margin-bottom: 5px;">
+                        Majalengka, {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}
+                    </p>
+                    <p class="sig-label" style="font-size: 12px; font-weight: 700; color: var(--dark-slate); margin: 0 0 10px 0;">
+                        {{ $pesanan->penyedia->company ?? 'Nama Perusahaan' }}
+                    </p>
+                    
+                    <!-- Barcode/QR E-Signature -->
+                    <div class="sig-qr-container" style="margin: 10px 0; display: flex; justify-content: center; align-items: center; min-height: 80px;">
+                        <img id="sig-qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data={{ urlencode(($pesanan->penyedia->company ?? '') . ' | ' . ($pesanan->penyedia->delegation_name ?? '') . ' | ' . ($pesanan->penyedia->delegate_position ?? '')) }}" alt="QR Signature" style="width: 80px; height: 80px; object-fit: contain;">
+                    </div>
+
+                    <p class="sig-name" id="display-sig-name" style="font-size: 13.5px; font-weight: 700; color: #000000; margin: 0; text-decoration: underline;">
+                        {{ $pesanan->penyedia->delegation_name ?? 'Nama Penanggung Jawab' }}
+                    </p>
+                    <p class="sig-position" id="display-sig-position" style="font-size: 11px; color: #6c757d; margin: 2px 0 0 0;">
+                        {{ $pesanan->penyedia->delegate_position ?? 'Direktur / Pengelola' }}
+                    </p>
                 </div>
             </div>
 
@@ -613,6 +642,58 @@
             </div>
         </div>
     </div>
+
+    <!-- Script TTD Interaktif & QR Code Generator -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selector = document.getElementById('sig-selector');
+            const customInputs = document.getElementById('custom-sig-inputs');
+            const inputName = document.getElementById('input-sig-name');
+            const inputPosition = document.getElementById('input-sig-position');
+            
+            const displayName = document.getElementById('display-sig-name');
+            const displayPosition = document.getElementById('display-sig-position');
+            const qrImage = document.getElementById('sig-qr-image');
+            const companyName = "{{ $pesanan->penyedia->company ?? '' }}";
+            
+            function updateSignature(name, position) {
+                const finalName = name || 'Nama Penandatangan';
+                const finalPosition = position || 'Jabatan';
+                
+                displayName.textContent = finalName;
+                displayPosition.textContent = finalPosition;
+                
+                // Generate QR Code data
+                const qrData = encodeURIComponent(`${companyName} | ${finalName} | ${finalPosition}`);
+                qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${qrData}`;
+            }
+            
+            selector.addEventListener('change', function() {
+                if (this.value === 'custom') {
+                    customInputs.style.display = 'flex';
+                    updateSignature(inputName.value, inputPosition.value);
+                } else {
+                    customInputs.style.display = 'none';
+                    const defaultOption = this.options[this.selectedIndex];
+                    const name = defaultOption.getAttribute('data-name');
+                    const position = defaultOption.getAttribute('data-position');
+                    updateSignature(name, position);
+                }
+            });
+            
+            inputName.addEventListener('input', function() {
+                if (selector.value === 'custom') {
+                    updateSignature(this.value, inputPosition.value);
+                }
+            });
+            
+            inputPosition.addEventListener('input', function() {
+                if (selector.value === 'custom') {
+                    updateSignature(inputName.value, this.value);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
