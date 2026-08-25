@@ -17,13 +17,9 @@ class KasController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         
-        $totalPemasukan = $transactions->where('type', 'pemasukan')->sum(function($item) {
-            return $item->nominal * $item->qty;
-        });
+        $totalPemasukan = $transactions->where('type', 'pemasukan')->sum('nominal');
         
-        $totalPengeluaran = $transactions->where('type', 'pengeluaran')->sum(function($item) {
-            return $item->nominal * $item->qty;
-        });
+        $totalPengeluaran = $transactions->where('type', 'pengeluaran')->sum('nominal');
         
         $saldoKas = $totalPemasukan - $totalPengeluaran;
         
