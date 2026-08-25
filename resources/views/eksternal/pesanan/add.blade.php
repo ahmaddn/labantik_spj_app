@@ -46,9 +46,23 @@
 
                 <form action="{{ route('eksternal.pesanan.session') }}" method="POST">
                     @csrf
-                    <div class="row">
+                    <input type="hidden" name="input_type" id="input_type_hidden" value="{{ old('input_type', $sessionData['input_type'] ?? 'lengkap') }}">
+                    
+                    <div class="row mb-4">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label style="font-weight: 700; color: #007bff;">Tipe Input Pesanan</label>
+                                <select id="input-type-toggle" class="form-control form-select" style="border: 2px solid #007bff; font-weight: 600;">
+                                    <option value="lengkap" {{ old('input_type', $sessionData['input_type'] ?? 'lengkap') === 'lengkap' ? 'selected' : '' }}>Pesanan Lengkap (Semua Dokumen SPJ)</option>
+                                    <option value="invoice" {{ old('input_type', $sessionData['input_type'] ?? 'lengkap') === 'invoice' ? 'selected' : '' }}>Hanya Invoice (Input Cepat)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group spj-only-field">
                                 <label>Nomor Pesanan</label>
                                 <input type="text" name="order_num" class="form-control"
                                     value="{{ old('order_num', $sessionData['order_num'] ?? str_pad((int) $lastOrderNum + 1, 3, '0', STR_PAD_LEFT)) }}">
@@ -64,7 +78,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Nomor Nota</label>
                                 <input type="text" name="note_num" class="form-control"
                                     value="{{ old('note_num', $sessionData['note_num'] ?? str_pad((int) $lastNoteNum + 1, 3, '0', STR_PAD_LEFT)) }}">
@@ -72,7 +86,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Nomor Berita Acara Serah Terima</label>
                                 <input type="text" name="bast_num" class="form-control"
                                     value="{{ old('bast_num', $sessionData['bast_num'] ?? str_pad((int) $lastBastNum + 1, 3, '0', STR_PAD_LEFT)) }}">
@@ -80,7 +94,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Kepala Sekolah</label>
                                 <select name="kepsekID" class="form-control" {{ $kepsek->isEmpty() ? 'disabled' : '' }}>
                                     <option value="">
@@ -98,7 +112,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Bendahara</label>
                                 <select name="bendaharaID" class="form-control"
                                     {{ $bendahara->isEmpty() ? 'disabled' : '' }}>
@@ -135,7 +149,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Kegiatan</label>
                                 <select name="kegiatanID" class="form-control"
                                     {{ $kegiatan->isEmpty() ? 'disabled' : '' }}>
@@ -182,14 +196,14 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Titimangsa Tanggal Penagihan</label>
                                 <input type="date" name="billing" class="form-control" value="{{ old('billing') }}">
                                 @error('billing')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Titimangsa Tanggal Bayar</label>
                                 <input type="date" name="paid" class="form-control" min="2025-01-01"
                                     value="{{ old('paid') }}">
@@ -197,7 +211,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group spj-only-field">
                                 <label>Titimangsa Tanggal Diterima</label>
                                 <input type="date" name="accepted" class="form-control" min="2025-01-01"
                                     value="{{ old('accepted') }}">
@@ -255,4 +269,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('input-type-toggle');
+            const hiddenInput = document.getElementById('input_type_hidden');
+            const spjFields = document.querySelectorAll('.spj-only-field');
+            
+            function toggleFields(type) {
+                hiddenInput.value = type;
+                if (type === 'invoice') {
+                    spjFields.forEach(el => {
+                        el.style.display = 'none';
+                    });
+                } else {
+                    spjFields.forEach(el => {
+                        el.style.display = 'block';
+                    });
+                }
+            }
+            
+            toggle.addEventListener('change', function() {
+                toggleFields(this.value);
+            });
+            
+            // Trigger initial state
+            toggleFields(toggle.value);
+        });
+    </script>
 @endsection
