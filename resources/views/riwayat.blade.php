@@ -69,7 +69,7 @@
 
 
                             <div class="table-responsive">
-                                <table class="table table-center">
+                                <table class="datatable table table-center">
                                     <thead>
                                         <tr class="bg-gray-200 text-gray-700">
                                             <th>No</th>
