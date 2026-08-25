@@ -22,7 +22,7 @@
                         <h5 class="card-title">Form Edit Penyedia</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('internal.penyedia.update', $penyedia->id) }}" method="POST">
+                        <form action="{{ route('internal.penyedia.update', $penyedia->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -96,6 +96,21 @@
                                 <label>Jabatan Delegasi</label>
                                 <input type="text" class="form-control" name="delegate_position"
                                     value="{{ old('delegate_position', $penyedia->delegate_position) }}" required>
+                            </div>
+
+                            {{-- Logo Perusahaan --}}
+                            <div class="form-group">
+                                <label>Logo Perusahaan</label>
+                                @if($penyedia->logo)
+                                    <div class="mb-2">
+                                        <img src="{{ asset('storage/logos/' . $penyedia->logo) }}" alt="Logo Saat Ini" style="max-height: 80px; max-width: 150px; object-fit: contain; border: 1px solid #ddd; padding: 4px; border-radius: 4px;">
+                                        <small class="text-muted d-block">Logo saat ini</small>
+                                    </div>
+                                @endif
+                                <input type="file" class="form-control" name="logo" accept="image/*">
+                                @error('logo')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="text-end">
