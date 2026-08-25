@@ -435,10 +435,18 @@
             <!-- Header -->
             <div class="header-section">
                 <div class="logo-container">
-                    <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+                    @if ($pesanan->letterhead && $pesanan->letterhead->logo)
+                        <img src="{{ asset('storage/logos/' . $pesanan->letterhead->logo) }}" alt="Logo" style="max-height: 55px; max-width: 150px; object-fit: contain;">
+                    @else
+                        <div class="logo-icon"><i class="fas fa-image"></i></div>
+                    @endif
                     <div>
-                        <h2 class="brand-name">{{ $pesanan->penyedia->company ?? 'Nama Perusahaan' }}</h2>
-                        <p class="brand-tagline">TAGLINE SPACE HERE</p>
+                        <h2 class="brand-name" style="margin-bottom: 4px;">{{ $pesanan->penyedia->company ?? 'Nama Perusahaan' }}</h2>
+                        @if (!$pesanan->letterhead || !$pesanan->letterhead->logo)
+                            <small class="no-print-panel text-muted" style="font-size: 11px; display: block; margin-top: 4px; padding: 2px 8px; background: #e3f2fd; border-radius: 4px; border: 1px dashed #90caf9;">
+                                <i class="fas fa-info-circle text-primary"></i> Logo otomatis diambil dari Kop Surat. Atur Kop Surat di menu Pesanan untuk memasang logo.
+                            </small>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -578,7 +586,7 @@
             <div class="footer-section">
                 <div class="contact-info">
                     @if($pesanan->penyedia)
-                        <span><strong>Telepon:</strong> {{ $pesanan->penyedia->post_code ?? '-' }}</span>
+                        <span><strong>Kode Pos:</strong> {{ $pesanan->penyedia->post_code ?? '-' }}</span>
                         <span><strong>Alamat:</strong> {{ $pesanan->penyedia->address ?? '-' }}</span>
                     @endif
                 </div>
