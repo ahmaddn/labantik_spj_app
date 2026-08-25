@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Pesanan;
-use App\Models\Expenditure;
+use App\Models\CashTransaction;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -52,19 +52,18 @@ class ReportController extends Controller
 
         $pesanan = $pesananQuery->get();
 
-        // Query untuk expenditure dengan filter yang sama
-    // Ambil pengeluaran terbaru terlebih dahulu
-    $expenditureQuery = Expenditure::where('user_id', Auth::id())->orderByDesc('date');
+        // Query untuk cash_transactions dengan filter yang sama
+        $cashQuery = CashTransaction::where('user_id', Auth::id())->orderByDesc('date');
 
         if ($request->start_date) {
-            $expenditureQuery->whereDate('date', '>=', $request->start_date);
+            $cashQuery->whereDate('date', '>=', $request->start_date);
         }
 
         if ($request->end_date) {
-            $expenditureQuery->whereDate('date', '<=', $request->end_date);
+            $cashQuery->whereDate('date', '<=', $request->end_date);
         }
 
-        $expenditure = $expenditureQuery->get();
+        $cashTransactions = $cashQuery->get();
 
         // Gabungkan data dan urutkan berdasarkan tanggal
         $allTransactions = collect();
@@ -83,18 +82,31 @@ class ReportController extends Controller
             ]);
         }
 
-        // Tambahkan data pengeluaran
-        foreach ($expenditure as $e) {
-            $allTransactions->push([
-                'date' => $e->date,
-                'type' => 'expense',
-                'project_name' => $e->type,
-                'responsible_person' => $e->pic ?? '',
-                'nominal' => 0,
-                'expense' => $e->nominal,
-                'profit' => -$e->nominal, // pengeluaran mengurangi saldo
-                'description' => ''
-            ]);
+        // Tambahkan data kas (pemasukan & pengeluaran)
+        foreach ($cashTransactions as $c) {
+            if ($c->type === 'pemasukan') {
+                $allTransactions->push([
+                    'date' => $c->date->format('Y-m-d'),
+                    'type' => 'income',
+                    'project_name' => $c->category,
+                    'responsible_person' => $c->pic ?? '',
+                    'nominal' => $c->nominal * $c->qty,
+                    'expense' => 0,
+                    'profit' => $c->nominal * $c->qty,
+                    'description' => 'Pemasukan Kas'
+                ]);
+            } else {
+                $allTransactions->push([
+                    'date' => $c->date->format('Y-m-d'),
+                    'type' => 'expense',
+                    'project_name' => $c->category,
+                    'responsible_person' => $c->pic ?? '',
+                    'nominal' => 0,
+                    'expense' => $c->nominal * $c->qty,
+                    'profit' => -($c->nominal * $c->qty),
+                    'description' => 'Pengeluaran Kas'
+                ]);
+            }
         }
 
         // Urutkan gabungan transaksi: terbaru (desc) -> lama
@@ -291,18 +303,18 @@ class ReportController extends Controller
 
         $pesanan = $pesananQuery->get();
 
-        // Query untuk expenditure dengan filter yang sama
-        $expenditureQuery = Expenditure::where('user_id', Auth::id())->orderBy('date');
+        // Query untuk cash_transactions dengan filter yang sama
+        $cashQuery = CashTransaction::where('user_id', Auth::id())->orderBy('date');
 
         if ($request->start_date) {
-            $expenditureQuery->whereDate('date', '>=', $request->start_date);
+            $cashQuery->whereDate('date', '>=', $request->start_date);
         }
 
         if ($request->end_date) {
-            $expenditureQuery->whereDate('date', '<=', $request->end_date);
+            $cashQuery->whereDate('date', '<=', $request->end_date);
         }
 
-        $expenditure = $expenditureQuery->get();
+        $cashTransactions = $cashQuery->get();
 
         // Gabungkan data dan urutkan berdasarkan tanggal
         $allTransactions = collect();
@@ -321,18 +333,31 @@ class ReportController extends Controller
             ]);
         }
 
-        // Tambahkan data pengeluaran
-        foreach ($expenditure as $e) {
-            $allTransactions->push([
-                'date' => $e->date,
-                'type' => 'expense',
-                'project_name' => $e->type,
-                'responsible_person' => $e->pic ?? '',
-                'nominal' => 0,
-                'expense' => $e->nominal,
-                'profit' => -$e->nominal, // pengeluaran mengurangi saldo
-                'description' => ''
-            ]);
+        // Tambahkan data kas (pemasukan & pengeluaran)
+        foreach ($cashTransactions as $c) {
+            if ($c->type === 'pemasukan') {
+                $allTransactions->push([
+                    'date' => $c->date->format('Y-m-d'),
+                    'type' => 'income',
+                    'project_name' => $c->category,
+                    'responsible_person' => $c->pic ?? '',
+                    'nominal' => $c->nominal * $c->qty,
+                    'expense' => 0,
+                    'profit' => $c->nominal * $c->qty,
+                    'description' => 'Pemasukan Kas'
+                ]);
+            } else {
+                $allTransactions->push([
+                    'date' => $c->date->format('Y-m-d'),
+                    'type' => 'expense',
+                    'project_name' => $c->category,
+                    'responsible_person' => $c->pic ?? '',
+                    'nominal' => 0,
+                    'expense' => $c->nominal * $c->qty,
+                    'profit' => -($c->nominal * $c->qty),
+                    'description' => 'Pengeluaran Kas'
+                ]);
+            }
         }
 
         $allTransactions = $allTransactions->sortBy('date')->values();

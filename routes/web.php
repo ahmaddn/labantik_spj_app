@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\PengeluaranController;
+use App\Http\Controllers\KasController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterUserController;
@@ -99,6 +99,7 @@ Route::prefix('eksternal')->name('eksternal.')->middleware('auth')->group(functi
     Route::post('/pesanan/import', [PesananController::class, 'import'])->name('pesanan.import');
     Route::delete('/pesanan/delete/{id}', [PesananController::class, 'delete'])->name('pesanan.delete');
     Route::get('/pesanan/export/{id}', [PesananController::class, 'export'])->name('pesanan.export');
+    Route::get('/pesanan/invoice/{id}', [PesananController::class, 'invoice'])->name('pesanan.invoice');
 
     //Letterhead/Kop Surat
     Route::get('/pesanan/addLetterhead', [PesananController::class, 'addLetterhead'])->name('pesanan.addLetterhead');
@@ -113,13 +114,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/dashboard', [PesananController::class, 'dashboard'])->name('dashboard');
 
-    // Pengeluaran
-    Route::get('/expenditure', [PengeluaranController::class, 'index'])->name('pengeluaran.index');
-    Route::get('/expenditure/create', [PengeluaranController::class, 'create'])->name('pengeluaran.create');
-    Route::post('/expenditure/store', [PengeluaranController::class, 'store'])->name('pengeluaran.store');
-    Route::get('/expenditure/edit/{id}', [PengeluaranController::class, 'edit'])->name('pengeluaran.edit');
-    Route::put('/expenditure/update/{id}', [PengeluaranController::class, 'update'])->name('pengeluaran.update');
-    Route::delete('/expenditure/delete/{id}', [PengeluaranController::class, 'destroy'])->name('pengeluaran.destroy');
+    // Pengelolaan Kas
+    Route::get('/kas', [KasController::class, 'index'])->name('kas.index');
+    Route::get('/kas/create', [KasController::class, 'create'])->name('kas.create');
+    Route::post('/kas/store', [KasController::class, 'store'])->name('kas.store');
+    Route::get('/kas/edit/{id}', [KasController::class, 'edit'])->name('kas.edit');
+    Route::put('/kas/update/{id}', [KasController::class, 'update'])->name('kas.update');
+    Route::delete('/kas/delete/{id}', [KasController::class, 'destroy'])->name('kas.destroy');
 
     // Report
     Route::get('/report', [ReportController::class, 'index'])->name('report.index');
