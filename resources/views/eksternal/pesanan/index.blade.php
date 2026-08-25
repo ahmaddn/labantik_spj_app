@@ -235,8 +235,15 @@
                                                         @if ($item->kegiatanID && $item->penyediaID && $item->penerimaID && $item->bendaharaID && $item->kepsekID)
                                                             <a href="{{ route('eksternal.pesanan.export', $item->id) }}"
                                                                 class="btn btn-sm btn-outline-primary" target="_blank"
-                                                                title="Print">
+                                                                title="Print SPJ">
                                                                 <i class="fas fa-print"></i>
+                                                            </a>
+                                                        @endif
+                                                        @if ($item->penyediaID && $item->penerimaID)
+                                                            <a href="{{ route('eksternal.pesanan.invoice', $item->id) }}"
+                                                                class="btn btn-sm btn-outline-warning" style="color: #ffc107;" target="_blank"
+                                                                title="Invoice">
+                                                                <i class="fas fa-file-invoice"></i>
                                                             </a>
                                                         @endif
 

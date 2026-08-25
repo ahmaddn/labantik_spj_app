@@ -12,7 +12,7 @@ use App\Models\Penerima;
 use App\Models\Barang;
 use App\Models\Bendahara;
 use App\Models\Kepsek;
-use App\Models\Expenditure;
+use App\Models\CashTransaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -530,6 +530,12 @@ class PesananController extends Controller
         return view('template', compact('pesanan', 'letterhead'));
     }
 
+    public function invoice($id)
+    {
+        $pesanan = Pesanan::with(['barang', 'penyedia', 'penerima', 'bendahara', 'letterhead'])->findOrFail($id);
+        return view('eksternal.pesanan.invoice', compact('pesanan'));
+    }
+
     public function dashboard()
     {
         $id = Auth::id();
@@ -540,13 +546,16 @@ class PesananController extends Controller
 
         $totals = Pesanan::where('userID', $id)->sum('total');
         $totalkeuntungan = Pesanan::where('userID', $id)->sum('profit');
-        $totalpengeluaran = Expenditure::where('user_id', $id)->sum('nominal');
+        $totalpengeluaran = CashTransaction::where('user_id', $id)->where('type', 'pengeluaran')->sum('nominal');
 
         // Ambil data kegiatan dengan total per kegiatan
         $dataTransaksi = Pesanan::with('kegiatan')
             ->where('userID', $id)
             ->get();
-        $dataPengeluaran = Expenditure::where('user_id', $id)->get();
+        $dataPengeluaran = CashTransaction::where('user_id', $id)->where('type', 'pengeluaran')->get()->map(function ($item) {
+            $item->type = $item->category;
+            return $item;
+        });
 
         return view('dashboard', compact('pesanan', 'totals', 'dataTransaksi', 'dataPengeluaran', 'totalkeuntungan', 'totalpengeluaran'));
     }

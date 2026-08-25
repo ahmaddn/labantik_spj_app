@@ -33,10 +33,10 @@
                                 class="{{ Route::is('eksternal.pesanan.index') ? 'active' : '' }}">Pesanan</a></li>
                     </ul>
                 </li>
-                <li class="{{ Route::is('pengeluaran.index') ? 'active' : '' }}">
-                    <a href="{{ route('pengeluaran.index') }}"
-                        class="{{ Route::is('pengeluaran.index') ? 'active' : '' }}">
-                        <i class="fas fa-money-bill"></i> <span>Pengeluaran</span>
+                <li class="{{ Route::is('kas.*') ? 'active' : '' }}">
+                    <a href="{{ route('kas.index') }}"
+                        class="{{ Route::is('kas.*') ? 'active' : '' }}">
+                        <i class="fas fa-wallet"></i> <span>Pengelolaan Kas</span>
                     </a>
                 </li>
                 <li class="{{ Route::is('report.index') ? 'active' : '' }}">
