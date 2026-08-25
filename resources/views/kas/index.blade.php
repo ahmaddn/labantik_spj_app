@@ -95,7 +95,6 @@
                             <th>Kategori / Jenis</th>
                             <th>Qty</th>
                             <th>Nominal</th>
-                            <th>Total</th>
                             <th>Penanggung Jawab (PIC)</th>
                             <th>Aksi</th>
                         </tr>
@@ -119,7 +118,6 @@
                                 <td>{{ $data->category }}</td>
                                 <td>{{ $data->qty }}</td>
                                 <td>Rp. {{ number_format($data->nominal, 0, ',', '.') }}</td>
-                                <td>Rp. {{ number_format($data->nominal * $data->qty, 0, ',', '.') }}</td>
                                 <td>{{ $data->pic }}</td>
                                 <td>
                                     @if($data->pesanan_id)

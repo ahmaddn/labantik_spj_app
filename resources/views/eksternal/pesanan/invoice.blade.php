@@ -591,21 +591,21 @@
                 </div>
             </div>
 
-            <!-- Tanda Tangan (TTD) -->
+             <!-- Tanda Tangan (TTD) -->
             <div class="signature-section" style="display: flex; justify-content: flex-end; align-items: flex-start; gap: 20px; margin-top: 30px;">
                 <!-- Panel Pilihan Penandatangan (Screen Only, no-print) -->
-                <div class="no-print-panel" style="display: flex; flex-direction: column; gap: 6px; text-align: left; background: #f8f9fa; padding: 12px; border-radius: 6px; border: 1px solid #dee2e6; width: 220px; align-self: center;">
-                    <label style="font-size: 11px; font-weight: 700; color: #495057; margin-bottom: 2px;">Penandatangan:</label>
-                    <select id="sig-selector" class="form-select form-select-sm" style="font-size: 11.5px; padding: 5px; border-radius: 4px; border: 1px solid #ced4da; width: 100%;">
+                <div class="no-print-panel" style="display: flex; flex-direction: column; gap: 8px; text-align: left; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); width: 240px; align-self: center; box-sizing: border-box;">
+                    <label style="font-size: 11px; font-weight: 700; color: #495057; margin-bottom: 2px;">Pilih Penandatangan:</label>
+                    <select id="sig-selector" class="form-select form-select-sm" style="font-size: 12px; padding: 6px 10px; border-radius: 4px; border: 1px solid #ced4da; width: 100%; cursor: pointer; box-sizing: border-box;">
                         <option value="default" data-name="{{ $pesanan->penyedia->delegation_name ?? '' }}" data-position="{{ $pesanan->penyedia->delegate_position ?? '' }}">
                             {{ $pesanan->penyedia->delegation_name ?? 'Penanggung Jawab Default' }}
                         </option>
                         <option value="custom">Lainnya (Tulis Manual)...</option>
                     </select>
                     
-                    <div id="custom-sig-inputs" style="display: none; flex-direction: column; gap: 5px; margin-top: 5px;">
-                        <input type="text" id="input-sig-name" placeholder="Nama Penandatangan" style="font-size: 11px; padding: 4px 6px; border-radius: 4px; border: 1px solid #ced4da;">
-                        <input type="text" id="input-sig-position" placeholder="Jabatan" style="font-size: 11px; padding: 4px 6px; border-radius: 4px; border: 1px solid #ced4da;">
+                    <div id="custom-sig-inputs" style="display: none; flex-direction: column; gap: 8px; margin-top: 8px; width: 100%; box-sizing: border-box;">
+                        <input type="text" id="input-sig-name" placeholder="Nama Penandatangan" style="width: 100%; font-size: 12px; padding: 6px 10px; border-radius: 4px; border: 1px solid #ced4da; box-sizing: border-box;">
+                        <input type="text" id="input-sig-position" placeholder="Jabatan" style="width: 100%; font-size: 12px; padding: 6px 10px; border-radius: 4px; border: 1px solid #ced4da; box-sizing: border-box;">
                     </div>
                 </div>
 
@@ -619,7 +619,7 @@
                     
                     <!-- Barcode/QR E-Signature -->
                     <div class="sig-qr-container" style="margin: 10px 0; display: flex; justify-content: center; align-items: center; min-height: 80px;">
-                        <img id="sig-qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data={{ urlencode(($pesanan->penyedia->company ?? '') . ' | ' . ($pesanan->penyedia->delegation_name ?? '') . ' | ' . ($pesanan->penyedia->delegate_position ?? '')) }}" alt="QR Signature" style="width: 80px; height: 80px; object-fit: contain;">
+                        <img id="sig-qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data={{ urlencode($pesanan->penyedia->delegation_name ?? '') }}" alt="QR Signature" style="width: 80px; height: 80px; object-fit: contain;">
                     </div>
 
                     <p class="sig-name" id="display-sig-name" style="font-size: 13.5px; font-weight: 700; color: #000000; margin: 0; text-decoration: underline;">
@@ -664,7 +664,7 @@
                 displayPosition.textContent = finalPosition;
                 
                 // Generate QR Code data
-                const qrData = encodeURIComponent(`${companyName} | ${finalName} | ${finalPosition}`);
+                const qrData = encodeURIComponent(finalName);
                 qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${qrData}`;
             }
             
