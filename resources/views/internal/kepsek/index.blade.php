@@ -38,7 +38,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-center">
+                                <table class="datatable table table-center">
                                     <thead>
                                         <tr class="bg-gray-200 text-gray-700">
                                             <th class="px-4 py-2">ID</th>

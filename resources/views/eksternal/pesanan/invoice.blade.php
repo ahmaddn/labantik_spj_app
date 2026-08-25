@@ -25,7 +25,7 @@
             print-color-adjust: exact;
         }
 
-        /* Printable Area */
+        /* Area Cetak */
         .invoice-card {
             background-color: #ffffff;
             max-width: 800px;
@@ -35,13 +35,13 @@
             border-radius: 8px;
             position: relative;
             box-sizing: border-box;
-            min-height: 297mm; /* Standard A4 height aspect */
+            min-height: 297mm;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        /* Float Action Panel */
+        /* Panel Aksi */
         .no-print-panel {
             max-width: 800px;
             margin: 0 auto 20px auto;
@@ -82,7 +82,7 @@
             gap: 6px;
         }
 
-        /* Invoice Layout Styling */
+        /* Header */
         .header-section {
             display: flex;
             justify-content: space-between;
@@ -146,11 +146,11 @@
             margin: 0;
         }
 
-        /* Details Section */
+        /* Details */
         .details-section {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 40px;
+            margin-bottom: 45px;
         }
 
         .invoice-to {
@@ -158,45 +158,52 @@
         }
 
         .invoice-to h3 {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
-            color: var(--dark-slate);
+            color: #6c757d;
+            text-transform: uppercase;
             margin: 0 0 8px 0;
+            letter-spacing: 0.5px;
         }
 
         .client-name {
             font-size: 16px;
             font-weight: 700;
             color: #000000;
-            margin: 0 0 4px 0;
+            margin: 0 0 6px 0;
         }
 
         .client-address {
             font-size: 13px;
-            line-height: 1.4;
-            color: #6c757d;
+            line-height: 1.5;
+            color: #495057;
             margin: 0;
         }
 
         .meta-details {
             text-align: right;
-            display: grid;
-            grid-template-columns: auto 120px;
-            row-gap: 8px;
-            column-gap: 15px;
-            font-size: 14px;
-            align-items: center;
+            font-size: 13.5px;
+            max-width: 45%;
+        }
+
+        .meta-row {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
         }
 
         .meta-label {
             font-weight: 600;
             color: var(--dark-slate);
-            text-align: left;
+            margin-right: 8px;
+            white-space: nowrap;
         }
 
         .meta-value {
             color: #2b2b2b;
             text-align: right;
+            word-break: break-word;
         }
 
         /* Items Table */
@@ -232,8 +239,9 @@
 
         .items-table td {
             padding: 14px 15px;
-            font-size: 13.5px;
+            font-size: 13px;
             border-bottom: 1px solid var(--border-color);
+            color: #2b2b2b;
         }
 
         .items-table tr:nth-child(even) {
@@ -252,15 +260,16 @@
         .bottom-section {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
+            margin-top: 20px;
+            gap: 20px;
         }
 
         .bottom-left {
-            max-width: 50%;
+            width: 55%;
         }
 
         .thank-you {
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 600;
             color: var(--dark-slate);
             margin: 0 0 15px 0;
@@ -268,25 +277,33 @@
 
         .info-block {
             margin-bottom: 15px;
+            background-color: #fafbfc;
+            border: 1px solid #f1f3f5;
+            padding: 12px;
+            border-radius: 6px;
         }
 
         .info-title {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             color: var(--dark-slate);
-            margin: 0 0 5px 0;
+            margin: 0 0 6px 0;
+            letter-spacing: 0.5px;
         }
 
         .info-desc {
             font-size: 11px;
-            color: #6c757d;
+            color: #495057;
             line-height: 1.5;
             margin: 0;
         }
 
         .bottom-right {
-            min-width: 250px;
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
 
         .summary-row {
@@ -318,39 +335,58 @@
             margin-top: 10px;
         }
 
+        /* Signature Block (TTD) */
+        .signature-section {
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-end;
+            text-align: center;
+        }
+
+        .signature-container {
+            width: 250px;
+        }
+
+        .sig-date {
+            font-size: 12px;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+
+        .sig-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--dark-slate);
+            margin-bottom: 55px;
+        }
+
+        .sig-name {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #000000;
+            margin: 0;
+            text-decoration: underline;
+        }
+
+        .sig-position {
+            font-size: 11px;
+            color: #6c757d;
+            margin: 2px 0 0 0;
+        }
+
         /* Footer Accent */
         .footer-section {
-            margin-top: 50px;
+            margin-top: 40px;
             border-top: 2px solid var(--primary-yellow);
-            padding-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
+            padding-top: 15px;
         }
 
         .contact-info {
             font-size: 11px;
             color: #6c757d;
-        }
-
-        .contact-info span {
-            margin-right: 15px;
-        }
-
-        .sign-area {
-            text-align: center;
-        }
-
-        .sign-line {
-            width: 150px;
-            border-bottom: 1px solid #6c757d;
-            margin-bottom: 5px;
-        }
-
-        .sign-title {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--dark-slate);
+            display: flex;
+            justify-content: center;
+            gap: 20px;
         }
 
         /* Print Settings */
@@ -383,7 +419,7 @@
 </head>
 <body>
 
-    <!-- Top Action Panel for UI view -->
+    <!-- Panel Aksi Atas -->
     <div class="no-print-panel">
         <a href="{{ route('eksternal.pesanan.index') }}" class="btn-back">
             <i class="fas fa-arrow-left"></i> Kembali ke Daftar
@@ -393,7 +429,7 @@
         </button>
     </div>
 
-    <!-- Main Printable Invoice -->
+    <!-- Konten Invoice Utama -->
     <div class="invoice-card">
         <div>
             <!-- Header -->
@@ -401,7 +437,7 @@
                 <div class="logo-container">
                     <div class="logo-icon"><i class="fas fa-bolt"></i></div>
                     <div>
-                        <h2 class="brand-name">{{ $pesanan->penyedia->company ?? 'Brand Name' }}</h2>
+                        <h2 class="brand-name">{{ $pesanan->penyedia->company ?? 'Nama Perusahaan' }}</h2>
                         <p class="brand-tagline">TAGLINE SPACE HERE</p>
                     </div>
                 </div>
@@ -412,36 +448,39 @@
                 <h1 class="banner-text">INVOICE</h1>
             </div>
 
-            <!-- Invoice Details -->
+            <!-- Detail Invoice -->
             <div class="details-section">
                 <div class="invoice-to">
-                    <h3>Invoice to:</h3>
+                    <h3>Tagihan Kepada:</h3>
                     <p class="client-name">{{ $pesanan->penerima->name ?? 'Nama Penerima' }}</p>
-                    <p class="client-address">
+                    <div class="client-address">
                         NIP. {{ $pesanan->penerima->nip ?? '-' }}<br>
                         {{ $pesanan->penerima->position ?? 'Jabatan' }}<br>
                         {{ $pesanan->penerima->school ?? 'Sekolah / Instansi' }}
-                    </p>
+                    </div>
                 </div>
                 <div class="meta-details">
-                    <span class="meta-label">Invoice#</span>
-                    <span class="meta-value">{{ $pesanan->invoice_num ?? '52148' }}</span>
-
-                    <span class="meta-label">Date</span>
-                    <span class="meta-value">{{ \Carbon\Carbon::parse($pesanan->order_date)->format('d / m / Y') }}</span>
+                    <div class="meta-row">
+                        <span class="meta-label">No. Invoice:</span>
+                        <span class="meta-value">{{ $pesanan->invoice_num ?? '0000' }}</span>
+                    </div>
+                    <div class="meta-row">
+                        <span class="meta-label">Tanggal:</span>
+                        <span class="meta-value">{{ \Carbon\Carbon::parse($pesanan->order_date)->format('d / m / Y') }}</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Items Table -->
+            <!-- Tabel Barang -->
             <div class="table-container">
                 <table class="items-table">
                     <thead>
                         <tr>
-                            <th style="width: 5%;" class="text-center">SL.</th>
-                            <th style="width: 50%;">Item Description</th>
-                            <th style="width: 15%;" class="text-right">Price</th>
-                            <th style="width: 10%;" class="text-center">Qty.</th>
-                            <th style="width: 20%;" class="text-right">Total</th>
+                            <th style="width: 8%;" class="text-center">No.</th>
+                            <th style="width: 47%;">Deskripsi Barang / Jasa</th>
+                            <th style="width: 17%;" class="text-right">Harga Satuan</th>
+                            <th style="width: 10%;" class="text-center">Jumlah</th>
+                            <th style="width: 18%;" class="text-right">Total Harga</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -471,24 +510,24 @@
         </div>
 
         <div>
-            <!-- Summary and Bottom section -->
+            <!-- Ringkasan Pembayaran -->
             <div class="bottom-section">
                 <div class="bottom-left">
-                    <p class="thank-you">Thank you for your business</p>
+                    <p class="thank-you">Terima kasih atas kerja sama Anda.</p>
                     
                     @if($pesanan->penyedia)
                     <div class="info-block">
-                        <p class="info-title">Payment Info:</p>
+                        <p class="info-title">Informasi Pembayaran:</p>
                         <p class="info-desc">
-                            Bank Name: {{ $pesanan->penyedia->bank ?? '-' }}<br>
-                            Account No: {{ $pesanan->penyedia->account ?? '-' }}<br>
-                            A/C Holder: {{ $pesanan->penyedia->delegation_name ?? '-' }}
+                            Nama Bank: {{ $pesanan->penyedia->bank ?? '-' }}<br>
+                            No. Rekening: {{ $pesanan->penyedia->account ?? '-' }}<br>
+                            Pemilik Rekening: {{ $pesanan->penyedia->delegation_name ?? '-' }}
                         </p>
                     </div>
                     @endif
 
                     <div class="info-block">
-                        <p class="info-title">Terms & Conditions:</p>
+                        <p class="info-title">Syarat & Ketentuan:</p>
                         <p class="info-desc">Pembayaran dilakukan secara penuh sesuai dengan kesepakatan penyerahan barang dan jasa.</p>
                     </div>
                 </div>
@@ -501,17 +540,16 @@
                     
                     @php
                         $taxNominal = $pesanan->tax ?? 0;
-                        // Calculate percentage for display if tax nominal > 0
                         $taxPercentage = $subtotal > 0 ? round(($taxNominal / $subtotal) * 100, 2) : 0;
                     @endphp
                     <div class="summary-row">
-                        <span class="summary-label">Tax ({{ $taxPercentage }}%):</span>
+                        <span class="summary-label">Pajak ({{ $taxPercentage }}%):</span>
                         <span class="summary-value">Rp. {{ number_format($taxNominal, 0, ',', '.') }}</span>
                     </div>
 
                     @if($pesanan->shipping_cost > 0)
                     <div class="summary-row">
-                        <span class="summary-label">Shipping:</span>
+                        <span class="summary-label">Biaya Pengiriman:</span>
                         <span class="summary-value">Rp. {{ number_format($pesanan->shipping_cost, 0, ',', '.') }}</span>
                     </div>
                     @endif
@@ -526,31 +564,26 @@
                 </div>
             </div>
 
-            <!-- Footer Section -->
+            <!-- Tanda Tangan (TTD) -->
+            <div class="signature-section">
+                <div class="signature-container">
+                    <p class="sig-date">Majalengka, {{ \Carbon\Carbon::parse($pesanan->order_date)->translatedFormat('d F Y') }}</p>
+                    <p class="sig-label">Tanda Tangan Resmi,</p>
+                    <p class="sig-name">{{ $pesanan->penyedia->delegation_name ?? 'Nama Penanggung Jawab' }}</p>
+                    <p class="sig-position">{{ $pesanan->penyedia->delegate_position ?? 'Direktur / Pengelola' }}</p>
+                </div>
+            </div>
+
+            <!-- Bagian Kaki (Footer) -->
             <div class="footer-section">
                 <div class="contact-info">
                     @if($pesanan->penyedia)
-                        <span><strong>Phone:</strong> {{ $pesanan->penyedia->post_code ?? '-' }}</span>
-                        <span><strong>Address:</strong> {{ $pesanan->penyedia->address ?? '-' }}</span>
-                    @endif
-                </div>
-                <div class="sign-area">
-                    <div class="sign-line"></div>
-                    <p class="sign-title">Authorised Sign</p>
-                    @if($pesanan->penyedia)
-                        <small style="color: #6c757d; font-size: 10px;">{{ $pesanan->penyedia->delegation_name }}</small>
+                        <span><strong>Telepon:</strong> {{ $pesanan->penyedia->post_code ?? '-' }}</span>
+                        <span><strong>Alamat:</strong> {{ $pesanan->penyedia->address ?? '-' }}</span>
                     @endif
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Auto trigger print dialog on page load -->
-    <script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            // Optional: Auto open print dialog
-            // window.print();
-        });
-    </script>
 </body>
 </html>
