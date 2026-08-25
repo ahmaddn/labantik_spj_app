@@ -443,9 +443,14 @@
                     <div>
                         <h2 class="brand-name" style="margin-bottom: 4px;">{{ $pesanan->penyedia->company ?? 'Nama Perusahaan' }}</h2>
                         @if (!$pesanan->letterhead || !$pesanan->letterhead->logo)
-                            <small class="no-print-panel text-muted" style="font-size: 11px; display: block; margin-top: 4px; padding: 2px 8px; background: #e3f2fd; border-radius: 4px; border: 1px dashed #90caf9;">
-                                <i class="fas fa-info-circle text-primary"></i> Logo otomatis diambil dari Kop Surat. Atur Kop Surat di menu Pesanan untuk memasang logo.
-                            </small>
+                            <div class="no-print-panel" style="margin-top: 6px; padding: 6px 10px; background: #e3f2fd; border-radius: 4px; border: 1px dashed #90caf9; display: flex; align-items: center; justify-content: space-between; gap: 15px;">
+                                <span style="font-size: 11px; color: #495057;">
+                                    <i class="fas fa-info-circle text-primary"></i> Logo otomatis diambil dari Kop Surat.
+                                </span>
+                                <a href="{{ route('eksternal.pesanan.addLetterhead') }}" class="btn-print" style="font-size: 11px; padding: 4px 8px; text-decoration: none; border-radius: 4px; color: #ffffff; background-color: #007bff; border: none; white-space: nowrap; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                                    <i class="fas fa-plus"></i> Tambah Kop Surat/Logo
+                                </a>
+                            </div>
                         @endif
                     </div>
                 </div>
